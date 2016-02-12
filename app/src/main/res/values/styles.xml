@@ -7,12 +7,6 @@
         <item name="android:textColorHint">@color/default_hint_color</item>
         <item name="android:textAppearance">@style/text_appearance</item>
         <item name="android:windowBackground">@color/window_background</item>
-        <item name="android:radioButtonStyle">@style/MyRadioButton</item>
-        <item name="android:buttonStyleToggle">@style/toggle_button_style</item>
-        <item name="editTextStyle">@style/edit_text_style</item>
-        <item name="actionBarStyle">@style/action_bar_style</item>
-        <item name="checkboxStyle">@style/checkbox_style</item>
-        <item name="android:cursorVisible">true</item>
     </style>
 
     <style name="quicktag_menu_style" parent="Widget.AppCompat.Light.ActionButton">
