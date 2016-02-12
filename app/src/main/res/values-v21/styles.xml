@@ -1,0 +1,18 @@
+<resources>>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="ToolbarTitleTextAppearanceCustom" parent="ToolbarTitleTextAppearance">
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="ToolbarSubtitleTextAppearanceCustom" parent="ToolbarSubtitleTextAppearance">
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+</resources>

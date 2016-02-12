@@ -1,0 +1,88 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorAccent">@color/accent</item>
+
+        <item name="baseFieldStyle">@style/BaseFieldStyle</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.Purple">
+        <item name="colorPrimary">@color/purple_primary</item>
+        <item name="colorPrimaryDark">@color/purple_primary_dark</item>
+        <item name="colorAccent">@color/purple_filter</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="BaseFieldStyle">
+        <item name="verticalMargin">@dimen/dimen_13dp</item>
+        <item name="horizontalMargin">@dimen/dimen_13dp</item>
+        <item name="primaryTextColor">@color/black_54pc</item>
+        <item name="primaryTextSize">@dimen/fontsize_14</item>
+        <item name="secondaryTextColor">@color/black</item>
+        <item name="secondaryTextSize">@dimen/fontsize_14</item>
+    </style>
+
+    <style name="NumberEditorSingleLine" parent="Widget.AppCompat.EditText">
+        <item name="android:singleLine">true</item>
+        <item name="android:inputType">number</item>
+    </style>
+
+    <style name="FontSize14" parent="@android:style/Widget.TextView">
+        <item name="android:textSize">@dimen/fontsize_14</item>
+    </style>
+
+    <style name="ColorBlack54Font14" parent="FontSize14">
+        <item name="android:textColor">@color/black_54pc</item>
+    </style>
+
+    <style name="MyButtonRounded" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/purple_submit_button</item>
+        <item name="android:textColor">@color/widget_background</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="ButtonGreenRounded" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/green_submit_button</item>
+        <item name="android:textColor">@color/widget_background</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="ToolBarStyle" parent="Widget.AppCompat.Toolbar">
+        <item name="titleTextAppearance">@style/ToolbarTitleTextAppearanceCustom</item>
+        <item name="subtitleTextAppearance">@style/ToolbarSubtitleTextAppearanceCustom</item>
+    </style>
+
+    <style name="ToolbarTitleTextAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/fontsize_28</item>
+    </style>
+
+    <style name="ToolbarTitleTextAppearanceCustom" parent="ToolbarTitleTextAppearance"/>
+
+    <style name="ToolbarSubtitleTextAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/fontsize_16</item>
+    </style>
+
+    <style name="ToolbarSubtitleTextAppearanceCustom" parent="ToolbarSubtitleTextAppearance"/>
+
+
+    <color name="purple_primary_dark">#5111aa</color>
+    <color name="purple_primary">#7322DB</color>
+    <color name="purple_filter">#7323dd</color>
+
+</resources>

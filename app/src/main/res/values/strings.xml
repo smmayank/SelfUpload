@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">SelfUploadForm</string>
+    <string name="action_settings">Settings</string>
+    <string name="default_selection">Select</string>
+    <string name="self_upload_dashboard_subtitle">Let\'s list your property in Housing</string>
+    <string name="save_and_upload"><![CDATA[SAVE & UPLOAD]]></string>
+    <string-array name="property_types">
+        <item>Apartment</item>
+        <item>Independent House</item>
+        <item>Independent Floor</item>
+    </string-array>
+    <string-array name="flat_configurations">
+        <item>1 BHK</item>
+        <item>2 BHK</item>
+        <item>3 BHK</item>
+        <item>4 BHK</item>
+        <item>5 BHK</item>
+    </string-array>
+    <string-array name="age_selection_types">
+        <item>Months</item>
+        <item>Years</item>
+    </string-array>
+    <string-array name="yes_no">
+        <item>Yes</item>
+        <item>No</item>
+    </string-array>
+</resources>

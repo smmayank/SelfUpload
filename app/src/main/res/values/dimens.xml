@@ -1,0 +1,86 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="fab_margin">16dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">8dp</dimen>
+    <dimen name="shadow_height">8dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="property_listing_card_inset">6.6dp</dimen>
+
+
+    <dimen name="control_corner_material">2dp</dimen>
+    <dimen name="button_inset_horizontal_material">@dimen/control_inset_material</dimen>
+    <dimen name="button_inset_vertical_material">6dp</dimen>
+    <dimen name="button_padding_horizontal_material">8dp</dimen>
+    <dimen name="button_padding_vertical_material">@dimen/control_padding_material</dimen>
+    <dimen name="control_inset_material">4dp</dimen>
+    <dimen name="control_padding_material">4dp</dimen>
+    <dimen name="notifications_count_view_size">26dp</dimen>
+    <dimen name="reminder_listview_divider">6.6dp</dimen>
+    <dimen name="reminder_lisview_margin">16dp</dimen>
+    <dimen name="lead_view_item_inset">6.6dp</dimen>
+    <dimen name="reminder_activity_cell_margin">16dp</dimen>
+    <dimen name="property_details_sticky_button">16dp</dimen>
+    <dimen name="add_more_fab_margin">14dp</dimen>
+    <dimen name="quicktag_searchbox_padding_left">24dp</dimen>
+    <dimen name="quicktag_searchbox_padding_right">16dp</dimen>
+    <dimen name="quicktag_searchbox_drawable_padding">12dp</dimen>
+    <dimen name="searchbox_top_height">56dp</dimen>
+    <dimen name="chat_horizontal_margin">16dp</dimen>
+    <dimen name="chat_vertical_margin">16dp</dimen>
+    <dimen name="chat_display_picture_width">40dp</dimen>
+    <dimen name="chat_display_picture_height">40dp</dimen>
+    <dimen name="chat_display_picture_margin_left">16dp</dimen>
+    <dimen name="chat_display_picture_margin_top">17dp</dimen>
+    <dimen name="chat_user_name_margin_left">15dp</dimen>
+    <dimen name="chat_user_name_margin_top">17dp</dimen>
+    <dimen name="chat_user_name_text_size">16sp</dimen>
+    <dimen name="chat_timestamp_margin_right">14dp</dimen>
+    <dimen name="chat_timestamp_margin_top">18dp</dimen>
+    <dimen name="chat_timestamp_text_size">12sp</dimen>
+    <dimen name="chat_property_details_margin_top">3dp</dimen>
+    <dimen name="chat_property_details_margin_left">1dp</dimen>
+    <dimen name="chat_property_details_text_size">14sp</dimen>
+    <dimen name="chat_last_message_margin_top">10dp</dimen>
+    <dimen name="chat_last_message_margin_left">1dp</dimen>
+    <dimen name="chat_last_message_text_size">14sp</dimen>
+    <dimen name="chat_message_or_call_icon_margin_right">18dp</dimen>
+    <dimen name="chat_unread_count_text_size">12sp</dimen>
+    <dimen name="chat_unread_count_margin_right">12dp</dimen>
+    <dimen name="dimen_240dp">240dp</dimen>
+    <dimen name="dimen_5dp">5dp</dimen>
+    <dimen name="dimen_3dp">3dp</dimen>
+    <dimen name="dimen_10dp">10dp</dimen>
+    <dimen name="dimen_20dp">20dp</dimen>
+    <dimen name="dimen_13dp">13dp</dimen>
+    <dimen name="dimen_7dp">7dp</dimen>
+    <dimen name="dimen_8dp">8dp</dimen>
+    <dimen name="dimen_15dp">15dp</dimen>
+    <dimen name="dimen_18dp">18dp</dimen>
+    <dimen name="dimen_38dp">38dp</dimen>
+    <dimen name="dimen_12dp">12dp</dimen>
+    <dimen name="dimen_11dp">11dp</dimen>
+    <dimen name="dimen_56dp">56dp</dimen>
+    <dimen name="dimen_16dp">16dp</dimen>
+    <dimen name="dimen_1dp">1dp</dimen>
+    <dimen name="dimen_2dp">2dp</dimen>
+    <dimen name="dimen_17dp">17dp</dimen>
+    <dimen name="dimen_19dp">19dp</dimen>
+    <dimen name="dimen_50dp">50dp</dimen>
+    <dimen name="dimen_26dp">26dp</dimen>
+
+
+    <!-- fontsize dimensions -->
+    <dimen name="fontsize_10">10sp</dimen>
+    <dimen name="fontsize_14">14sp</dimen>
+    <dimen name="fontsize_15">15sp</dimen>
+    <dimen name="fontsize_16">16sp</dimen>
+    <dimen name="fontsize_20">20sp</dimen>
+    <dimen name="fontsize_28">28sp</dimen>
+    <dimen name="chat_display_text_max_width">240dp</dimen>
+
+    <dimen name="field_content_default_width">100dp</dimen>
+    <dimen name="input_selection_field_default_width">120dp</dimen>
+    <dimen name="field_margin_top">@dimen/dimen_26dp</dimen>
+    <dimen name="self_upload_dashboard_toolbar_height">248dp</dimen>
+</resources>

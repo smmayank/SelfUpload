@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="primary_dark">#0e943b</color>
+    <color name="purple">#7323dd</color>
+    <color name="primary">#1fc055</color>
+    <color name="primary_sixty_percent_transparent">#967323dd</color>
+    <color name="small_circle">#c3c3c3</color>
+
+    <color name="accent">#0e943b</color>
+    <color name="widget_background">#ffffff</color>
+    <color name="window_background">#F4F4F4</color>
+    <color name="widget_border">#e5e5e5</color>
+    <color name="default_font_color">#434955</color>
+    <color name="white">#ffffffff</color>
+    <color name="default_hint_color">#52000000</color>
+    <color name="purple_background">#7323dc</color>
+    <color name="purple_dark">#6A1B9A</color>
+    <color name="gray_background">#f4f4f4</color>
+    <color name="dark_gray">#727272</color>
+    <color name="black_font">#de000000</color>
+    <color name="black_font_with_opacity">#88000000</color>
+    <color name="mineShaft">#414141</color>
+    <color name="timecolor">#8fe0aa</color>
+    <color name="pure_black">#000000</color>
+    <color name="black_half_transparent">#80000000</color>
+    <color name="black_70_percent_opacity">#B3000000</color>
+    <color name="black_60_percent_opacity">#99414141</color>
+    <color name="black_50_percent_opacity">#80000000</color>
+    <color name="black_40_percent_opacity">#66000000</color>
+    <color name="black_36_percent_opacity">#59000000</color>
+    <color name="black_30_percent_opacity">#4D000000</color>
+    <color name="black_25_percent_opacity">#40000000</color>
+    <color name="black_20_percent_opacity">#33000000</color>
+    <color name="black_15_percent_opacity">#26000000</color>
+    <color name="black_10_percent_opacity">#1A000000</color>
+    <color name="black_0_percent_opacity">#00000000</color>
+    <color name="black_5_percent_opacity">#0D000000</color>
+    <color name="light_gray_font">#7a000000</color>
+    <color name="light_gray_background">#e7e7e7</color>
+    <color name="selected_menu_item_bg">#f7f7f7</color>
+    <color name="tour_bg">#282828</color>
+    <color name="chat_text_color">#191919</color>
+
+    <color name="button_pressed_gray">#bbbcbc</color>
+    <color name="plain_white">#ffffff</color>
+    <color name="heading_background">#fafafa</color>
+
+    <color name="pink_font">#e62878</color>
+    <color name="gray_accent">#4b4b4b</color>
+    <color name="selected_locality_background">#F0F0F0</color>
+    <color name="timeline_gray">#cdcdcd</color>
+    <color name="border_gray">#dcdcdc</color>
+    <color name="gray_font">#999999</color>
+    <color name="gray">#7f7f7f</color>
+    <color name="dove_gray_1">#666666</color>
+    <color name="dove_gray">#646464</color>
+    <color name="light_gray">#e6e6e6</color>
+    <color name="red">#eb5555</color>
+    <color name="yellow">#f8e71c</color>
+    <color name="gray_cell_background">#e9e9e9</color>
+    <color name="medium_gray">#f0f0f0</color>
+    <color name="dark_purple_font">#5a00d7</color>
+    <color name="transparent_black">#5C5C5C</color>
+    <color name="black">#000000</color>
+    <color name="background_gray">#f0f0f0</color>
+    <color name="divider_gray">#e5e5e5</color>
+    <color name="pinkish_grey">#cdcdcd</color>
+    <color name="warm_grey">#9b9b9b</color>
+    <color name="mercury">#e6e6e6</color>
+    <color name="grey_chat_background">#f0f0f0</color>
+    <color name="greyish_brown_87">#dd414141</color>
+    <color name="greyish_brown_54">#8c414141</color>
+    <color name="greyish_brown_26">#40414141</color>
+
+    <color name="black_87pc">#de000000</color>
+    <color name="black_54pc">#8a000000</color>
+    <color name="chatbuttonsend">#1fc055</color>
+    <color name="purpleblue">#7323dc</color>
+    <color name="post_call_widget_text_color">#3b3b3b</color>
+    <color name="post_call_widget_yes_color">#1fc055</color>
+    <color name="post_call_widget_no_color">#5d5d5d</color>
+
+</resources>

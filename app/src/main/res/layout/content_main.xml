@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.mayank.selfuploadform.MainActivity"
+    tools:showIn="@layout/activity_main">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/dimen_13dp">
+
+        <com.mayank.selfuploadform.selfupload.widgets.SelectionField
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:entries="@array/property_types"
+            app:entryPadding="@dimen/dimen_11dp"
+            app:headerText="Property Type"
+            app:mandatory="true"
+            app:secondaryTextColor="@color/selection_color" />
+
+        <com.mayank.selfuploadform.selfupload.widgets.SpinnerField
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/field_margin_top"
+            app:entries="@array/flat_configurations"
+            app:headerText="BHK Type"
+            app:mandatory="true" />
+
+        <com.mayank.selfuploadform.selfupload.widgets.NumberField
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/field_margin_top"
+            app:contentText="No. of Bathrooms"
+            app:headerVisible="false" />
+
+        <com.mayank.selfuploadform.selfupload.widgets.NumberField
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:contentText="No. of Balconies"
+            app:headerVisible="false" />
+
+        <com.mayank.selfuploadform.selfupload.widgets.InputField
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/field_margin_top"
+            app:descriptorIcon="@drawable/search"
+            app:editable="false"
+            app:headerText="Locality"
+            app:mandatory="true" />
+
+        <com.mayank.selfuploadform.selfupload.widgets.SpinnerField
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/field_margin_top"
+            app:headerText="Building Name"
+            app:mandatory="true" />
+
+        <com.mayank.selfuploadform.selfupload.widgets.InputField
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/field_margin_top"
+            app:editable="true"
+            app:headerText="Floor Number"
+            app:inputType="number"
+            app:mandatory="true" />
+
+        <com.mayank.selfuploadform.selfupload.widgets.InputField
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/field_margin_top"
+            app:editable="true"
+            app:headerText="Total Floors"
+            app:inputType="number"
+            app:mandatory="true" />
+
+        <com.mayank.selfuploadform.selfupload.widgets.InputSelectionField
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/field_margin_top"
+            app:entries="@array/age_selection_types"
+            app:headerText="Age of Property"
+            app:inputType="number"
+            app:mandatory="true" />
+
+        <TextView
+            style="@style/ColorBlack54Font14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/field_margin_top"
+            android:text="Amenities *" />
+
+        <com.mayank.selfuploadform.selfupload.widgets.SelectionField
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/field_margin_top"
+            app:entries="@array/yes_no"
+            app:headerPosition="Left"
+            app:headerText="Reserved Parking"
+            app:mandatory="true"
+            app:primaryTextColor="@color/black_87pc"
+            app:primaryTextSize="@dimen/fontsize_16"
+            app:secondaryTextColor="@color/selection_color" />
+
+        <com.mayank.selfuploadform.selfupload.widgets.SelectionField
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/field_margin_top"
+            app:entries="@array/yes_no"
+            app:headerPosition="Left"
+            app:headerText="Cupboards"
+            app:mandatory="true"
+            app:primaryTextColor="@color/black_87pc"
+            app:primaryTextSize="@dimen/fontsize_16"
+            app:secondaryTextColor="@color/selection_color" />
+
+        <com.mayank.selfuploadform.selfupload.widgets.SelectionField
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/field_margin_top"
+            app:entries="@array/yes_no"
+            app:headerPosition="Left"
+            app:headerText="Pipeline Gas"
+            app:mandatory="true"
+            app:primaryTextColor="@color/black_87pc"
+            app:primaryTextSize="@dimen/fontsize_16"
+            app:secondaryTextColor="@color/selection_color" />
+
+        <com.mayank.selfuploadform.selfupload.widgets.InputField
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/field_margin_top"
+            app:headerText="Description"
+            app:inputLines="@integer/description_lines" />
+
+        <Button
+            style="@style/MyButtonRounded"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/field_margin_top"
+            android:text="SAVE &amp; PROCEED" />
+    </LinearLayout>
+</ScrollView>

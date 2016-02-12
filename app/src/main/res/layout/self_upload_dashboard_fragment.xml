@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/self_upload_toolbar" />
+
+    <TextView
+        android:id="@+id/dashboard_layout_view"
+        android:layout_width="1dp"
+        android:layout_height="32dp"
+        android:layout_alignBottom="@id/toolbar"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/dashboard_action_button"
+        style="@style/ButtonGreenRounded"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="@string/save_and_upload" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/dashboard_action_button"
+        android:layout_alignTop="@id/dashboard_layout_view"
+        android:layout_margin="8dp"
+        android:background="@drawable/dashboard_cards_list_background" />
+
+</RelativeLayout>
