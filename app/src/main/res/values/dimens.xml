@@ -83,4 +83,7 @@
     <dimen name="input_selection_field_default_width">120dp</dimen>
     <dimen name="field_margin_top">@dimen/dimen_26dp</dimen>
     <dimen name="self_upload_dashboard_toolbar_height">248dp</dimen>
+    <dimen name="dimen_4dp">4dp</dimen>
+    <dimen name="dimen_6dp">6dp</dimen>
+    <dimen name="dimen_24dp">24dp</dimen>
 </resources>

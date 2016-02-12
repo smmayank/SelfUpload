@@ -1,13 +1,58 @@
 <resources>
-
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorPrimary">@color/primary</item>
         <item name="colorAccent">@color/accent</item>
+        <item name="android:textColorHint">@color/default_hint_color</item>
+        <item name="android:textAppearance">@style/text_appearance</item>
+        <item name="android:windowBackground">@color/window_background</item>
+        <item name="android:radioButtonStyle">@style/MyRadioButton</item>
+        <item name="android:buttonStyleToggle">@style/toggle_button_style</item>
+        <item name="editTextStyle">@style/edit_text_style</item>
+        <item name="actionBarStyle">@style/action_bar_style</item>
+        <item name="checkboxStyle">@style/checkbox_style</item>
+        <item name="android:cursorVisible">true</item>
+    </style>
 
-        <item name="baseFieldStyle">@style/BaseFieldStyle</item>
+    <style name="quicktag_menu_style" parent="Widget.AppCompat.Light.ActionButton">
+        <item name="textAllCaps">false</item>
+    </style>
+
+    <style name="quicktag_dialog_info_layout">
+        <item name="android:paddingLeft">24dp</item>
+        <item name="android:paddingRight">25dp</item>
+        <item name="android:paddingTop">30dp</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:drawablePadding">24dp</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="quicktag_dialog_info_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:drawablePadding">24sp</item>
+        <item name="android:textColor">@color/pure_black</item>
+        <item name="android:layout_marginBottom">36dp</item>
+    </style>
+
+    <style name="AppTheme.ActionBarTitleLowerCase">
+        <item name="actionButtonStyle">@style/quicktag_menu_style</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="MenuFontTheme" parent="AppTheme">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="AppTheme.ActionBarOverlay">
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="windowActionBarOverlay">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="actionBarStyle">@style/action_bar_transparent</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -15,11 +60,321 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.NoActionBar.Purple">
-        <item name="colorPrimary">@color/purple_primary</item>
-        <item name="colorPrimaryDark">@color/purple_primary_dark</item>
-        <item name="colorAccent">@color/purple_filter</item>
+    <style name="text_appearance" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/default_font_color</item>
+        <item name="android:textSize">14sp</item>
     </style>
+
+    <style name="action_bar_style" parent="Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="titleTextStyle">@style/action_bar_text_style</item>
+        <item name="displayOptions">useLogo|showHome|showTitle|homeAsUp</item>
+    </style>
+
+    <style name="dashboard_toolbar" parent="Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="android:textColorPrimary">@color/plain_white</item>
+        <item name="android:textColorSecondary">@color/plain_white</item>
+        <item name="titleTextStyle">@style/action_bar_text_style</item>
+        <item name="displayOptions">useLogo|showHome|showTitle|homeAsUp</item>
+    </style>
+
+    <style name="action_bar_transparent" parent="Widget.AppCompat.Light.ActionBar">
+        <item name="titleTextStyle">@style/action_bar_text_style</item>
+        <item name="displayOptions">useLogo|showHome|showTitle|homeAsUp</item>
+    </style>
+
+    <style name="action_bar_text_style" parent="Base.Widget.AppCompat.ActionBar">
+        <item name="android:textColor">@android:color/primary_text_dark</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="QuickTagRadioButton" parent="@android:style/Widget.CompoundButton.RadioButton">
+        <item name="android:textSize">13sp</item>
+        <item name="android:button">@null</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">2dp</item>
+    </style>
+
+    <style name="MyButtonRounded" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/purple_submit_button</item>
+        <item name="android:textColor">@color/widget_background</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="MyButton" parent="Widget.AppCompat.Button">
+        <item name="android:background">@drawable/purple_submit_button_without_round_corners</item>
+        <item name="android:textColor">@color/widget_background</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="bhk_layout_style">
+        <item name="android:paddingBottom">17dp</item>
+        <item name="android:paddingTop">17dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@color/widget_background</item>
+    </style>
+
+    <style name="edit_text_style" parent="@style/Widget.AppCompat.EditText">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textCursorDrawable">@drawable/edit_text_cursor</item>
+    </style>
+
+
+    <style name="purple_image_button">
+        <item name="android:background">@color/purple_background</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="image_button_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/widget_background</item>
+        <item name="android:paddingLeft">8dp</item>
+    </style>
+
+    <style name="contact_title_style" parent="roboto_medium_font">
+        <item name="android:textColor">@color/black_font</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="message_text_style">
+        <item name="android:textColor">@color/light_gray_font</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="message_text_bold_style">
+        <item name="android:textColor">@color/black_font</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="header_regular_black">
+        <item name="android:textColor">@color/pure_black</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="reminder_button">
+        <item name="android:gravity">center</item>
+        <item name="android:paddingTop">17dp</item>
+        <item name="android:paddingBottom">17dp</item>
+    </style>
+
+    <style name="reminder_button_text" parent="roboto_medium_font">
+        <item name="android:drawablePadding">6dp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/gray_accent</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="empty_list_page_header" parent="roboto_medium_font">
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/pure_black</item>
+    </style>
+
+    <style name="empty_list_page_message" parent="roboto_regular_font">
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:lineSpacingMultiplier">1.2</item>
+        <item name="android:textColor">@color/light_gray_font</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:singleLine">false</item>
+        <item name="android:paddingLeft">48dp</item>
+        <item name="android:paddingRight">48dp</item>
+    </style>
+
+    <style name="dashboard_zero_state_text">
+        <item name="android:textColor">@color/pure_black</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="status_change_dialog_button">
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+
+    <style name="list_header_style">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/pure_black</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="lead_list_style">
+        <item name="android:divider">@android:color/transparent</item>
+        <item name="android:dividerHeight">@dimen/lead_view_item_inset</item>
+        <item name="android:clipToPadding">false</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">14dp</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:scrollbars">none</item>
+    </style>
+
+    <style name="fab_dashboard_button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <style name="fab_dashboard_button.text">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/plain_white</item>
+    </style>
+
+    <style name="zero_state_card_view">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">80dp</item>
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:layout_marginTop">16dp</item>
+    </style>
+
+    <style name="zero_state_card_view_linear_layout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingBottom">22dp</item>
+        <item name="android:paddingTop">22dp</item>
+        <item name="android:paddingLeft">22dp</item>
+        <item name="android:background">@drawable/abc_list_selector_holo_dark</item>
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="purple_border_button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">47dp</item>
+        <item name="android:layout_marginRight">47dp</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:layout_marginBottom">20dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/purple_border_drawable</item>
+    </style>
+
+    <style name="purple_border_button_text_label">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">12dp</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/purple_background</item>
+    </style>
+
+    <style name="compat_time_spinner">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="amenities_layout_text" parent="AppTheme">
+        <item name="android:textSize">10sp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textAppearance">@style/amenities_text_appearance</item>
+    </style>
+
+    <style name="amenities_text_appearance" parent="TextAppearance.AppCompat">
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textColor">@color/dove_gray_1</item>
+    </style>
+
+    <style name="purple_button_with_white_text" parent="Widget.AppCompat.Button">
+        <item name="android:background">@color/purple_background</item>
+        <item name="android:textColor">@color/plain_white</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:padding">18dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="center_black_text" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">20sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/pure_black</item>
+    </style>
+
+    <style name="toolbar_text_expanded" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@android:color/transparent</item>
+    </style>
+
+    <style name="toolbar_text_collapsed" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/plain_white</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="large_screen_title_style">
+        <item name="android:textColor">@color/pure_black</item>
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="roboto_light_font">
+        <item name="android:typeface">normal</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="roboto_medium_font">
+        <item name="android:typeface">sans</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="roboto_regular_font">
+        <item name="android:typeface">sans</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="switch_text_description" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/mineShaft</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="theme_black_text">
+        <item name="android:textColor">@color/black_font</item>
+
+    </style>
+
+    <style name="search_box_erase_btn">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <style name="MyAppTheme" parent="AppTheme">
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="chatAppTheme" parent="AppTheme">
+        <item name="actionBarStyle">@style/action_bar_style_chat</item>
+    </style>
+
+    <style name="action_bar_style_chat" parent="Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="subtitleTextStyle">@style/action_bar_subtitle</item>
+        <item name="titleTextStyle">@style/action_bar_text_style</item>
+        <item name="displayOptions">useLogo|showHome|showTitle|homeAsUp</item>
+    </style>
+
+    <style name="action_bar_subtitle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Subtitle">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+
+    <!-- Base application theme. -->
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
@@ -47,13 +402,6 @@
         <item name="android:textColor">@color/black_54pc</item>
     </style>
 
-    <style name="MyButtonRounded" parent="Widget.AppCompat.Button">
-        <item name="android:background">@drawable/purple_submit_button</item>
-        <item name="android:textColor">@color/widget_background</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:gravity">center</item>
-    </style>
-
     <style name="ButtonGreenRounded" parent="Widget.AppCompat.Button">
         <item name="android:background">@drawable/green_submit_button</item>
         <item name="android:textColor">@color/widget_background</item>
@@ -62,8 +410,8 @@
     </style>
 
     <style name="ToolBarStyle" parent="Widget.AppCompat.Toolbar">
-        <item name="titleTextAppearance">@style/ToolbarTitleTextAppearanceCustom</item>
-        <item name="subtitleTextAppearance">@style/ToolbarSubtitleTextAppearanceCustom</item>
+        <item name="titleTextAppearance">@style/SelfUploadToolbarTitleTextAppearance</item>
+        <item name="subtitleTextAppearance">@style/SelfUploadToolbarSubtitleTextAppearance</item>
     </style>
 
     <style name="ToolbarTitleTextAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
@@ -71,18 +419,36 @@
         <item name="android:textSize">@dimen/fontsize_28</item>
     </style>
 
-    <style name="ToolbarTitleTextAppearanceCustom" parent="ToolbarTitleTextAppearance"/>
+    <style name="SelfUploadToolbarTitleTextAppearance" parent="ToolbarTitleTextAppearance" />
 
     <style name="ToolbarSubtitleTextAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/white_70_percent_opacity</item>
         <item name="android:textSize">@dimen/fontsize_16</item>
     </style>
 
-    <style name="ToolbarSubtitleTextAppearanceCustom" parent="ToolbarSubtitleTextAppearance"/>
+    <style name="SelfUploadToolbarSubtitleTextAppearance" parent="ToolbarSubtitleTextAppearance" />
 
+    <style name="SelfUploadDashboardCardTitleStyle" parent="roboto_regular_font">
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/black_87pc</item>
+        <item name="android:textSize">@dimen/fontsize_16</item>
+    </style>
 
-    <color name="purple_primary_dark">#5111aa</color>
-    <color name="purple_primary">#7322DB</color>
-    <color name="purple_filter">#7323dd</color>
+    <style name="SelfUploadDashboardCardSubTitleStyle" parent="roboto_regular_font">
+        <item name="android:background">@null</item>
+        <item name="android:enabled">false</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:clickable">false</item>
+        <item name="android:textColor">@color/black_54pc</item>
+        <item name="android:textColorHint">@color/black_25_percent_opacity</item>
+        <item name="android:textSize">@dimen/fontsize_14</item>
+    </style>
+
+    <style name="SelfUploadStatusImageStyle">
+        <item name="android:padding">@dimen/dimen_3dp</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:layout_height">@dimen/dimen_24dp</item>
+        <item name="android:layout_width">@dimen/dimen_24dp</item>
+    </style>
 
 </resources>

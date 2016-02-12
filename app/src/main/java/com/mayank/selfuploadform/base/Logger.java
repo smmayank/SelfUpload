@@ -19,7 +19,7 @@ public class Logger {
    * @throws java.util.IllegalFormatException if the format is invalid.
    * @since 1.5
    */
-  public static void logD(Object caller, String text, Object args) {
+  public static void logD(Object caller, String text, Object... args) {
     if (DEBUG_FLAG) {
       String tag = getTag(caller);
       Log.d(tag, String.format(Locale.ENGLISH, text, args));

@@ -16,6 +16,7 @@
     <color name="widget_border">#e5e5e5</color>
     <color name="default_font_color">#434955</color>
     <color name="white">#ffffffff</color>
+    <color name="white_70_percent_opacity">#B3ffffff</color>
     <color name="default_hint_color">#52000000</color>
     <color name="purple_background">#7323dc</color>
     <color name="purple_dark">#6A1B9A</color>
@@ -83,5 +84,9 @@
     <color name="post_call_widget_text_color">#3b3b3b</color>
     <color name="post_call_widget_yes_color">#1fc055</color>
     <color name="post_call_widget_no_color">#5d5d5d</color>
+
+    <color name="purple_primary_dark">#5111aa</color>
+    <color name="purple_primary">#7322DB</color>
+    <color name="purple_filter">#7323dd</color>
 
 </resources>
