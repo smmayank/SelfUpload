@@ -1,61 +1,51 @@
 package com.mayank.selfuploadform.selfupload.widgets;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
-import com.mayank.selfuploadform.base.Logger;
 import com.mayank.selfuploadform.R;
+import com.mayank.selfuploadform.base.Logger;
+import com.mayank.selfuploadform.selfupload.widgets.BaseField.BaseEntry;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.List;
 
-public class SelectionField extends BaseField implements View.OnClickListener {
+public class SelectionField<T extends BaseEntry> extends BaseField implements View.OnClickListener {
 
-  private float borderWidth;
+  private static final int FIRST = 0;
+  private static final int MIDDLE = 1;
+  private static final int LAST = 2;
 
-  private ArrayList<CharSequence> entries;
+  private ArrayList<T> entries;
   private SparseArray<View> fieldViews;
 
   private int fieldWidth;
   private int fieldHeight;
-  private int entryPadding;
-
-  public SelectionField(Context context) {
-    super(context);
-    init(null);
-  }
+  private SelectionFieldInteractionListener<T> listener;
 
   public SelectionField(Context context, AttributeSet attrs) {
-    super(context, attrs);
-    init(attrs);
+    this(context, attrs, R.attr.baseSelectionFieldStyle);
   }
 
   public SelectionField(Context context, AttributeSet attrs, int defStyleAttr) {
-    super(context, attrs, defStyleAttr);
+    super(context, attrs, R.attr.baseSelectionFieldStyle);
     init(attrs);
   }
 
   private void init(AttributeSet attrs) {
-    TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.SelectionField, 0, 0);
-    CharSequence[] values = a.getTextArray(R.styleable.SelectionField_entries);
-    entryPadding = a.getDimensionPixelSize(R.styleable.SelectionField_entryPadding, 0);
-    a.recycle();
-    borderWidth = getResources().getDimension(R.dimen.dimen_1dp) / 2;
     fieldViews = new SparseArray<>();
     entries = new ArrayList<>();
-    addEntries(values);
   }
 
-  public void addEntries(CharSequence... values) {
-    if (null == values || 0 == values.length) {
+  public void addEntries(List<T> values) {
+    if (null == values || values.isEmpty()) {
       return;
     }
-    Collections.addAll(entries, values);
+    entries.addAll(values);
     requestLayout();
   }
 
@@ -72,33 +62,52 @@ public class SelectionField extends BaseField implements View.OnClickListener {
     int size = entries.size();
     fieldWidth = width / size;
     fieldHeight = 0;
+    int length = 0;
+    int maxIndex = -1;
     for (int i = 0; i < size; i++) {
-      View view = getFieldView(i, entries.get(i));
-      fieldHeight = measureView(view, fieldWidth);
+      int entryLength = entries.get(i).getEntryText().length();
+      if (length <= entryLength) {
+        length = entryLength;
+        maxIndex = i;
+      }
+    }
+    // make sure the child with maximum length gets measured first
+    View view = getFieldView(maxIndex, entries.get(maxIndex).getEntryText());
+    fieldHeight = measureView(view, fieldWidth);
+    for (int i = 0; i < size; i++) {
+      if (i != maxIndex) {
+        view = getFieldView(i, entries.get(i).getEntryText());
+        measureView(view, fieldWidth, fieldHeight);
+      }
     }
     return fieldHeight;
   }
 
   private View getFieldView(int index, CharSequence text) {
     View view = fieldViews.get(index);
-    if (null != view) {
-      return view;
+    if (null == view) {
+      view = createFieldView(index, text);
     }
-    return createFieldView(index, text);
+    return view;
   }
 
   private View createFieldView(int index, CharSequence text) {
     TextView textView = new TextView(getContext());
-    textView.setLines(2);
     textView.setGravity(Gravity.CENTER);
-    textView.setBackgroundResource(R.drawable.selection_background);
-    textView.setTextColor(getsecondaryTextColor());
-    textView.setPadding(entryPadding, entryPadding, entryPadding, entryPadding);
+    textView.setTextColor(getSecondaryTextColor());
     textView.setOnClickListener(this);
     setTextSize(textView, getSecondaryTextSize());
     addView(textView);
+    setViewPadding(textView);
     textView.setText(text);
     fieldViews.put(index, textView);
+    boolean left = false, right = false;
+    if (FIRST == index) {
+      left = true;
+    } else if (index == entries.size() - 1) {
+      right = true;
+    }
+    setViewBackground(textView, left, right);
     return textView;
   }
 
@@ -107,11 +116,12 @@ public class SelectionField extends BaseField implements View.OnClickListener {
     if (entries.isEmpty()) {
       return;
     }
+    int strokeWidthDiff = getStrokeWidth() >> 1;
     int size = entries.size();
     for (int i = 0; i < size; i++) {
-      View view = getFieldView(i, entries.get(i));
-      view.layout(l, t, (int) (l + fieldWidth + borderWidth), t + fieldHeight);
-      l += fieldWidth - borderWidth;
+      View view = getFieldView(i, entries.get(i).getEntryText());
+      view.layout(l, t, (int) (l + fieldWidth + strokeWidthDiff), t + fieldHeight);
+      l += fieldWidth - strokeWidthDiff;
     }
   }
 
@@ -120,8 +130,11 @@ public class SelectionField extends BaseField implements View.OnClickListener {
     if (v.isSelected()) {
       return;
     }
-    int size = entries.size();
     int index = fieldViews.indexOfValue(v);
+    if (index < 0 || index >= entries.size()) {
+      return;
+    }
+    int size = entries.size();
     for (int i = 0; i < size; i++) {
       if (index != i) {
         fieldViews.get(i).setSelected(false);
@@ -129,5 +142,20 @@ public class SelectionField extends BaseField implements View.OnClickListener {
     }
     v.setSelected(true);
     Logger.logD(this, "index %d", index);
+    sendSelection(index, entries.get(index));
+  }
+
+  protected void sendSelection(int index, T entry) {
+    if (null != listener) {
+      listener.onSelectionFieldSelected(this, index, entry);
+    }
+  }
+
+  public void setSelectionFieldInteractionListener(SelectionFieldInteractionListener<T> listener) {
+    this.listener = listener;
+  }
+
+  public interface SelectionFieldInteractionListener<T> {
+    void onSelectionFieldSelected(SelectionField field, int index, T entry);
   }
 }

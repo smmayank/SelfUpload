@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
@@ -18,6 +21,8 @@ public abstract class BaseField extends ViewGroup {
   private static final boolean DEBUG_LAYOUT = false;
 
   private static final String MANDATORY_INDICATOR = " *";
+  private static final int RADII_SIZE = 8;
+  private static final int NO_COLOR = -1;
 
   private final ColorStateList secondaryTextColor;
   private final ColorStateList primaryTextColor;
@@ -35,6 +40,9 @@ public abstract class BaseField extends ViewGroup {
   private TextView header;
   private int headerHeight;
   private int headerWidth;
+  private int strokeWidth;
+  private ColorStateList strokeColor;
+  private float radius;
 
   public BaseField(Context context) {
     this(context, null);
@@ -47,16 +55,14 @@ public abstract class BaseField extends ViewGroup {
   public BaseField(Context context, AttributeSet attrs, int defStyleAttr) {
     super(context, attrs, defStyleAttr);
     TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.BaseField, defStyleAttr,
-            R.style.BaseFieldStyle);
+            R.style.FieldStyle);
     headerText = a.getString(R.styleable.BaseField_headerText);
     headerVisible = a.getBoolean(R.styleable.BaseField_headerVisible, true);
     mandatory = a.getBoolean(R.styleable.BaseField_mandatory, false);
     headerPosition = a.getInt(R.styleable.BaseField_headerPosition, HeaderPosition.TOP);
 
-    verticalMargin = a.getDimensionPixelOffset(R.styleable.BaseField_verticalMargin,
-            getResources().getDimensionPixelOffset(R.dimen.dimen_13dp));
-    horizontalMargin = a.getDimensionPixelOffset(R.styleable.BaseField_horizontalMargin,
-            getResources().getDimensionPixelOffset(R.dimen.dimen_13dp));
+    verticalMargin = a.getDimensionPixelOffset(R.styleable.BaseField_verticalMargin, 0);
+    horizontalMargin = a.getDimensionPixelOffset(R.styleable.BaseField_horizontalMargin, 0);
 
     primaryTextColor = a.getColorStateList(R.styleable.BaseField_primaryTextColor);
     primaryTextSize = a.getDimension(R.styleable.BaseField_primaryTextSize,
@@ -67,12 +73,21 @@ public abstract class BaseField extends ViewGroup {
             getResources().getDimension(R.dimen.fontsize_14));
     contentWidth = a.getDimensionPixelSize(R.styleable.BaseField_contentWidth, getResources()
             .getDimensionPixelOffset(R.dimen.input_selection_field_default_width));
+    strokeWidth = a.getDimensionPixelSize(R.styleable.BaseField_backgroundStrokeWidth,
+            getResources().getDimensionPixelOffset(R.dimen.dimen_1dp));
+    strokeColor = a.getColorStateList(R.styleable.BaseField_backgroundStrokeColor);
+    radius = a.getDimension(R.styleable.BaseField_backgroundCornerRadius, getResources()
+            .getDimension(R.dimen.dimen_2dp));
     a.recycle();
     setHeaderVisible(headerVisible);
   }
 
   public float getSecondaryTextSize() {
     return secondaryTextSize;
+  }
+
+  public float getPrimaryTextSize() {
+    return primaryTextSize;
   }
 
   public int getVerticalMargin() {
@@ -83,22 +98,12 @@ public abstract class BaseField extends ViewGroup {
     return horizontalMargin;
   }
 
-  public void setHeaderPosition(int headerPosition) {
-    this.headerPosition = headerPosition;
-    requestLayout();
-  }
-
   public void setHeaderVisible(boolean headerVisible) {
     this.headerVisible = headerVisible;
     if (headerVisible) {
       createHeader();
     }
     setVisibility(header, headerVisible);
-    requestLayout();
-  }
-
-  public void setMandatory(boolean mandatory) {
-    this.mandatory = mandatory;
     requestLayout();
   }
 
@@ -131,6 +136,61 @@ public abstract class BaseField extends ViewGroup {
     if (null != v) {
       v.setVisibility(visible ? VISIBLE : GONE);
     }
+  }
+
+  protected Drawable createViewBackground(boolean left, boolean right, int color) {
+    return createViewBackground(left, left, right, right, color);
+  }
+
+  protected Drawable createViewBackground(boolean left, boolean right) {
+    return createViewBackground(left, left, right, right, NO_COLOR);
+  }
+
+  protected final Drawable createViewBackground(boolean topLeft, boolean bottomLeft,
+          boolean topRight, boolean bottomRight, int color) {
+    GradientDrawable drawable = new GradientDrawable();
+    // topLeft, topRight
+    drawable.setCornerRadii(getRadii(topLeft, topRight, bottomRight, bottomLeft));
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+      drawable.setStroke(strokeWidth, strokeColor);
+    } else {
+      drawable.setStroke(strokeWidth, strokeColor.getDefaultColor());
+    }
+    if (NO_COLOR != color) {
+      drawable.setColor(color);
+    }
+    return drawable;
+  }
+
+  protected final void setViewBackground(View view, boolean leftRound, boolean rightRound) {
+    Drawable drawable = createViewBackground(leftRound, rightRound);
+    setViewBackground(view, drawable);
+  }
+
+  protected final void setViewBackground(View view, Drawable drawable) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+      view.setBackground(drawable);
+    } else {
+      view.setBackgroundDrawable(drawable);
+    }
+  }
+
+  protected final void setViewPadding(View view) {
+    setViewPadding(view, getVerticalMargin(), getHorizontalMargin());
+  }
+
+  protected final void setViewPadding(View view, int vertical, int horizontal) {
+    view.setPadding(vertical, horizontal, vertical, horizontal);
+  }
+
+  private float[] getRadii(boolean... args) {
+    float[] radii = new float[RADII_SIZE];
+    int index = 0;
+    for (boolean val : args) {
+      radii[index++] = val ? radius : 0;
+      radii[index++] = val ? radius : 0;
+    }
+    return radii;
   }
 
   @Override
@@ -227,11 +287,23 @@ public abstract class BaseField extends ViewGroup {
     layoutChildren(l, t, r, b);
   }
 
-  public ColorStateList getsecondaryTextColor() {
+  public ColorStateList getSecondaryTextColor() {
     return secondaryTextColor;
   }
 
+  public ColorStateList getPrimaryTextColor() {
+    return primaryTextColor;
+  }
+
   protected abstract void layoutChildren(int l, int t, int r, int b);
+
+  protected int getStrokeWidth() {
+    return strokeWidth;
+  }
+
+  public interface BaseEntry {
+    CharSequence getEntryText();
+  }
 
   private static final class HeaderPosition {
     private static final int TOP = 0;

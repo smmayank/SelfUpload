@@ -88,5 +88,6 @@
     <color name="purple_primary_dark">#5111aa</color>
     <color name="purple_primary">#7322DB</color>
     <color name="purple_filter">#7323dd</color>
+    <color name="input_selection_default_background_color">#dcdcdc</color>
 
 </resources>

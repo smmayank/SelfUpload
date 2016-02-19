@@ -79,6 +79,7 @@ public class SelfUploadDashboardPresenter {
 
   public void commercialsCardClicked() {
     Logger.logD(this, "commercialsCardClicked");
+    view.openCommercialsView();
   }
 
   public void photosCardClicked() {

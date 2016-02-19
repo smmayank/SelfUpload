@@ -253,7 +253,7 @@
     <string name="listing_confirmation_phone_number">03-333-333-333</string>
     <string name="listing_confirmation_login_message">Login to manage your properties and leads right from this app!</string>
     <string name="button_close">Close</string>
-    <string name="no_description"/>
+    <string name="no_description" />
     <string name="login_image_desc">Logged in user</string>
     <string name="hint_housing_logo">Housing Logo</string>
     <string name="active_properties">Active Properties</string>
@@ -393,7 +393,7 @@
     <string name="quick_tagging_dialog_subTitle">Get started by adding contacts to this smart diary now!</string>
     <string name="hi_user">"Hi %1$s!"</string>
     <string name="invite_other_agents">Invite other Agents</string>
-    <string name="empty_text"/>
+    <string name="empty_text" />
     <string name="add_owner">Add Owner</string>
     <string name="no_recommended_properties_title">No Properties in the Network right now.</string>
     <string name="no_recommended_properties_desc">Through Broadcast, you can let agents in your contacts know about your lead.</string>
@@ -497,10 +497,7 @@
     <!---->
 
 
-
-
-
-    <string name="default_selection">Select</string>
+    <string name="spinner_field_default_selection">Select from list</string>
     <string name="self_upload_dashboard_subtitle">Let\'s list your property in Housing</string>
     <string name="save_and_upload">SAVE &amp; UPLOAD</string>
     <string name="self_upload_dashboard_title">Hi %1$s</string>
@@ -510,17 +507,49 @@
     <string name="self_upload_dashboard_commercials_sub_title">Price, Brokerage, Built-up-Area etc.</string>
     <string name="self_upload_dashboard_photos_title">Photos</string>
     <string name="self_upload_dashboard_photos_sub_title">Add photos of your property</string>
+    <string name="save_and_proceed">SAVE &amp; PROCEED</string>
+    <string name="amenities">Amenities *</string>
+    <string name="property_details">Property Details</string>
+    <string name="self_upload_search_result_not_found">Create building using %1$s</string>
+    <string name="search_building_editor_hint">Enter Building Name</string>
+    <string name="search_locality_editor_hint">Enter Locality Name</string>
+    <string name="years">Years</string>
+
+
     <string-array name="property_types">
-        <item>Apartment</item>
-        <item>Independent House</item>
-        <item>Independent Floor</item>
+        <item>Apartment,1</item>
+        <item>Independent House,2</item>
+        <item>Independent Floor,3</item>
     </string-array>
+
     <string-array name="flat_configurations">
-        <item>1 BHK</item>
-        <item>2 BHK</item>
-        <item>3 BHK</item>
-        <item>4 BHK</item>
-        <item>5 BHK</item>
+        <item>1 RK,1</item>
+        <item>2 RK,9</item>
+        <item>3 RK,10</item>
+        <item>4 RK,50</item>
+        <item>5 RK,49</item>
+        <item>6 RK,51</item>
+        <item>1 BHK,2</item>
+        <item>1.5 BHK,56</item>
+        <item>2 BHK,3</item>
+        <item>2.5 BHK,8</item>
+        <item>3 BHK,4</item>
+        <item>3.5 BHK,44</item>
+        <item>4 BHK,5</item>
+        <item>4.5 BHK,45</item>
+        <item>5 BHK,6</item>
+        <item>5+ BHK,7</item>
+    </string-array>
+
+    <string-array name="entrance_facing_types">
+        <item>North,1</item>
+        <item>North-East,2</item>
+        <item>East,3</item>
+        <item>South-East,4</item>
+        <item>South,5</item>
+        <item>South-West,6</item>
+        <item>West,7</item>
+        <item>North-West,8</item>
     </string-array>
     <string-array name="age_selection_types">
         <item>Months</item>

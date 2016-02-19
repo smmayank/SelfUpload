@@ -136,10 +136,11 @@
         <flag name="time" value="0x00000024" />
     </attr>
 
-    <attr name="entries" format="reference" />
-
     <declare-styleable name="AppTheme">
         <attr name="baseFieldStyle" format="reference" />
+        <attr name="baseSelectionFieldStyle" format="reference" />
+        <attr name="baseSpinnerFieldStyle" format="reference" />
+        <attr name="baseInputFieldStyle" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="BaseField">
@@ -157,33 +158,36 @@
         <attr name="primaryTextSize" format="dimension" />
         <attr name="secondaryTextColor" format="color" />
         <attr name="secondaryTextSize" format="dimension" />
-    </declare-styleable>
-
-    <declare-styleable name="SelectionField">
-        <attr name="entryPadding" format="dimension" />
-        <attr name="entries" />
-    </declare-styleable>
-
-    <declare-styleable name="SpinnerField">
-        <attr name="entries" />
+        <attr name="backgroundStrokeWidth" format="dimension" />
+        <attr name="backgroundStrokeColor" format="color" />
+        <attr name="backgroundCornerRadius" format="dimension" />
     </declare-styleable>
 
     <declare-styleable name="NumberField">
         <attr name="contentText" format="string" localization="suggested" />
         <attr name="selectionColor" format="color" />
+        <attr name="clickerWidth" format="dimension" />
+        <attr name="clickerTextSize" format="dimension" />
     </declare-styleable>
 
     <declare-styleable name="InputField">
         <attr name="editable" format="boolean" />
         <attr name="descriptorIcon" format="reference" />
+        <attr name="hintText" format="string" localization="suggested" />
         <attr name="prefixString" format="string" localization="suggested" />
         <attr name="postfixString" format="string" localization="suggested" />
         <attr name="inputLines" format="integer" />
         <attr name="inputType" />
     </declare-styleable>
 
+
     <declare-styleable name="InputSelectionField">
-        <attr name="entries" />
         <attr name="spinnerWidth" format="dimension" />
+        <attr name="selectionTextSize" format="dimension" />
+        <attr name="selectionBackgroundColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="InputSelectionCheckboxField">
+        <attr name="checkboxText" format="string" localization="suggested" />
     </declare-styleable>
 </resources>

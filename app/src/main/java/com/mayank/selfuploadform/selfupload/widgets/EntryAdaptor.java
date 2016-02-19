@@ -1,20 +1,19 @@
 package com.mayank.selfuploadform.selfupload.widgets;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class EntryAdaptor<T> extends BaseAdapter {
-
-
-  private static final int FIRST = 0;
+  public static final int FIRST = 0;
   private final List<T> entries;
   private final EntryAdaptorCallback<T> listener;
-  private T defaultEntry;
+  private CharSequence defaultEntry;
+  private boolean hasDefault;
 
 
   public EntryAdaptor(EntryAdaptorCallback<T> listener) {
@@ -22,38 +21,37 @@ public class EntryAdaptor<T> extends BaseAdapter {
     this.listener = listener;
   }
 
-  public void setDefaultEntry(T entry) {
-    if (null != defaultEntry) {
-      entries.remove(defaultEntry);
+  public void addEntries(List<T> values) {
+    if (null == values || values.isEmpty()) {
+      return;
     }
-    this.defaultEntry = entry;
-    if (null != defaultEntry) {
-      entries.add(FIRST, defaultEntry);
-    }
+    entries.addAll(values);
     notifyDataSetChanged();
   }
 
-  public void addEntries(T[] values) {
-    if (null == values || 0 == values.length) {
-      return;
-    }
-    Collections.addAll(entries, values);
+  public void setDefaultEntry(CharSequence entry) {
+    this.defaultEntry = entry;
+    this.hasDefault = !TextUtils.isEmpty(defaultEntry);
     notifyDataSetChanged();
   }
 
   @Override
   public int getCount() {
-    return entries.size();
+    return entries.size() + (hasDefault ? 1 : 0);
   }
 
   @Override
   public Object getItem(int position) {
-    return entries.get(position);
+    return entries.get(getPosition(position));
+  }
+
+  public T getEntry(int position) {
+    return entries.get(getPosition(position));
   }
 
   @Override
   public long getItemId(int position) {
-    return position;
+    return getPosition(position);
   }
 
   @Override
@@ -61,13 +59,34 @@ public class EntryAdaptor<T> extends BaseAdapter {
     if (null == convertView) {
       convertView = listener.createView();
     }
-    listener.updateView(convertView, entries.get(position));
+    if (hasDefault && FIRST == position) {
+      listener.updateDefaultView(convertView, defaultEntry);
+    } else {
+      listener.updateView(convertView, entries.get(getPosition(position)));
+    }
     return convertView;
+  }
+
+  @Override
+  public boolean isEmpty() {
+    if (hasDefault) {
+      return entries.isEmpty();
+    }
+    return super.isEmpty();
+  }
+
+  private int getPosition(int position) {
+    if (hasDefault) {
+      return position - 1;
+    }
+    return position;
   }
 
   public interface EntryAdaptorCallback<E> {
     View createView();
 
     void updateView(View convertView, E entry);
+
+    void updateDefaultView(View convertView, CharSequence defaultString);
   }
 }

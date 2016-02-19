@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_id": "selfuploadapp",
+    "project_number": "893259203808",
+    "name": "SelfUploadApp"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:893259203808:android:e0f844fec953bb63",
+        "client_id": "android:com.mayank.selfuploadform",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "com.mayank.selfuploadform"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "893259203808-vsmh06t3vrp4d07kkijnn4otast75230.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mayank.selfuploadform",
+            "certificate_hash": "ECAAF4E75AC21F58E7A465CB1E4A26BB925A9E43"
+          }
+        },
+        {
+          "client_id": "893259203808-eogkc5huf6o9fqphemf53h3q2vudvrss.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 1,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 2
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}

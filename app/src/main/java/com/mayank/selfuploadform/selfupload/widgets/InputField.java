@@ -2,18 +2,20 @@ package com.mayank.selfuploadform.selfupload.widgets;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.mayank.selfuploadform.base.Logger;
 import com.mayank.selfuploadform.R;
+import com.mayank.selfuploadform.base.Logger;
 
 
-public class InputField extends BaseField implements View.OnClickListener {
+public class InputField extends BaseField implements View.OnClickListener, TextWatcher {
 
   private static final int NO_INPUT_TYPE = -1;
   private static final int DEFAULT_LINES = 1;
@@ -24,6 +26,12 @@ public class InputField extends BaseField implements View.OnClickListener {
   private int descriptorIcon;
   private int inputType;
   private int inputLines;
+  private InputFieldInteractionListener listener;
+  private boolean hasPrefix;
+  private boolean hasPostfix;
+  private String postfixString;
+  private String prefixString;
+  private String hintText;
 
   public InputField(Context context) {
     super(context);
@@ -46,74 +54,122 @@ public class InputField extends BaseField implements View.OnClickListener {
     descriptorIcon = a.getResourceId(R.styleable.InputField_descriptorIcon, 0);
     inputType = a.getInt(R.styleable.InputField_inputType, NO_INPUT_TYPE);
     inputLines = a.getInt(R.styleable.InputField_inputLines, DEFAULT_LINES);
-    CharSequence prefixString = a.getString(R.styleable.InputField_prefixString);
-    String postfixString = a.getString(R.styleable.InputField_postfixString);
+    prefixString = a.getString(R.styleable.InputField_prefixString);
+    postfixString = a.getString(R.styleable.InputField_postfixString);
+    hintText = a.getString(R.styleable.InputField_hintText);
     a.recycle();
-    editor = createEditor();
-    if (!TextUtils.isEmpty(prefixString)) {
-      prefixView = createDescriptor(prefixString, R.drawable.editor_prefix_background);
-    }
-    if (!TextUtils.isEmpty(postfixString)) {
-      postfixView = createDescriptor(postfixString, R.drawable.editor_postfix_background);
-    }
+    hasPrefix = !TextUtils.isEmpty(prefixString);
+    hasPostfix = !TextUtils.isEmpty(postfixString);
   }
 
-  private TextView createDescriptor(CharSequence text, int background) {
+  protected boolean isPrefixLeftRound() {
+    return hasPrefix;
+  }
+
+  protected boolean isPostFixRightRound() {
+    return hasPostfix;
+  }
+
+  private TextView createDescriptor(CharSequence text) {
     TextView e;
     e = new TextView(getContext());
     e.setText(text);
-    e.setTextColor(getsecondaryTextColor());
+    e.setTextColor(getSecondaryTextColor());
     setTextSize(e, getSecondaryTextSize());
-    e.setBackgroundResource(background);
+    setViewPadding(e);
     addView(e);
     return e;
   }
 
-  private TextView createEditor() {
-    TextView e;
-    if (isEditable) {
-      e = new EditText(getContext());
-    } else {
-      e = new TextView(getContext());
+  private TextView getEditor() {
+    if (null == editor) {
+      if (isEditable) {
+        editor = new EditText(getContext());
+      } else {
+        editor = new TextView(getContext());
+      }
+      editor.setLines(inputLines);
+      if (NO_INPUT_TYPE != inputType) {
+        editor.setInputType(inputType);
+      }
+      editor.setTextColor(getSecondaryTextColor());
+      editor.setGravity(Gravity.TOP);
+      editor.setCompoundDrawablesWithIntrinsicBounds(0, 0, descriptorIcon, 0);
+      if (isEditable) {
+        editor.addTextChangedListener(this);
+      } else {
+        editor.setOnClickListener(this);
+      }
+      editor.setHint(hintText);
+      addView(editor);
     }
-    e.setLines(inputLines);
-    if (NO_INPUT_TYPE != inputType) {
-      e.setInputType(inputType);
-    }
-    e.setTextColor(getsecondaryTextColor());
-    setTextSize(e, getSecondaryTextSize());
-    e.setBackgroundResource(R.drawable.editor_background);
-    e.setGravity(Gravity.TOP);
-    e.setCompoundDrawablesWithIntrinsicBounds(0, 0, descriptorIcon, 0);
-    if (!isEditable) {
-      e.setOnClickListener(this);
-    }
-    addView(e);
-    return e;
+    setTextSize(editor, getSecondaryTextSize());
+    setViewBackground(editor, isEditorLeftRound(), isEditorRightRound());
+    setViewPadding(editor);
+    return editor;
+  }
+
+  protected boolean isEditorLeftRound() {
+    return !hasPrefix;
+  }
+
+  protected boolean isEditorRightRound() {
+    return !hasPostfix;
+  }
+
+  public void setInputFieldInteractionListener(InputFieldInteractionListener listener) {
+    this.listener = listener;
   }
 
   @Override
   protected int measureChildren(int width) {
+    editor = getEditor();
+    prefixView = getPrefixView();
+    postfixView = getPostfixView();
+    int strokeWidthDiff = getStrokeWidth() >> 1;
     if (isVisible(prefixView)) {
       measureView(prefixView, 0);
       width -= prefixView.getMeasuredWidth();
+      width += strokeWidthDiff;
     }
     if (isVisible(postfixView)) {
       measureView(postfixView, 0);
       width -= postfixView.getMeasuredWidth();
+      width += strokeWidthDiff;
     }
     return measureView(editor, width);
   }
 
+  private TextView getPrefixView() {
+    if (hasPrefix) {
+      if (null == prefixView) {
+        prefixView = createDescriptor(prefixString);
+      }
+      setViewBackground(prefixView, isPrefixLeftRound(), false);
+    }
+    return prefixView;
+  }
+
+  private TextView getPostfixView() {
+    if (hasPostfix) {
+      if (null == postfixView) {
+        postfixView = createDescriptor(postfixString);
+      }
+      setViewBackground(postfixView, false, isPostFixRightRound());
+    }
+    return postfixView;
+  }
+
   @Override
   protected void layoutChildren(int l, int t, int r, int b) {
+    int strokeWidthDiff = getStrokeWidth() >> 1;
     if (isVisible(prefixView)) {
-      prefixView.layout(l, t, l + prefixView.getMeasuredWidth(), b);
-      l += prefixView.getMeasuredWidth();
+      prefixView.layout(l, t, l + prefixView.getMeasuredWidth() + strokeWidthDiff, b);
+      l += prefixView.getMeasuredWidth() - strokeWidthDiff;
     }
     if (isVisible(postfixView)) {
-      postfixView.layout(r - postfixView.getMeasuredWidth(), t, r, b);
-      r -= postfixView.getMeasuredWidth();
+      postfixView.layout(r - postfixView.getMeasuredWidth() - strokeWidthDiff, t, r, b);
+      r -= postfixView.getMeasuredWidth() - strokeWidthDiff;
     }
     editor.layout(l, t, r, b);
   }
@@ -121,5 +177,40 @@ public class InputField extends BaseField implements View.OnClickListener {
   @Override
   public void onClick(View v) {
     Logger.logD(this, "Search Clicked");
+    sendClickResult();
+  }
+
+  private void sendClickResult() {
+    if (null != listener && !isEditable) {
+      listener.onInputFieldClicked(this);
+    }
+  }
+
+  @Override
+  public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    setTextSize(editor, TextUtils.isEmpty(s) ? getSecondaryTextSize() : getPrimaryTextSize());
+  }
+
+  @Override
+  public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+  }
+
+  @Override
+  public void afterTextChanged(Editable s) {
+    sendChangeResult(s);
+
+  }
+
+  private void sendChangeResult(CharSequence text) {
+    if (null != listener && isEditable) {
+      listener.onInputFieldChanged(this, text);
+    }
+  }
+
+  public interface InputFieldInteractionListener {
+    void onInputFieldClicked(InputField field);
+
+    void onInputFieldChanged(InputField field, CharSequence text);
   }
 }

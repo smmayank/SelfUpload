@@ -4,7 +4,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -22,13 +21,11 @@ public class SelfUploadActivity extends AppCompatActivity
         implements BaseSelfUploadFragmentCallback {
 
   private static final int FRAGMENT_CONTAINER = R.id.fragment_container;
-  private int defaultColor;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_dashboard);
-    defaultColor = ContextCompat.getColor(this, R.color.purple_primary_dark);
     initDashboardFragment();
   }
 
@@ -37,10 +34,12 @@ public class SelfUploadActivity extends AppCompatActivity
     replaceFragment(frag);
   }
 
-  private void replaceFragment(Fragment frag) {
-    setStatusBarColor(defaultColor);
+  public void replaceFragment(Fragment frag) {
     FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
     ft.replace(FRAGMENT_CONTAINER, frag);
+    if (!(frag instanceof SelfUploadDashboardFragment)) {
+      ft.addToBackStack(null);
+    }
     ft.commit();
   }
 

@@ -27,4 +27,6 @@ public interface SelfUploadDashboardView {
   void setPhotosStatus(int status);
 
   void openDetailsView();
+
+  void openCommercialsView();
 }

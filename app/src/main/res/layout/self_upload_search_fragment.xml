@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        app:popupTheme="@style/AppTheme.PopupOverlay">
+
+        <EditText
+            android:id="@+id/self_building_upload_search_editor"
+            style="@style/SelfUploadSearchEditorStyle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:hint="@string/search_building_editor_hint" />
+    </android.support.v7.widget.Toolbar>
+
+    <EditText
+        android:id="@+id/self_upload_locality_search_editor"
+        style="@style/SelfUploadSearchEditorStyle"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@null"
+        android:hint="@string/search_locality_editor_hint"
+        android:paddingEnd="@dimen/dimen_20dp"
+        android:paddingLeft="@dimen/dimen_20dp"
+        android:paddingRight="@dimen/dimen_20dp"
+        android:paddingStart="@dimen/dimen_20dp" />
+
+    <TextView
+        android:id="@+id/self_upload_search_result_empty"
+        style="@style/SelfUploadCurrentLocationStyle"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:gravity="center_vertical"
+        android:paddingEnd="@dimen/dimen_20dp"
+        android:paddingLeft="@dimen/dimen_20dp"
+        android:paddingRight="@dimen/dimen_20dp"
+        android:paddingStart="@dimen/dimen_20dp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/self_upload_search_results"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

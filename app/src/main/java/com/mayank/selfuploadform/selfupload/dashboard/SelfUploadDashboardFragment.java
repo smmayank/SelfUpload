@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import com.mayank.selfuploadform.R;
 import com.mayank.selfuploadform.selfupload.base.BaseSelfUploadFragment;
+import com.mayank.selfuploadform.selfupload.commercials.SelfUploadCommercialsFragment;
+import com.mayank.selfuploadform.selfupload.details.SelfUploadDetailsFragment;
 
 public class SelfUploadDashboardFragment extends BaseSelfUploadFragment
         implements SelfUploadDashboardView, View.OnClickListener {
@@ -73,7 +75,7 @@ public class SelfUploadDashboardFragment extends BaseSelfUploadFragment
 
   @Override
   public void showProgressBar(boolean visible) {
-    setVisibility(progressBar, visible);
+    setViewVisibility(progressBar, visible);
   }
 
   @Override
@@ -103,7 +105,7 @@ public class SelfUploadDashboardFragment extends BaseSelfUploadFragment
 
   @Override
   public void showPhotos(CharSequence... images) {
-    setVisibility(photosSubtitleView, null == images || 0 == images.length);
+    setViewVisibility(photosSubtitleView, null == images || 0 == images.length);
   }
 
   @Override
@@ -113,7 +115,12 @@ public class SelfUploadDashboardFragment extends BaseSelfUploadFragment
 
   @Override
   public void openDetailsView() {
+    openFragment(new SelfUploadDetailsFragment());
+  }
 
+  @Override
+  public void openCommercialsView() {
+    openFragment(new SelfUploadCommercialsFragment());
   }
 
   private void initValues() {
@@ -159,6 +166,11 @@ public class SelfUploadDashboardFragment extends BaseSelfUploadFragment
     presenter = new SelfUploadDashboardPresenter(getActivity(), this);
   }
 
+  @Override
+  protected int getStatusBarColor() {
+    return ContextCompat.getColor(getContext(), R.color.purple_primary_dark);
+  }
+
   private void initToolbar() {
     toolbar.setTitleTextAppearance(getContext(), R.style.SelfUploadToolbarTitleTextAppearance);
     toolbar.setSubtitleTextAppearance(getContext(),
@@ -170,10 +182,6 @@ public class SelfUploadDashboardFragment extends BaseSelfUploadFragment
     toolbar.setLayoutParams(layoutParams);
     toolbar.setSubtitle(getString(R.string.self_upload_dashboard_subtitle));
     updateToolbar();
-  }
-
-  private void setVisibility(View view, boolean visible) {
-    view.setVisibility(visible ? View.VISIBLE : View.GONE);
   }
 
   private void setStatus(ImageView imgView, int status) {
