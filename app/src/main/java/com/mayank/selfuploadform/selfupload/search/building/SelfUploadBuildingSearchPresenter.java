@@ -1,18 +1,17 @@
-package com.mayank.selfuploadform.selfupload.search;
+package com.mayank.selfuploadform.selfupload.search.building;
 
 import com.mayank.selfuploadform.base.Logger;
 
-public class SelfUploadSearchPresenter {
+public class SelfUploadBuildingSearchPresenter {
 
-  private final SelfUploadSearchView view;
+  private final SelfUploadBuildingSearchView view;
 
-  public SelfUploadSearchPresenter(SelfUploadSearchView view) {
+  public SelfUploadBuildingSearchPresenter(SelfUploadBuildingSearchView view) {
     this.view = view;
     initDefaults();
   }
 
   private void initDefaults() {
-    view.showLocalitySearch(false);
     view.setEmptySearchText(null);
   }
 
@@ -21,13 +20,8 @@ public class SelfUploadSearchPresenter {
   }
 
   public void searchBuilding(CharSequence text) {
-    Logger.logD(this, "searchBuilding %s", text);
-    view.setEmptySearchText(text);
-    view.showLocalitySearch(false);
-  }
-
-  public void searchLocality(CharSequence text) {
     Logger.logD(this, "searchLocality %s", text);
+    view.setEmptySearchText(text);
   }
 
   public void onDestroy() {
@@ -35,7 +29,6 @@ public class SelfUploadSearchPresenter {
 
   public void onEmptyViewClicked(CharSequence text) {
     Logger.logD(this, "onEmptyViewClicked %s", text);
-    view.setEmptySearchText(null);
-    view.showLocalitySearch(true);
+    view.openLocalitySearchView(text);
   }
 }

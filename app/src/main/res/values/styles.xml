@@ -451,9 +451,9 @@
         <item name="android:layout_width">@dimen/dimen_24dp</item>
     </style>
 
-    <style name="SelfUploadCurrentLocationStyle" parent="roboto_regular_font">
-        <item name="android:textSize">@dimen/fontsize_14</item>
-        <item name="android:textColor">@color/black_54pc</item>
+    <style name="SelfUploadSearchEmptyResultStyle" parent="roboto_regular_font">
+        <item name="android:textSize">@dimen/fontsize_16</item>
+        <item name="android:textColor">@color/primary</item>
     </style>
 
     <style name="SelfUploadSearchEditorStyle" parent="roboto_regular_font">

@@ -510,7 +510,7 @@
     <string name="save_and_proceed">SAVE &amp; PROCEED</string>
     <string name="amenities">Amenities *</string>
     <string name="property_details">Property Details</string>
-    <string name="self_upload_search_result_not_found">Create building using %1$s</string>
+    <string name="self_upload_search_result_not_found">+\t\t\t\tAdd new building \'%1$s\'</string>
     <string name="search_building_editor_hint">Enter Building Name</string>
     <string name="search_locality_editor_hint">Enter Locality Name</string>
     <string name="years">Years</string>
