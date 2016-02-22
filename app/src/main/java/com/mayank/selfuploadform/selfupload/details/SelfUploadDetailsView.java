@@ -6,19 +6,17 @@ import java.util.List;
 
 public interface SelfUploadDetailsView {
 
+    void enableActionButton(boolean enable);
 
+    void setPropertyTypes(List<BaseSelfUploadEntry> propertyTypes);
 
-  void enableActionButton(boolean enable);
+    void setFlatConfiguration(List<BaseSelfUploadEntry> flatConfigurationType);
 
-  void setPropertyTypes(List<BaseSelfUploadEntry> propertyTypes);
+    void setEntranceFacingTypes(List<BaseSelfUploadEntry> entranceEntries);
 
-  void setFlatConfiguration(List<BaseSelfUploadEntry> flatConfigurationType);
+    void setAmenitiesEntries(List<BaseSelfUploadEntry> amenitiesEntries);
 
-  void setEntranceFacingTypes(List<BaseSelfUploadEntry> entranceEntries);
+    void showBuildingsDetails(boolean visibility);
 
-  void setAmenitiesEntries(List<BaseSelfUploadEntry> amenitiesEntries);
-
-  void showBuildingsDetails(boolean visibility);
-
-  void openLocalitySearch();
+    void openLocalitySearch();
 }

@@ -54,16 +54,16 @@ public abstract class BaseSelfUploadFragment extends TrackedFragment {
     return getClass().getSimpleName();
   }
 
+  protected final void setViewVisibility(View buildingName, boolean visibility) {
+    buildingName.setVisibility(visibility ? View.VISIBLE : View.GONE);
+  }
+
   public interface BaseSelfUploadFragmentCallback {
     void setToolbar(Toolbar toolbar);
 
     void setStatusBarColor(int color);
 
     void replaceFragment(Fragment frag);
-  }
-
-  protected final void setViewVisibility(View buildingName, boolean visibility) {
-    buildingName.setVisibility(visibility ? View.VISIBLE : View.GONE);
   }
 
 }
