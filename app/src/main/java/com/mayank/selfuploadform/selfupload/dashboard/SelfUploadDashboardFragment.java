@@ -163,7 +163,7 @@ public class SelfUploadDashboardFragment extends BaseSelfUploadFragment
     }
 
     private void initPresenter() {
-        presenter = new SelfUploadDashboardPresenter(getActivity(), this);
+        presenter = new SelfUploadDashboardPresenter(this);
     }
 
     @Override

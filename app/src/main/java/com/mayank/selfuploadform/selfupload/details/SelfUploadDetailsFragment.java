@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.mayank.selfuploadform.R;
 import com.mayank.selfuploadform.selfupload.base.BaseSelfUploadEntry;
 import com.mayank.selfuploadform.selfupload.base.BaseSelfUploadFragment;
-import com.mayank.selfuploadform.selfupload.search.SelfUploadSearchFragment;
+import com.mayank.selfuploadform.selfupload.search.building.SelfUploadBuildingSearchFragment;
 import com.mayank.selfuploadform.selfupload.repository.SelfUploadFormRepository;
 import com.mayank.selfuploadform.selfupload.widgets.InputField;
 import com.mayank.selfuploadform.selfupload.widgets.NumberField;
@@ -172,7 +172,7 @@ public class SelfUploadDetailsFragment extends BaseSelfUploadFragment
 
   @Override
   public void openLocalitySearch() {
-    openFragment(new SelfUploadSearchFragment());
+    openFragment(new SelfUploadBuildingSearchFragment());
   }
 
   @Override

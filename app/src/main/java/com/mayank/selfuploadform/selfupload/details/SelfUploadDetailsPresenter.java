@@ -16,7 +16,6 @@ public class SelfUploadDetailsPresenter {
     initDefaults();
   }
 
-
   private void initDefaults() {
     view.enableActionButton(false);
     view.setPropertyTypes(repository.getPropertyType());
