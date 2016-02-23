@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:selfupload="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/text_item"
+        android:title="@null"
+        android:visible="false"
+        selfupload:showAsAction="ifRoom" />
+
+</menu>

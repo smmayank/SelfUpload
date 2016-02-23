@@ -18,6 +18,10 @@ public class PhotoModel {
         this.map = map;
     }
 
+    public PhotoModel() {
+        this.map = new HashMap<>();
+    }
+
     public static class PhotoObject {
 
         private Integer id;

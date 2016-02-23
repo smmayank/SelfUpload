@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:selfupload="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/edit"
+        android:icon="@drawable/edit_white"
+        android:title="@string/edit"
+        selfupload:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/tag"
+        android:icon="@drawable/tag_white"
+        android:title="@string/tag"
+        selfupload:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/delete"
+        android:icon="@drawable/delete"
+        android:title="@string/delete"
+        selfupload:showAsAction="ifRoom" />
+
+</menu>

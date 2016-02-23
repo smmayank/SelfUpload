@@ -11,59 +11,65 @@ import com.mayank.selfuploadform.base.TrackedFragment;
 
 public abstract class BaseSelfUploadFragment extends TrackedFragment {
 
-  private BaseSelfUploadFragmentCallback listener;
-  private int defaultColor;
+    private BaseSelfUploadFragmentCallback listener;
+    private int defaultColor;
 
-  public boolean onBackPressedHandled() {
-    return false;
-  }
-
-  @Override
-  public void onAttach(Context context) {
-    super.onAttach(context);
-    if (context instanceof BaseSelfUploadFragmentCallback) {
-      listener = (BaseSelfUploadFragmentCallback) context;
-    } else {
-      throw new RuntimeException("Activity must implement BaseSelfUploadFragmentCallback");
+    public boolean onBackPressedHandled() {
+        return false;
     }
 
-    defaultColor = ContextCompat.getColor(getContext(), R.color.primary_dark);
-  }
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof BaseSelfUploadFragmentCallback) {
+            listener = (BaseSelfUploadFragmentCallback) context;
+        } else {
+            throw new RuntimeException("Activity must implement BaseSelfUploadFragmentCallback");
+        }
 
-  @Override
-  public void onResume() {
-    super.onResume();
-    int statusBarColor = getStatusBarColor();
-    listener.setStatusBarColor(statusBarColor);
-  }
+        defaultColor = ContextCompat.getColor(getContext(), R.color.primary_dark);
+    }
 
-  protected int getStatusBarColor() {
-    return defaultColor;
-  }
+    @Override
+    public void onResume() {
+        super.onResume();
+        int statusBarColor = getStatusBarColor();
+        listener.setStatusBarColor(statusBarColor);
+    }
 
-  protected final void setToolbar(Toolbar toolbar) {
-    listener.setToolbar(toolbar);
-  }
+    protected int getStatusBarColor() {
+        return defaultColor;
+    }
 
-  protected void openFragment(Fragment frag) {
-    listener.replaceFragment(frag);
-  }
+    protected final void setToolbar(Toolbar toolbar) {
+        listener.setToolbar(toolbar);
+    }
 
-  @Override
-  public String getTrackingScreenName() {
-    return getClass().getSimpleName();
-  }
+    protected void openFragment(Fragment frag) {
+        listener.replaceFragment(frag);
+    }
 
-  protected final void setViewVisibility(View buildingName, boolean visibility) {
-    buildingName.setVisibility(visibility ? View.VISIBLE : View.GONE);
-  }
+    protected void refreshMenu() {
+        listener.refreshOptionsMenu();
+    }
 
-  public interface BaseSelfUploadFragmentCallback {
-    void setToolbar(Toolbar toolbar);
+    @Override
+    public String getTrackingScreenName() {
+        return getClass().getSimpleName();
+    }
 
-    void setStatusBarColor(int color);
+    protected final void setViewVisibility(View viewName, boolean visibility) {
+        viewName.setVisibility(visibility ? View.VISIBLE : View.GONE);
+    }
 
-    void replaceFragment(Fragment frag);
-  }
+    public interface BaseSelfUploadFragmentCallback {
+        void setToolbar(Toolbar toolbar);
+
+        void setStatusBarColor(int color);
+
+        void replaceFragment(Fragment frag);
+
+        void refreshOptionsMenu();
+    }
 
 }
