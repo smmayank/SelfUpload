@@ -26,7 +26,6 @@ public abstract class BaseSelfUploadFragment extends TrackedFragment {
         } else {
             throw new RuntimeException("Activity must implement BaseSelfUploadFragmentCallback");
         }
-
         defaultColor = ContextCompat.getColor(getContext(), R.color.primary_dark);
     }
 
@@ -35,6 +34,10 @@ public abstract class BaseSelfUploadFragment extends TrackedFragment {
         super.onResume();
         int statusBarColor = getStatusBarColor();
         listener.setStatusBarColor(statusBarColor);
+    }
+
+    public void updateFragment(int requestCode, Object... data) {
+
     }
 
     protected int getStatusBarColor() {
@@ -49,8 +52,11 @@ public abstract class BaseSelfUploadFragment extends TrackedFragment {
         listener.replaceFragment(frag);
     }
 
-    protected void refreshMenu() {
-        listener.refreshOptionsMenu();
+    protected void requestForPermission(String[] permissions, int requestID) {
+        listener.requestForPermission(permissions, requestID);
+    }
+
+    public void onPermissionResult(int requestID, boolean granted) {
     }
 
     @Override
@@ -69,7 +75,7 @@ public abstract class BaseSelfUploadFragment extends TrackedFragment {
 
         void replaceFragment(Fragment frag);
 
-        void refreshOptionsMenu();
+        void requestForPermission(String[] permissions, int requestID);
     }
 
 }

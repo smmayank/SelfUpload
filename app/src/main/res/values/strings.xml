@@ -519,7 +519,9 @@
     <string name="add_photos">ADD PHOTOS</string>
     <string name="add_photos_fragment_title">Add photos</string>
     <string name="selected_text_format">%s SELECTED</string>
-
+    <string name="storage_permission_denied">External storage permission has been denied. You cannot move further now.</string>
+    <string name="storage_permission_granted">External storage access granted.</string>
+    <string name="add_new">ADD NEW</string>
 
     <string-array name="property_types">
         <item>Apartment,1</item>

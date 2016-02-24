@@ -1,21 +1,22 @@
-package com.mayank.selfuploadform.selfupload.photopicker;
+package com.mayank.selfuploadform.selfupload.images.photopicker;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.TextView;
 
 import com.mayank.selfuploadform.R;
 import com.mayank.selfuploadform.models.PhotoModel;
 import com.mayank.selfuploadform.selfupload.base.BaseSelfUploadFragment;
+import com.mayank.selfuploadform.selfupload.images.tagging.TaggingFragment;
 import com.mayank.selfuploadform.selfupload.repository.PhotoPickerRepository;
 import com.mayank.selfuploadform.selfupload.widgets.ImageField;
 
@@ -27,18 +28,13 @@ import java.util.ArrayList;
 public class PhotoPickerFragment extends BaseSelfUploadFragment implements PhotoPickerView,
         ImageField.ImageFieldInteractionListener, View.OnClickListener {
 
+    public static final int IMAGE_CAPTURE_REQUEST_CODE = 102;
     private Toolbar toolbar;
     private GridView gridView;
     private Button addPhotosButton;
-    private MenuItem textMenuItem;
     private PhotoPickerPresenter photoPickerPresenter;
-    private PhotoPickerRepository photoPickerRepository;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
-    }
+    private PhotoPickerGridAdapter adapter;
+    private TextView selectedText;
 
     @Nullable
     @Override
@@ -52,12 +48,17 @@ public class PhotoPickerFragment extends BaseSelfUploadFragment implements Photo
         return view;
     }
 
+    @Override
+    protected int getStatusBarColor() {
+        return ContextCompat.getColor(getContext(), R.color.black_20_percent_opacity);
+    }
+
     private void setListeners() {
         addPhotosButton.setOnClickListener(this);
     }
 
     private void initPresenter() {
-        photoPickerRepository = new PhotoPickerRepository(getContext());
+        PhotoPickerRepository photoPickerRepository = new PhotoPickerRepository(getContext());
         photoPickerPresenter = new PhotoPickerPresenter(this, photoPickerRepository);
     }
 
@@ -66,50 +67,60 @@ public class PhotoPickerFragment extends BaseSelfUploadFragment implements Photo
         toolbar.setTitleTextColor(ContextCompat.getColor(getContext(), R.color.purple));
         toolbar.setBackgroundColor(ContextCompat.getColor(getContext(), android.R.color.white));
         toolbar.setNavigationIcon(ContextCompat.getDrawable(getContext(), R.drawable.close_purple));
+        ViewCompat.setElevation(toolbar, getResources().getDimensionPixelSize(R.dimen.dimen_10dp));
+        ViewCompat.setElevation(selectedText, getResources().getDimensionPixelSize(R.dimen.dimen_12dp));
         setToolbar(toolbar);
+    }
+
+    @Override
+    public void updateFragment(int requestCode, Object... data) {
+        super.updateFragment(requestCode, data);
+        switch (requestCode) {
+            case IMAGE_CAPTURE_REQUEST_CODE: {
+                photoPickerPresenter.initDefaults(new PhotoPickerRepository(getContext()));
+                break;
+            }
+        }
     }
 
     private void getViews(View view) {
         toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         gridView = (GridView) view.findViewById(R.id.picker_grid_view);
         addPhotosButton = (Button) view.findViewById(R.id.add_photos);
+        selectedText = (TextView) view.findViewById(R.id.selected_text);
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        if (null != menu) {
-            menu.clear();
-        }
-        inflater = getActivity().getMenuInflater();
-        inflater.inflate(R.menu.self_upload_photo_picker_menu, menu);
-        if (null != menu) {
-            textMenuItem = menu.findItem(R.id.text_item);
-        }
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public void showImages(ArrayList<String> images) {
-        PhotoPickerGridAdapter adapter = new PhotoPickerGridAdapter(getContext(), images, this);
+    public void showImages(ArrayList<PhotoModel.PhotoObject> images) {
+        adapter = new PhotoPickerGridAdapter(getContext(), images, this, this);
         gridView.setAdapter(adapter);
     }
 
     @Override
     public void addSelection(PhotoModel.PhotoObject photoObject) {
         photoPickerPresenter.addSelection(photoObject);
+        adapter.addSelection(photoObject);
     }
 
     @Override
     public void clearSelection(PhotoModel.PhotoObject photoObject) {
         photoPickerPresenter.clearSelection(photoObject);
+        adapter.clearSelection(photoObject);
     }
 
     @Override
-    public void setMenuText(Integer integer) {
-        if (null != textMenuItem && 0 != integer) {
-            textMenuItem.setTitle(getString(R.string.selected_text_format, integer));
-            refreshMenu();
+    public void launchTagging(ArrayList<PhotoModel.PhotoObject> photoObjects) {
+        openFragment(TaggingFragment.newInstance(photoObjects));
+    }
+
+    @Override
+    public void setSelectedText(Integer integer) {
+        if (0 != integer) {
+            selectedText.setText(getString(R.string.selected_text_format, integer));
             setViewVisibility(addPhotosButton, true);
+        } else {
+            selectedText.setText(null);
+            setViewVisibility(addPhotosButton, false);
         }
     }
 
@@ -120,6 +131,15 @@ public class PhotoPickerFragment extends BaseSelfUploadFragment implements Photo
                 photoPickerPresenter.addPhotosClickEvent();
                 break;
             }
+            case R.id.container: {
+                launchCamera();
+                break;
+            }
         }
+    }
+
+    private void launchCamera() {
+        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        getActivity().startActivityForResult(intent, IMAGE_CAPTURE_REQUEST_CODE);
     }
 }

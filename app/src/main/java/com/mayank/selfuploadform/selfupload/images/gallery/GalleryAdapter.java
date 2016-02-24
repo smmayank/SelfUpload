@@ -1,4 +1,4 @@
-package com.mayank.selfuploadform.selfupload.gallery;
+package com.mayank.selfuploadform.selfupload.images.gallery;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

@@ -1,6 +1,8 @@
 package com.mayank.selfuploadform.selfupload.dashboard;
 
 import com.mayank.selfuploadform.base.Logger;
+import com.mayank.selfuploadform.models.PhotoModel;
+import com.mayank.selfuploadform.selfupload.repository.GalleryRepository;
 
 public class SelfUploadDashboardPresenter {
 
@@ -16,6 +18,7 @@ public class SelfUploadDashboardPresenter {
     private final int propertyId;
 
     private final int[] statuses;
+    private GalleryRepository galleryRepository;
 
     public SelfUploadDashboardPresenter(SelfUploadDashboardView view) {
         this(view, NEW_PROPERTY);
@@ -77,7 +80,12 @@ public class SelfUploadDashboardPresenter {
         view.openCommercialsView();
     }
 
-    public void photosCardClicked() {
+    public void photosCardClicked(PhotoModel photoModel) {
         Logger.logD(this, "photosCardClicked");
+        if (null == photoModel) {
+            view.openPickerView();
+        } else {
+            view.openGalleryView(photoModel);
+        }
     }
 }

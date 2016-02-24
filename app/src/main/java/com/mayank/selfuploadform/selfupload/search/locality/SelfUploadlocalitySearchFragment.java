@@ -20,84 +20,85 @@ import com.mayank.selfuploadform.selfupload.base.BaseSelfUploadFragment;
 public class SelfUploadLocalitySearchFragment extends BaseSelfUploadFragment
         implements SelfUploadLocalitySearchView, AdapterView.OnItemClickListener, TextWatcher {
 
-  private SelfUploadLocalitySearchPresenter presenter;
-  private Toolbar toolbar;
-  private EditText localitySearchEditor;
+    private SelfUploadLocalitySearchPresenter presenter;
+    private Toolbar toolbar;
+    private EditText localitySearchEditor;
 
-  public static Fragment newInstance(CharSequence buildingName) {
-    Fragment frag = new SelfUploadLocalitySearchFragment();
-    frag.setArguments(SelfUploadLocalitySearchPresenter.generateArgs(buildingName));
-    return frag;
-  }
+    public static Fragment newInstance(CharSequence buildingName) {
+        Fragment frag = new SelfUploadLocalitySearchFragment();
+        frag.setArguments(SelfUploadLocalitySearchPresenter.generateArgs(buildingName));
+        return frag;
+    }
 
-  @Nullable
-  @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
-          Bundle savedInstanceState) {
-    View inflate =
-            inflater.inflate(R.layout.self_upload_building_search_fragment, container, false);
-    initValues();
-    initViews(inflate);
-    initToolbar();
-    initPresenter();
-    return inflate;
-  }
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
+        View inflate =
+                inflater.inflate(R.layout.self_upload_building_search_fragment, container, false);
+        initValues();
+        initViews(inflate);
+        initToolbar();
+        initPresenter();
+        return inflate;
+    }
 
-  private void initValues() {
-  }
+    private void initValues() {
+    }
 
-  private void initPresenter() {
-    presenter = new SelfUploadLocalitySearchPresenter(this);
-    presenter.onCreate(getArguments());
-  }
+    private void initPresenter() {
+        presenter = new SelfUploadLocalitySearchPresenter(this);
+        presenter.onCreate(getArguments());
+    }
 
-  private void initViews(View inflate) {
-    toolbar = (Toolbar) inflate.findViewById(R.id.toolbar);
+    private void initViews(View inflate) {
+        toolbar = (Toolbar) inflate.findViewById(R.id.toolbar);
 
-    RecyclerView localitiesList =
-            (RecyclerView) inflate.findViewById(R.id.self_upload_buidling_search_results);
+        RecyclerView localitiesList =
+                (RecyclerView) inflate.findViewById(R.id.self_upload_buidling_search_results);
 
-    localitySearchEditor =
-            (EditText) inflate.findViewById(R.id.self_building_upload_building_search_editor);
-    localitySearchEditor.addTextChangedListener(this);
-  }
+        localitySearchEditor =
+                (EditText) inflate.findViewById(R.id.self_building_upload_building_search_editor);
+        localitySearchEditor.addTextChangedListener(this);
+    }
 
-  @Override
-  protected int getStatusBarColor() {
-    return ContextCompat.getColor(getContext(), R.color.black_40_percent_opacity);
-  }
+    @Override
+    protected int getStatusBarColor() {
+        return ContextCompat.getColor(getContext(), R.color.black_40_percent_opacity);
+    }
 
-  private void initToolbar() {
-    setToolbar(toolbar);
-  }
+    private void initToolbar() {
+        setToolbar(toolbar);
+    }
 
-  @Override
-  public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-    presenter.onLocalitySelected(position);
-  }
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        presenter.onLocalitySelected(position);
+    }
 
-  @Override
-  public void onDestroy() {
-    super.onDestroy();
-    presenter.onDestroy();
-  }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        presenter.onDestroy();
+    }
 
-  @Override
-  public void setBuildingName(CharSequence buildingName) {
-    toolbar.setTitle(buildingName);
-    setToolbar(toolbar);
-  }
+    @Override
+    public void setBuildingName(CharSequence buildingName) {
+        toolbar.setTitle(buildingName);
+        setToolbar(toolbar);
+    }
 
-  @Override
-  public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-  }
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+    }
 
-  @Override
-  public void onTextChanged(CharSequence s, int start, int before, int count) {
-  }
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+    }
 
-  @Override
-  public void afterTextChanged(Editable s) {
-    presenter.searchLocality(s);
-  }
+    @Override
+    public void afterTextChanged(Editable s) {
+        presenter.searchLocality(s);
+    }
+
 }

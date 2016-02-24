@@ -3,9 +3,9 @@
     xmlns:selfupload="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/text_item"
-        android:title="@null"
-        android:visible="false"
+        android:id="@+id/delete"
+        android:icon="@drawable/delete"
+        android:title="@string/delete"
         selfupload:showAsAction="ifRoom" />
 
 </menu>

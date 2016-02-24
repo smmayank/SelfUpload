@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/black"
+        android:title="@string/accept"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:titleTextColor="@color/white" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tag_selector"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginBottom="@dimen/dimen_5dp"
+        android:layout_marginTop="@dimen/dimen_5dp" />
+
+    <com.mayank.selfuploadform.selfupload.widgets.TagSelectorField
+        android:id="@+id/tag_selector"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/footer_view"
+        android:layout_marginBottom="@dimen/dimen_16dp"
+        app:contentPadding="@dimen/dimen_16dp"
+        app:defaultBackground="@drawable/tag_unselected"
+        app:defaultTextColor="@android:color/white"
+        app:entries="@array/tags_list"
+        app:numOfColumns="@integer/default_tag_selector_columns"
+        app:selectedBackground="@drawable/tag_selected"
+        app:selectedTextColor="@android:color/black"
+        app:textSize="@dimen/fontsize_7" />
+
+    <RelativeLayout
+        android:id="@+id/footer_view"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/done"
+            style="@style/ButtonGreenRounded"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:text="@string/button_done"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/fontsize_16"
+            android:visibility="gone" />
+
+        <ProgressBar
+            android:id="@+id/tag_progress_bar"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_5dp"
+            android:layout_alignParentBottom="true"
+            android:indeterminate="false"
+            android:max="@integer/max_progress"
+            android:minHeight="@dimen/dimen_5dp"
+            android:progress="0"
+            android:progressDrawable="@drawable/green_progress_drawable" />
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

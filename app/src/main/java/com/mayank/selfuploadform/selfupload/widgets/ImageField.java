@@ -1,27 +1,38 @@
 package com.mayank.selfuploadform.selfupload.widgets;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
+import android.graphics.Point;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
+import android.view.Display;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.mayank.selfuploadform.R;
 import com.mayank.selfuploadform.models.PhotoModel;
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
 
 /**
  * Created by rahulchandnani on 22/02/16
  */
+@SuppressWarnings("SuspiciousNameCombination")
 public class ImageField extends RelativeLayout implements View.OnClickListener {
 
+    private static final float FRACTION = .33f;
+    private static final long ANIMATION_DURATION = 300;
     private ImageView image;
     private ImageView check;
     private int currentState;
     private PhotoModel.PhotoObject photoObject;
     private ImageFieldInteractionListener imageFieldInteractionListener;
+    private int width;
 
     public ImageField(Context context) {
         this(context, null, 0);
@@ -37,12 +48,19 @@ public class ImageField extends RelativeLayout implements View.OnClickListener {
     }
 
     private void init() {
+        WindowManager wm = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        width = (int) (FRACTION * size.x);
         image = new ImageView(getContext());
         this.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
         this.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.gallery_element_background));
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT);
+        params.width = width;
+        params.height = width;
         image.setLayoutParams(params);
         this.addView(image);
         check = new ImageView(getContext());
@@ -87,61 +105,71 @@ public class ImageField extends RelativeLayout implements View.OnClickListener {
 
     public void setPhoto(PhotoModel.PhotoObject photoObject) {
         this.photoObject = photoObject;
-        // TODO: 22/02/16 load images from photo object to image view.
+        File file = new File(photoObject.getPath());
+        Picasso.with(getContext()).load(file).resize(width, width).centerCrop().into(image);
     }
 
     public void setState(int state) {
         this.currentState = state;
         switch (currentState) {
             case State.HIGHLIGHTED: {
-                setMargin(getContext().getResources().getDimensionPixelSize(R.dimen.dimen_0dp));
+                setPadding(getContext().getResources().getDimensionPixelSize(R.dimen.dimen_0dp));
                 check.setVisibility(View.VISIBLE);
                 check.setOnClickListener(this);
+                image.setOnClickListener(this);
                 check.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.photo_unselected));
                 this.setEnabled(true);
                 break;
             }
             case State.SELECTED: {
-                setMargin(getContext().getResources().getDimensionPixelSize(R.dimen.dimen_12dp));
+                setPadding(getContext().getResources().getDimensionPixelSize(R.dimen.dimen_12dp));
                 check.setVisibility(View.VISIBLE);
                 check.setOnClickListener(this);
+                image.setOnClickListener(this);
                 check.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.photo_selected));
                 this.setEnabled(true);
                 break;
             }
             case State.USED: {
-                setMargin(getContext().getResources().getDimensionPixelSize(R.dimen.dimen_12dp));
+                setPadding(getContext().getResources().getDimensionPixelSize(R.dimen.dimen_12dp));
                 check.setVisibility(View.GONE);
                 check.setOnClickListener(null);
+                image.setOnClickListener(null);
                 check.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.photo_unselected));
                 this.setEnabled(false);
                 break;
             }
             default:
             case State.DEFAULT: {
-                setMargin(getContext().getResources().getDimensionPixelSize(R.dimen.dimen_0dp));
+                setPadding(getContext().getResources().getDimensionPixelSize(R.dimen.dimen_0dp));
                 check.setVisibility(View.GONE);
                 check.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.photo_unselected));
                 check.setOnClickListener(null);
+                image.setOnClickListener(null);
                 this.setEnabled(true);
                 break;
             }
         }
     }
 
-    private void setMargin(int margin) {
-        LayoutParams params = (RelativeLayout.LayoutParams) image.getLayoutParams();
-        params.setMargins(margin, margin, margin, margin);
-        image.setLayoutParams(params);
+    private void setPadding(final int margin) {
+        ValueAnimator animator = ValueAnimator.ofInt(image.getPaddingRight(), margin);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                Integer value = (Integer) valueAnimator.getAnimatedValue();
+                image.setPadding(value, value, value, value);
+            }
+        });
+        animator.setDuration(ANIMATION_DURATION);
+        animator.start();
     }
 
     public static class State {
-
         public static final int DEFAULT = 997;
         public static final int HIGHLIGHTED = 998;
         public static final int SELECTED = 999;
         public static final int USED = 996;
-
     }
 
     public interface ImageFieldInteractionListener {

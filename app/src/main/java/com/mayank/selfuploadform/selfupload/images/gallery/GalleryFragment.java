@@ -1,4 +1,4 @@
-package com.mayank.selfuploadform.selfupload.gallery;
+package com.mayank.selfuploadform.selfupload.images.gallery;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.gson.Gson;
 import com.mayank.selfuploadform.R;
 import com.mayank.selfuploadform.models.PhotoModel;
 import com.mayank.selfuploadform.selfupload.base.BaseSelfUploadFragment;
@@ -33,6 +34,14 @@ public class GalleryFragment extends BaseSelfUploadFragment implements GalleryVi
     private GalleryPresenter galleryPresenter;
     private GalleryRepository galleryRepository;
     private GalleryAdapter galleryAdapter;
+
+    public static GalleryFragment newInstance(PhotoModel photoModel) {
+        GalleryFragment fragment = new GalleryFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(GalleryRepository.PHOTO_MODEL, new Gson().toJson(photoModel));
+        fragment.setArguments(bundle);
+        return fragment;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -87,7 +96,6 @@ public class GalleryFragment extends BaseSelfUploadFragment implements GalleryVi
         editMenuItem.setVisible(true);
         deleteMenuItem.setVisible(false);
         tagMenuItem.setVisible(false);
-        refreshMenu();
     }
 
     @Override
@@ -95,7 +103,6 @@ public class GalleryFragment extends BaseSelfUploadFragment implements GalleryVi
         editMenuItem.setVisible(false);
         deleteMenuItem.setVisible(true);
         tagMenuItem.setVisible(true);
-        refreshMenu();
     }
 
     @Override

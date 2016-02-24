@@ -1,4 +1,4 @@
-package com.mayank.selfuploadform.selfupload.gallery;
+package com.mayank.selfuploadform.selfupload.images.gallery;
 
 import com.mayank.selfuploadform.models.PhotoModel;
 import com.mayank.selfuploadform.selfupload.repository.GalleryRepository;

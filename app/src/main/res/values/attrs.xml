@@ -190,4 +190,16 @@
     <declare-styleable name="InputSelectionCheckboxField">
         <attr name="checkboxText" format="string" localization="suggested" />
     </declare-styleable>
+
+    <declare-styleable name="TagSelectorField">
+        <attr name="entries" format="reference" />
+        <attr name="numOfColumns" format="integer" />
+        <attr name="selectedTextColor" format="color" />
+        <attr name="defaultTextColor" format="color" />
+        <attr name="selectedBackground" format="reference" />
+        <attr name="defaultBackground" format="reference" />
+        <attr name="contentPadding" format="dimension" />
+        <attr name="textSize" format="dimension" />
+
+    </declare-styleable>
 </resources>

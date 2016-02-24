@@ -12,7 +12,7 @@ import com.mayank.selfuploadform.models.PhotoModel;
  */
 public class GalleryRepository {
 
-    private static final String PHOTO_MODEL = "photo_model";
+    public static final String PHOTO_MODEL = "photo_model";
 
     private Context context;
     private Integer propertyID;
@@ -28,7 +28,7 @@ public class GalleryRepository {
         if (null != value) {
             return new Gson().fromJson(value, PhotoModel.class);
         } else {
-            return new PhotoModel();
+            return null;
         }
     }
 

@@ -1,5 +1,6 @@
 package com.mayank.selfuploadform.selfupload.dashboard;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -12,16 +13,22 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mayank.selfuploadform.R;
+import com.mayank.selfuploadform.models.PhotoModel;
 import com.mayank.selfuploadform.selfupload.base.BaseSelfUploadFragment;
 import com.mayank.selfuploadform.selfupload.commercials.SelfUploadCommercialsFragment;
 import com.mayank.selfuploadform.selfupload.details.SelfUploadDetailsFragment;
+import com.mayank.selfuploadform.selfupload.images.gallery.GalleryFragment;
+import com.mayank.selfuploadform.selfupload.images.photopicker.PhotoPickerFragment;
+import com.mayank.selfuploadform.selfupload.repository.GalleryRepository;
 
 public class SelfUploadDashboardFragment extends BaseSelfUploadFragment
         implements SelfUploadDashboardView, View.OnClickListener {
 
     private static final int MAX_PROGRESS = 100;
+    public static final int ACCESS_STORAGE_PERMISSION = 101;
     private SelfUploadDashboardPresenter presenter;
     private Toolbar toolbar;
     private float cardsElevation;
@@ -33,17 +40,18 @@ public class SelfUploadDashboardFragment extends BaseSelfUploadFragment
     private ImageView detailsStatusView;
     private ImageView commercialsStatusView;
     private ImageView photosStatusView;
+    private View view;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View inflate = inflater.inflate(R.layout.self_upload_dashboard_fragment, container, false);
+        view = inflater.inflate(R.layout.self_upload_dashboard_fragment, container, false);
         initValues();
-        initViews(inflate);
+        initViews(view);
         initToolbar();
         initPresenter();
-        return inflate;
+        return view;
     }
 
     @Override
@@ -121,6 +129,32 @@ public class SelfUploadDashboardFragment extends BaseSelfUploadFragment
     @Override
     public void openCommercialsView() {
         openFragment(new SelfUploadCommercialsFragment());
+    }
+
+    @Override
+    public void openPickerView() {
+        openFragment(new PhotoPickerFragment());
+    }
+
+    @Override
+    public void openGalleryView(PhotoModel photoModel) {
+        openFragment(GalleryFragment.newInstance(photoModel));
+    }
+
+    @Override
+    public void onPermissionResult(int requestID, boolean granted) {
+        super.onPermissionResult(requestID, granted);
+        switch (requestID) {
+            case ACCESS_STORAGE_PERMISSION: {
+                if (granted) {
+                    launchGalleryModule();
+                } else {
+                    Toast.makeText(getContext(), getString(R.string.storage_permission_denied), Toast.LENGTH_SHORT)
+                            .show();
+                }
+                break;
+            }
+        }
     }
 
     private void initValues() {
@@ -216,10 +250,15 @@ public class SelfUploadDashboardFragment extends BaseSelfUploadFragment
                 break;
             }
             case R.id.self_upload_dashboard_photos_card: {
-                presenter.photosCardClicked();
+                requestForPermission(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE}, ACCESS_STORAGE_PERMISSION);
                 break;
             }
         }
-
     }
+
+    private void launchGalleryModule() {
+        presenter.photosCardClicked(new GalleryRepository(getContext(), null).getPhotoModel());
+    }
+
 }

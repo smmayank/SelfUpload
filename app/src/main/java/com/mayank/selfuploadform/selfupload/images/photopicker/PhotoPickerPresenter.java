@@ -1,4 +1,4 @@
-package com.mayank.selfuploadform.selfupload.photopicker;
+package com.mayank.selfuploadform.selfupload.images.photopicker;
 
 import com.mayank.selfuploadform.models.PhotoModel;
 import com.mayank.selfuploadform.selfupload.repository.PhotoPickerRepository;
@@ -10,23 +10,21 @@ import java.util.ArrayList;
  */
 public class PhotoPickerPresenter implements PhotoPickerRepository.FetchImagesCallback {
 
-    private PhotoPickerRepository photoPickerRepository;
     private PhotoPickerView photoPickerView;
     private ArrayList<PhotoModel.PhotoObject> photoObjects;
 
     public PhotoPickerPresenter(PhotoPickerView photoPickerView, PhotoPickerRepository photoPickerRepository) {
         this.photoPickerView = photoPickerView;
-        this.photoPickerRepository = photoPickerRepository;
         this.photoObjects = new ArrayList<>();
-        initDefaults();
+        initDefaults(photoPickerRepository);
     }
 
-    private void initDefaults() {
+    public void initDefaults(PhotoPickerRepository photoPickerRepository) {
         photoPickerRepository.fetchImages(this);
     }
 
     @Override
-    public void onImagesFetch(ArrayList<String> images) {
+    public void onImagesFetch(ArrayList<PhotoModel.PhotoObject> images) {
         photoPickerView.showImages(images);
     }
 
@@ -41,10 +39,10 @@ public class PhotoPickerPresenter implements PhotoPickerRepository.FetchImagesCa
     }
 
     private void setSelectedMenuText() {
-        photoPickerView.setMenuText(photoObjects.size());
+        photoPickerView.setSelectedText(photoObjects.size());
     }
 
     public void addPhotosClickEvent() {
-
+        photoPickerView.launchTagging(photoObjects);
     }
 }
