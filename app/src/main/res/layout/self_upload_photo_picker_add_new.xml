@@ -30,7 +30,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/dimen_12dp"
             android:text="@string/add_new"
-            android:textSize="@dimen/fontsize_14" />
+            android:textSize="@dimen/font_size_14" />
 
     </RelativeLayout>
 

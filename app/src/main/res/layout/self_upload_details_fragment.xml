@@ -126,7 +126,7 @@
                 app:headerText="Reserved Parking"
                 app:mandatory="true"
                 app:primaryTextColor="@color/black_87pc"
-                app:primaryTextSize="@dimen/fontsize_16"
+                app:primaryTextSize="@dimen/font_size_16"
                 app:secondaryTextColor="@color/selection_color" />
 
             <com.mayank.selfuploadform.selfupload.widgets.SelectionField
@@ -138,7 +138,7 @@
                 app:headerText="Cupboards"
                 app:mandatory="true"
                 app:primaryTextColor="@color/black_87pc"
-                app:primaryTextSize="@dimen/fontsize_16"
+                app:primaryTextSize="@dimen/font_size_16"
                 app:secondaryTextColor="@color/selection_color" />
 
             <com.mayank.selfuploadform.selfupload.widgets.SelectionField
@@ -150,7 +150,7 @@
                 app:headerText="Pipeline Gas"
                 app:mandatory="true"
                 app:primaryTextColor="@color/black_87pc"
-                app:primaryTextSize="@dimen/fontsize_16"
+                app:primaryTextSize="@dimen/font_size_16"
                 app:secondaryTextColor="@color/selection_color" />
 
             <com.mayank.selfuploadform.selfupload.widgets.InputField

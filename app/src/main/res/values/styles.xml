@@ -369,9 +369,9 @@
         <item name="verticalMargin">@dimen/dimen_13dp</item>
         <item name="horizontalMargin">@dimen/dimen_13dp</item>
         <item name="primaryTextColor">@color/black_54pc</item>
-        <item name="primaryTextSize">@dimen/fontsize_14</item>
+        <item name="primaryTextSize">@dimen/font_size_14</item>
         <item name="secondaryTextColor">@color/black_87pc</item>
-        <item name="secondaryTextSize">@dimen/fontsize_14</item>
+        <item name="secondaryTextSize">@dimen/font_size_14</item>
         <item name="backgroundStrokeColor">@color/black_15_percent_opacity</item>
     </style>
 
@@ -382,11 +382,11 @@
     </style>
 
     <style name="InputFieldStyle" parent="FieldStyle">
-        <item name="secondaryTextSize">@dimen/fontsize_16</item>
+        <item name="secondaryTextSize">@dimen/font_size_16</item>
     </style>
 
     <style name="SpinnerFieldStyle" parent="FieldStyle">
-        <item name="secondaryTextSize">@dimen/fontsize_16</item>
+        <item name="secondaryTextSize">@dimen/font_size_16</item>
     </style>
 
     <style name="NumberEditorSingleLine" parent="Widget.AppCompat.EditText">
@@ -395,7 +395,7 @@
     </style>
 
     <style name="FontSize14" parent="@android:style/Widget.TextView">
-        <item name="android:textSize">@dimen/fontsize_14</item>
+        <item name="android:textSize">@dimen/font_size_14</item>
     </style>
 
     <style name="ColorBlack54Font14" parent="FontSize14">
@@ -416,14 +416,14 @@
 
     <style name="ToolbarTitleTextAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">@dimen/fontsize_28</item>
+        <item name="android:textSize">@dimen/font_size_28</item>
     </style>
 
     <style name="SelfUploadToolbarTitleTextAppearance" parent="ToolbarTitleTextAppearance" />
 
     <style name="ToolbarSubtitleTextAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
         <item name="android:textColor">@color/white_70_percent_opacity</item>
-        <item name="android:textSize">@dimen/fontsize_16</item>
+        <item name="android:textSize">@dimen/font_size_16</item>
     </style>
 
     <style name="SelfUploadToolbarSubtitleTextAppearance" parent="ToolbarSubtitleTextAppearance" />
@@ -431,7 +431,7 @@
     <style name="SelfUploadDashboardCardTitleStyle" parent="roboto_regular_font">
         <item name="android:singleLine">true</item>
         <item name="android:textColor">@color/black_87pc</item>
-        <item name="android:textSize">@dimen/fontsize_16</item>
+        <item name="android:textSize">@dimen/font_size_16</item>
     </style>
 
     <style name="SelfUploadDashboardCardSubTitleStyle" parent="roboto_regular_font">
@@ -441,7 +441,7 @@
         <item name="android:clickable">false</item>
         <item name="android:textColor">@color/black_54pc</item>
         <item name="android:textColorHint">@color/black_25_percent_opacity</item>
-        <item name="android:textSize">@dimen/fontsize_14</item>
+        <item name="android:textSize">@dimen/font_size_14</item>
     </style>
 
     <style name="SelfUploadStatusImageStyle">
@@ -452,12 +452,12 @@
     </style>
 
     <style name="SelfUploadSearchEmptyResultStyle" parent="roboto_regular_font">
-        <item name="android:textSize">@dimen/fontsize_16</item>
+        <item name="android:textSize">@dimen/font_size_16</item>
         <item name="android:textColor">@color/primary</item>
     </style>
 
     <style name="SelfUploadSearchEditorStyle" parent="roboto_regular_font">
-        <item name="android:textSize">@dimen/fontsize_16</item>
+        <item name="android:textSize">@dimen/font_size_16</item>
         <item name="android:textColor">@color/black_87pc</item>
     </style>
 

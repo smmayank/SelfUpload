@@ -27,7 +27,7 @@
         android:layout_marginRight="@dimen/dimen_24dp"
         android:gravity="center_vertical"
         android:textColor="@color/purple"
-        android:textSize="@dimen/fontsize_14"
+        android:textSize="@dimen/font_size_14"
         android:textStyle="bold"
         tools:ignore="RelativeOverlap" />
 

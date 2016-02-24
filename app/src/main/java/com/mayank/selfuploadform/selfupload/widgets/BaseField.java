@@ -66,11 +66,11 @@ public abstract class BaseField extends ViewGroup {
 
         primaryTextColor = a.getColorStateList(R.styleable.BaseField_primaryTextColor);
         primaryTextSize = a.getDimension(R.styleable.BaseField_primaryTextSize,
-                getResources().getDimension(R.dimen.fontsize_14));
+                getResources().getDimension(R.dimen.font_size_14));
 
         secondaryTextColor = a.getColorStateList(R.styleable.BaseField_secondaryTextColor);
         secondaryTextSize = a.getDimension(R.styleable.BaseField_secondaryTextSize,
-                getResources().getDimension(R.dimen.fontsize_14));
+                getResources().getDimension(R.dimen.font_size_14));
         contentWidth = a.getDimensionPixelSize(R.styleable.BaseField_contentWidth, getResources()
                 .getDimensionPixelOffset(R.dimen.input_selection_field_default_width));
         strokeWidth = a.getDimensionPixelSize(R.styleable.BaseField_backgroundStrokeWidth,

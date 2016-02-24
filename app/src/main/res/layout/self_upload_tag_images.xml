@@ -31,14 +31,14 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/footer_view"
         android:layout_marginBottom="@dimen/dimen_16dp"
-        app:contentPadding="@dimen/dimen_16dp"
+        app:contentPadding="@dimen/dimen_10dp"
         app:defaultBackground="@drawable/tag_unselected"
         app:defaultTextColor="@android:color/white"
         app:entries="@array/tags_list"
         app:numOfColumns="@integer/default_tag_selector_columns"
         app:selectedBackground="@drawable/tag_selected"
         app:selectedTextColor="@android:color/black"
-        app:textSize="@dimen/fontsize_7" />
+        app:textSize="@dimen/font_size_7" />
 
     <RelativeLayout
         android:id="@+id/footer_view"
@@ -53,7 +53,7 @@
             android:layout_height="?attr/actionBarSize"
             android:text="@string/button_done"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/fontsize_16"
+            android:textSize="@dimen/font_size_16"
             android:visibility="gone" />
 
         <ProgressBar
