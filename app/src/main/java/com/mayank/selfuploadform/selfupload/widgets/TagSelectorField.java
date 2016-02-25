@@ -30,6 +30,8 @@ public class TagSelectorField extends LinearLayout implements View.OnClickListen
     private HashMap<String, TextView> map;
     private TextView selectedTextView;
     private int fontSize;
+    private OnTagSelectListener onTagSelectListener;
+    private boolean enabled = true;
 
     public TagSelectorField(Context context) {
         this(context, null);
@@ -100,9 +102,8 @@ public class TagSelectorField extends LinearLayout implements View.OnClickListen
         params.gravity = Gravity.CENTER;
         textView.setLayoutParams(params);
         textView.setText(text);
-        setDefaultState(textView);
+        setDefaultState(textView, false);
         textView.setGravity(Gravity.CENTER);
-        textView.setForegroundGravity(Gravity.CENTER);
         textView.setTextSize(fontSize);
         textView.setOnClickListener(this);
         return textView;
@@ -120,20 +121,28 @@ public class TagSelectorField extends LinearLayout implements View.OnClickListen
         return layout;
     }
 
-    private void setDefaultState(TextView textView) {
+    private void setDefaultState(TextView textView, boolean sendCallback) {
         if (null != textView) {
             textView.setTextColor(defaultTextColor);
             textView.setBackground(defaultBackground);
             textView.setTag(State.DEFAULT);
+            if (sendCallback && null != onTagSelectListener) {
+                onTagSelectListener.onTagRemove(this, textView.getText().toString());
+            }
         }
+        invalidate();
     }
 
-    private void setSelectedState(TextView textView) {
+    private void setSelectedState(TextView textView, boolean sendCallback) {
         if (null != textView) {
             textView.setTextColor(selectedTextColor);
             textView.setBackground(selectedBackground);
             textView.setTag(State.SELECTED);
+            if (sendCallback && null != onTagSelectListener) {
+                onTagSelectListener.onTagSelect(this, textView.getText().toString());
+            }
         }
+        invalidate();
     }
 
     public static class State {
@@ -141,20 +150,52 @@ public class TagSelectorField extends LinearLayout implements View.OnClickListen
         public static final int SELECTED = 1;
     }
 
+    public void setSelectedTag(String tag) {
+        if (map.containsKey(tag)) {
+            onClick(map.get(tag));
+        }
+    }
+
+    public void enable() {
+        this.enabled = true;
+    }
+
+    public void disable() {
+        this.enabled = false;
+    }
+
+    public void setOnTagSelectListener(OnTagSelectListener onTagSelectListener) {
+        this.onTagSelectListener = onTagSelectListener;
+    }
+
+    public void reset() {
+        if (null != selectedTextView) {
+            setDefaultState(selectedTextView, false);
+            selectedTextView = null;
+        }
+    }
+
     @Override
     public void onClick(View v) {
-        if (v instanceof TextView) {
+        if (enabled && v instanceof TextView) {
             TextView textView = (TextView) v;
             int state = (int) v.getTag();
             if (State.DEFAULT == state) {
-                setDefaultState(selectedTextView);
-                setSelectedState(textView);
+                setDefaultState(selectedTextView, true);
+                setSelectedState(textView, true);
                 selectedTextView = textView;
             } else {
-                setDefaultState(selectedTextView);
+                setDefaultState(selectedTextView, true);
                 selectedTextView = null;
             }
-
         }
+    }
+
+    public interface OnTagSelectListener {
+
+        void onTagSelect(View view, String tag);
+
+        void onTagRemove(View view, String tag);
+
     }
 }

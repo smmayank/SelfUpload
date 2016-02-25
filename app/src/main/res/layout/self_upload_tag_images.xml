@@ -16,7 +16,7 @@
         app:popupTheme="@style/AppTheme.PopupOverlay"
         app:titleTextColor="@color/white" />
 
-    <android.support.v4.view.ViewPager
+    <com.mayank.selfuploadform.selfupload.widgets.NonSwipeViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
         app:numOfColumns="@integer/default_tag_selector_columns"
         app:selectedBackground="@drawable/tag_selected"
         app:selectedTextColor="@android:color/black"
-        app:textSize="@dimen/font_size_7" />
+        app:textSize="@dimen/font_size_6" />
 
     <RelativeLayout
         android:id="@+id/footer_view"

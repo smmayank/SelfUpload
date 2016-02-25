@@ -1,9 +1,9 @@
 package com.mayank.selfuploadform.selfupload.images.tagging;
 
 import android.os.Bundle;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,6 +18,9 @@ import com.google.gson.Gson;
 import com.mayank.selfuploadform.R;
 import com.mayank.selfuploadform.models.PhotoModel;
 import com.mayank.selfuploadform.selfupload.base.BaseSelfUploadFragment;
+import com.mayank.selfuploadform.selfupload.images.gallery.GalleryFragment;
+import com.mayank.selfuploadform.selfupload.images.taggingpager.TaggingPagerAdapter;
+import com.mayank.selfuploadform.selfupload.widgets.NonSwipeViewPager;
 import com.mayank.selfuploadform.selfupload.widgets.TagSelectorField;
 
 import java.util.ArrayList;
@@ -25,19 +28,24 @@ import java.util.ArrayList;
 /**
  * Created by rahulchandnani on 25/02/16
  */
-public class TaggingFragment extends BaseSelfUploadFragment implements TaggingView {
+public class TaggingFragment extends BaseSelfUploadFragment implements TaggingView,
+        TagSelectorField.OnTagSelectListener, View.OnClickListener {
 
     private static final String PHOTO_OBJECT_HOLDER = "photo_object_holder";
 
     private static final String TITLE = "Tag photos (%s of %s)";
+    private static final long ANIMATION_DURATION = 300;
+    private static final long DELAY_TIME = 500;
 
     private TagSelectorField tagSelectorField;
     private Button doneButton;
     private ProgressBar progressBar;
-    private ViewPager viewPager;
+    private NonSwipeViewPager viewPager;
     private Toolbar toolbar;
     private TaggingPresenter taggingPresenter;
     private ArrayList<PhotoModel.PhotoObject> photoObjects;
+    private TaggingPagerAdapter adapter;
+    private UpdateHandler updateHandler;
 
     public static TaggingFragment newInstance(ArrayList<PhotoModel.PhotoObject> photoObjects) {
         TaggingFragment fragment = new TaggingFragment();
@@ -81,7 +89,30 @@ public class TaggingFragment extends BaseSelfUploadFragment implements TaggingVi
         getViews(view);
         getExtras();
         initToolbar();
+        initPresenter();
+        setupViewPager();
+        setListeners();
+        setupHandler();
         return view;
+    }
+
+    private void setupHandler() {
+        updateHandler = new UpdateHandler(taggingPresenter, photoObjects, viewPager);
+    }
+
+    private void initPresenter() {
+        taggingPresenter = new TaggingPresenter(this, photoObjects.size());
+    }
+
+    private void setListeners() {
+        tagSelectorField.setOnTagSelectListener(this);
+        doneButton.setOnClickListener(this);
+    }
+
+    private void setupViewPager() {
+        adapter = new TaggingPagerAdapter(getChildFragmentManager(), photoObjects);
+        viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(0);
     }
 
     private void initToolbar() {
@@ -97,7 +128,7 @@ public class TaggingFragment extends BaseSelfUploadFragment implements TaggingVi
 
     private void getViews(View view) {
         toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-        viewPager = (ViewPager) view.findViewById(R.id.view_pager);
+        viewPager = (NonSwipeViewPager) view.findViewById(R.id.view_pager);
         doneButton = (Button) view.findViewById(R.id.done);
         progressBar = (ProgressBar) view.findViewById(R.id.tag_progress_bar);
         tagSelectorField = (TagSelectorField) view.findViewById(R.id.tag_selector);
@@ -107,6 +138,66 @@ public class TaggingFragment extends BaseSelfUploadFragment implements TaggingVi
         PhotoObjectHolder holder = new Gson().fromJson(getArguments().getString(PHOTO_OBJECT_HOLDER),
                 PhotoObjectHolder.class);
         photoObjects = holder.getPhotoObjects();
+    }
+
+    @Override
+    public void enableTagSelector() {
+        tagSelectorField.enable();
+    }
+
+    @Override
+    public void onTagSelect(View view, String tag) {
+        adapter.setTag(tag, viewPager.getCurrentItem());
+        tagSelectorField.disable();
+        Message message = updateHandler.obtainMessage(UpdateHandler.TAG, tag);
+        updateHandler.sendMessageDelayed(message, DELAY_TIME);
+    }
+
+    @Override
+    public void onTagRemove(View view, String tag) {
+        taggingPresenter.removePhotoObject(tag, photoObjects.get(viewPager.getCurrentItem()));
+    }
+
+    @Override
+    public void swipeFragment() {
+        int index = viewPager.getCurrentItem();
+        tagSelectorField.reset();
+        viewPager.setCurrentItem(index + 1, true);
+    }
+
+    @Override
+    public void disableTagSelector() {
+        tagSelectorField.reset();
+        tagSelectorField.disable();
+    }
+
+    @Override
+    public void showDoneButton() {
+        progressBar.animate().alpha(0f).setDuration(ANIMATION_DURATION).start();
+        doneButton.animate().alpha(1f).setDuration(ANIMATION_DURATION).start();
+        doneButton.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void setTitleProgress(int count) {
+        toolbar.setTitle(String.format(TITLE, count, photoObjects.size()));
+    }
+
+    @Override
+    public void setProgress(int fraction) {
+        progressBar.setProgress(fraction);
+    }
+
+    @Override
+    public void launchGallery(PhotoModel photoModel) {
+        openFragment(GalleryFragment.newInstance(photoModel));
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == doneButton.getId()) {
+            taggingPresenter.doneButtonClicked();
+        }
     }
 
     public static class PhotoObjectHolder {
@@ -121,4 +212,27 @@ public class TaggingFragment extends BaseSelfUploadFragment implements TaggingVi
             this.photoObjects = photoObjects;
         }
     }
+
+    private static class UpdateHandler extends android.os.Handler {
+
+        public static final int TAG = 1;
+        private TaggingPresenter taggingPresenter;
+        private ArrayList<PhotoModel.PhotoObject> list;
+        private NonSwipeViewPager viewPager;
+
+        public UpdateHandler(TaggingPresenter taggingPresenter, ArrayList<PhotoModel.PhotoObject> list,
+                NonSwipeViewPager viewPager) {
+            this.taggingPresenter = taggingPresenter;
+            this.list = list;
+            this.viewPager = viewPager;
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            String tag = (String) msg.obj;
+            taggingPresenter.addPhotoObject(tag, list.get(viewPager.getCurrentItem()));
+        }
+    }
+
 }
