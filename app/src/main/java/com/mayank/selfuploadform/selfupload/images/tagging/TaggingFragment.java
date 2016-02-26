@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -32,6 +33,7 @@ public class TaggingFragment extends BaseSelfUploadFragment implements TaggingVi
         TagSelectorField.OnTagSelectListener, View.OnClickListener {
 
     private static final String PHOTO_OBJECT_HOLDER = "photo_object_holder";
+    private static final String PHOTO_MODEL = "photo_model";
 
     private static final String TITLE = "Tag photos (%s of %s)";
     private static final long ANIMATION_DURATION = 300;
@@ -46,13 +48,21 @@ public class TaggingFragment extends BaseSelfUploadFragment implements TaggingVi
     private ArrayList<PhotoModel.PhotoObject> photoObjects;
     private TaggingPagerAdapter adapter;
     private UpdateHandler updateHandler;
+    private PhotoModel photoModel;
 
     public static TaggingFragment newInstance(ArrayList<PhotoModel.PhotoObject> photoObjects) {
+        return newInstance(null, photoObjects);
+    }
+
+    public static TaggingFragment newInstance(PhotoModel photoModel, ArrayList<PhotoModel.PhotoObject> photoObjects) {
         TaggingFragment fragment = new TaggingFragment();
         Bundle bundle = new Bundle();
         PhotoObjectHolder holder = new PhotoObjectHolder();
         holder.setPhotoObjects(photoObjects);
         bundle.putString(PHOTO_OBJECT_HOLDER, new Gson().toJson(holder));
+        if (null != photoModel) {
+            bundle.putString(PHOTO_MODEL, new Gson().toJson(photoModel));
+        }
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -101,7 +111,7 @@ public class TaggingFragment extends BaseSelfUploadFragment implements TaggingVi
     }
 
     private void initPresenter() {
-        taggingPresenter = new TaggingPresenter(this, photoObjects.size());
+        taggingPresenter = new TaggingPresenter(this, photoModel, photoObjects.size());
     }
 
     private void setListeners() {
@@ -112,7 +122,8 @@ public class TaggingFragment extends BaseSelfUploadFragment implements TaggingVi
     private void setupViewPager() {
         adapter = new TaggingPagerAdapter(getChildFragmentManager(), photoObjects);
         viewPager.setAdapter(adapter);
-        viewPager.setOffscreenPageLimit(0);
+        viewPager.setOffscreenPageLimit(1);
+        viewPager.setPageTransformer(true, new DepthPageTransformer());
     }
 
     private void initToolbar() {
@@ -138,6 +149,10 @@ public class TaggingFragment extends BaseSelfUploadFragment implements TaggingVi
         PhotoObjectHolder holder = new Gson().fromJson(getArguments().getString(PHOTO_OBJECT_HOLDER),
                 PhotoObjectHolder.class);
         photoObjects = holder.getPhotoObjects();
+        String photoModelString = getArguments().getString(PHOTO_MODEL, null);
+        if (null != photoModelString) {
+            photoModel = new Gson().fromJson(photoModelString, PhotoModel.class);
+        }
     }
 
     @Override
@@ -190,6 +205,7 @@ public class TaggingFragment extends BaseSelfUploadFragment implements TaggingVi
 
     @Override
     public void launchGallery(PhotoModel photoModel) {
+        clearBackStack();
         openFragment(GalleryFragment.newInstance(photoModel));
     }
 
@@ -232,6 +248,31 @@ public class TaggingFragment extends BaseSelfUploadFragment implements TaggingVi
             super.handleMessage(msg);
             String tag = (String) msg.obj;
             taggingPresenter.addPhotoObject(tag, list.get(viewPager.getCurrentItem()));
+        }
+    }
+
+    public static class DepthPageTransformer implements ViewPager.PageTransformer {
+        private static final float MIN_SCALE = 0.50f;
+
+        public void transformPage(View view, float position) {
+            int pageWidth = view.getWidth();
+            if (position < -1) {
+                view.setAlpha(0);
+            } else if (position <= 0) {
+                view.setAlpha(1);
+                view.setTranslationX(0);
+                view.setScaleX(1);
+                view.setScaleY(1);
+            } else if (position <= 1) {
+                view.setAlpha(1 - position);
+                view.setTranslationX(pageWidth * -position);
+                float scaleFactor = MIN_SCALE
+                        + (1 - MIN_SCALE) * (1 - Math.abs(position));
+                view.setScaleX(scaleFactor);
+                view.setScaleY(scaleFactor);
+            } else {
+                view.setAlpha(0);
+            }
         }
     }
 

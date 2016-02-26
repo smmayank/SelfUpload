@@ -13,10 +13,12 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.mayank.selfuploadform.R;
 import com.mayank.selfuploadform.models.PhotoModel;
 import com.mayank.selfuploadform.selfupload.base.BaseSelfUploadFragment;
 import com.mayank.selfuploadform.selfupload.images.tagging.TaggingFragment;
+import com.mayank.selfuploadform.selfupload.repository.GalleryRepository;
 import com.mayank.selfuploadform.selfupload.repository.PhotoPickerRepository;
 import com.mayank.selfuploadform.selfupload.widgets.ImageField;
 
@@ -35,6 +37,18 @@ public class PhotoPickerFragment extends BaseSelfUploadFragment implements Photo
     private PhotoPickerPresenter photoPickerPresenter;
     private PhotoPickerGridAdapter adapter;
     private TextView selectedText;
+    private PhotoModel photoModel;
+    private ArrayList<String> paths;
+
+    public static PhotoPickerFragment newInstance(PhotoModel photoModel) {
+        PhotoPickerFragment fragment = new PhotoPickerFragment();
+        if (null != photoModel) {
+            Bundle bundle = new Bundle();
+            bundle.putString(GalleryRepository.PHOTO_MODEL, new Gson().toJson(photoModel));
+            fragment.setArguments(bundle);
+        }
+        return fragment;
+    }
 
     @Nullable
     @Override
@@ -43,9 +57,23 @@ public class PhotoPickerFragment extends BaseSelfUploadFragment implements Photo
         View view = inflater.inflate(R.layout.self_upload_photo_picker, container, false);
         getViews(view);
         initToolbar();
+        getExtras();
         initPresenter();
         setListeners();
         return view;
+    }
+
+    private void getExtras() {
+        paths = new ArrayList<>();
+        String photoModelString = getArguments().getString(GalleryRepository.PHOTO_MODEL, null);
+        if (null != photoModelString) {
+            photoModel = new Gson().fromJson(photoModelString, PhotoModel.class);
+            for (String tag : photoModel.getMap().keySet()) {
+                for (PhotoModel.PhotoObject photoObject : photoModel.getMap().get(tag)) {
+                    paths.add(photoObject.getPath());
+                }
+            }
+        }
     }
 
     @Override
@@ -92,7 +120,7 @@ public class PhotoPickerFragment extends BaseSelfUploadFragment implements Photo
 
     @Override
     public void showImages(ArrayList<PhotoModel.PhotoObject> images) {
-        adapter = new PhotoPickerGridAdapter(getContext(), images, this, this);
+        adapter = new PhotoPickerGridAdapter(getContext(), images, paths, this, this);
         gridView.setAdapter(adapter);
     }
 
@@ -110,7 +138,11 @@ public class PhotoPickerFragment extends BaseSelfUploadFragment implements Photo
 
     @Override
     public void launchTagging(ArrayList<PhotoModel.PhotoObject> photoObjects) {
-        openFragment(TaggingFragment.newInstance(photoObjects));
+        if (null != photoModel) {
+            openFragment(TaggingFragment.newInstance(photoModel, photoObjects));
+        } else {
+            openFragment(TaggingFragment.newInstance(photoObjects));
+        }
     }
 
     @Override

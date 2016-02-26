@@ -13,6 +13,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
@@ -149,6 +150,23 @@ public class SelfUploadActivity extends AppCompatActivity
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             window.setStatusBarColor(color);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        BaseSelfUploadFragment fragment = getAttachedFragment();
+        if (null == fragment || !fragment.onBackPressedHandled()) {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public void clearBackStack() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0 && !isFinishing()) {
+            getSupportFragmentManager().popBackStackImmediate(
+                    getSupportFragmentManager().getBackStackEntryAt(0).getId(),
+                    FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
     }
 

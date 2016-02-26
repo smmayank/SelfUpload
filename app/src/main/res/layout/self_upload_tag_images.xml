@@ -22,8 +22,8 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/tag_selector"
         android:layout_below="@+id/toolbar"
-        android:layout_marginBottom="@dimen/dimen_5dp"
-        android:layout_marginTop="@dimen/dimen_5dp" />
+        android:layout_marginBottom="@dimen/dimen_10dp"
+        android:layout_marginTop="@dimen/dimen_10dp" />
 
     <com.mayank.selfuploadform.selfupload.widgets.TagSelectorField
         android:id="@+id/tag_selector"

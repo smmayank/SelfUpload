@@ -3,6 +3,7 @@ package com.mayank.selfuploadform.selfupload.widgets;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Point;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
@@ -25,7 +26,7 @@ import java.io.File;
 @SuppressWarnings("SuspiciousNameCombination")
 public class ImageField extends RelativeLayout implements View.OnClickListener {
 
-    private static final float FRACTION = .33f;
+    private static final int FRACTION = 3;
     private static final long ANIMATION_DURATION = 300;
     private ImageView image;
     private ImageView check;
@@ -33,6 +34,7 @@ public class ImageField extends RelativeLayout implements View.OnClickListener {
     private PhotoModel.PhotoObject photoObject;
     private ImageFieldInteractionListener imageFieldInteractionListener;
     private int width;
+    private ImageView overlay;
 
     public ImageField(Context context) {
         this(context, null, 0);
@@ -52,7 +54,7 @@ public class ImageField extends RelativeLayout implements View.OnClickListener {
         Display display = wm.getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        width = (int) (FRACTION * size.x);
+        width = (int) ((double) size.x / FRACTION);
         image = new ImageView(getContext());
         this.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -73,6 +75,17 @@ public class ImageField extends RelativeLayout implements View.OnClickListener {
         check.setLayoutParams(params1);
         ViewCompat.setElevation(check, getContext().getResources().getDimensionPixelSize(R.dimen.dimen_10dp));
         this.addView(check);
+        overlay = new ImageView(getContext());
+        RelativeLayout.LayoutParams params2 = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT);
+        params2.width = width;
+        params2.height = width;
+        overlay.setLayoutParams(params2);
+        overlay.setImageDrawable(
+                new ColorDrawable(ContextCompat.getColor(getContext(), R.color.gallery_element_background_40_percent)));
+        ViewCompat.setElevation(overlay, getResources().getDimensionPixelSize(R.dimen.dimen_16dp));
+        this.addView(overlay);
+        overlay.setVisibility(GONE);
         setState(State.DEFAULT);
     }
 
@@ -117,6 +130,7 @@ public class ImageField extends RelativeLayout implements View.OnClickListener {
                 check.setVisibility(View.VISIBLE);
                 check.setOnClickListener(this);
                 image.setOnClickListener(this);
+                overlay.setVisibility(View.GONE);
                 check.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.photo_unselected));
                 this.setEnabled(true);
                 break;
@@ -125,6 +139,7 @@ public class ImageField extends RelativeLayout implements View.OnClickListener {
                 setPadding(getContext().getResources().getDimensionPixelSize(R.dimen.dimen_12dp));
                 check.setVisibility(View.VISIBLE);
                 check.setOnClickListener(this);
+                overlay.setVisibility(View.GONE);
                 image.setOnClickListener(this);
                 check.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.photo_selected));
                 this.setEnabled(true);
@@ -135,6 +150,7 @@ public class ImageField extends RelativeLayout implements View.OnClickListener {
                 check.setVisibility(View.GONE);
                 check.setOnClickListener(null);
                 image.setOnClickListener(null);
+                overlay.setVisibility(View.VISIBLE);
                 check.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.photo_unselected));
                 this.setEnabled(false);
                 break;
@@ -145,6 +161,7 @@ public class ImageField extends RelativeLayout implements View.OnClickListener {
                 check.setVisibility(View.GONE);
                 check.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.photo_unselected));
                 check.setOnClickListener(null);
+                overlay.setVisibility(View.GONE);
                 image.setOnClickListener(null);
                 this.setEnabled(true);
                 break;

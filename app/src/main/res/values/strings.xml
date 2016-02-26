@@ -522,6 +522,7 @@
     <string name="storage_permission_denied">External storage permission has been denied. You cannot move further now.</string>
     <string name="storage_permission_granted">External storage access granted.</string>
     <string name="add_new">ADD NEW</string>
+    <string name="add_more">ADD MORE</string>
 
     <string-array name="property_types">
         <item>Apartment,1</item>

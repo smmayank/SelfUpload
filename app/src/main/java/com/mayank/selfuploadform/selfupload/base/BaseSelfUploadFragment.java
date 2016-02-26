@@ -56,6 +56,10 @@ public abstract class BaseSelfUploadFragment extends TrackedFragment {
         listener.requestForPermission(permissions, requestID);
     }
 
+    protected void clearBackStack() {
+        listener.clearBackStack();
+    }
+
     public void onPermissionResult(int requestID, boolean granted) {
     }
 
@@ -76,6 +80,8 @@ public abstract class BaseSelfUploadFragment extends TrackedFragment {
         void replaceFragment(Fragment frag);
 
         void requestForPermission(String[] permissions, int requestID);
+
+        void clearBackStack();
     }
 
 }

@@ -14,11 +14,13 @@ public class TaggingPresenter {
     private PhotoModel photoModel;
     private int count;
     private int doneCount;
+    private PhotoModel previousPhotoModel;
 
-    public TaggingPresenter(TaggingView taggingView, int count) {
+    public TaggingPresenter(TaggingView taggingView, PhotoModel previousPhotoModel, int count) {
         this.taggingView = taggingView;
         this.count = count;
         this.doneCount = 0;
+        this.previousPhotoModel = previousPhotoModel;
         initDefaults();
     }
 
@@ -58,6 +60,35 @@ public class TaggingPresenter {
     }
 
     public void doneButtonClicked() {
+        if (null != previousPhotoModel) {
+            HashMap<String, String> pathTagMap = new HashMap<>();
+            HashMap<String, PhotoModel.PhotoObject> pathObjectMap = new HashMap<>();
+            for (String tag : previousPhotoModel.getMap().keySet()) {
+                for (PhotoModel.PhotoObject photoObject : previousPhotoModel.getMap().get(tag)) {
+                    pathTagMap.put(photoObject.getPath(), tag);
+                    pathObjectMap.put(photoObject.getPath(), photoObject);
+                }
+            }
+            for (String tag : photoModel.getMap().keySet()) {
+                for (PhotoModel.PhotoObject photoObject : photoModel.getMap().get(tag)) {
+                    pathTagMap.put(photoObject.getPath(), tag);
+                    pathObjectMap.put(photoObject.getPath(), photoObject);
+                }
+            }
+            photoModel.getMap().clear();
+            for (String path : pathTagMap.keySet()) {
+                String tag = pathTagMap.get(path);
+                PhotoModel.PhotoObject photoObject = pathObjectMap.get(path);
+                ArrayList<PhotoModel.PhotoObject> photoObjects;
+                if (photoModel.getMap().containsKey(tag)) {
+                    photoObjects = photoModel.getMap().get(tag);
+                } else {
+                    photoObjects = new ArrayList<>();
+                }
+                photoObjects.add(photoObject);
+                photoModel.getMap().put(tag, photoObjects);
+            }
+        }
         taggingView.launchGallery(photoModel);
     }
 }

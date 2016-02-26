@@ -26,6 +26,7 @@ public class GalleryElement extends LinearLayout {
     private ImageField.ImageFieldInteractionListener imageFieldInteractionListener;
     private ArrayList<ImageField> imageFields;
     private ArrayList<PhotoModel.PhotoObject> photoObjects;
+    private ArrayList<PhotoModel.PhotoObject> selectedPhotoObjects;
 
     public GalleryElement(Context context, ImageField.ImageFieldInteractionListener imageFieldInteractionListener) {
         this(context, null, 0);
@@ -49,6 +50,7 @@ public class GalleryElement extends LinearLayout {
         this.titleTextView = new TextView(getContext());
         this.addView(titleTextView);
         this.numOfColumns = NUM_OF_COLUMNS;
+        this.selectedPhotoObjects = new ArrayList<>();
     }
 
     public void setState(int state) {
@@ -62,7 +64,7 @@ public class GalleryElement extends LinearLayout {
         for (int i = 1; i < getChildCount(); i++) {
             removeViewAt(i);
         }
-        setImages(photoObjects);
+        setImages(photoObjects, selectedPhotoObjects, ImageField.State.DEFAULT);
     }
 
     public void setTitle(String title) {
@@ -73,9 +75,11 @@ public class GalleryElement extends LinearLayout {
         this.invalidate();
     }
 
-    public void setImages(ArrayList<PhotoModel.PhotoObject> list) {
+    public void setImages(ArrayList<PhotoModel.PhotoObject> list,
+            ArrayList<PhotoModel.PhotoObject> selectedPhotoObjects, int state) {
         if (null != list && 0 != list.size()) {
             photoObjects = list;
+            this.selectedPhotoObjects = selectedPhotoObjects;
             imageFields.clear();
             int numOfRows =
                     (list.size() % numOfColumns == 0) ? list.size() / numOfColumns : (int) Math.ceil((double) list.size
@@ -91,16 +95,21 @@ public class GalleryElement extends LinearLayout {
                 }
             }
             for (int i = 0; i < numOfRows; i++) {
-                LinearLayout layout = (LinearLayout) getChildAt(i);
+                LinearLayout layout = (LinearLayout) getChildAt(i + 1);
                 for (int j = 0; j < numOfColumns; j++) {
                     int index = i * numOfColumns + j;
                     if (index < list.size()) {
                         ImageField field = (ImageField) layout.getChildAt(j);
                         field.setPhoto(list.get(index));
+                        if (selectedPhotoObjects.contains(list.get(index))) {
+                            field.setState(ImageField.State.SELECTED);
+                        } else {
+                            field.setState(state);
+                        }
                         field.setVisibility(View.VISIBLE);
                         imageFields.add(field);
                     } else {
-                        getChildAt(j).setVisibility(View.INVISIBLE);
+                        layout.getChildAt(j).setVisibility(View.INVISIBLE);
                     }
                 }
             }
@@ -121,6 +130,7 @@ public class GalleryElement extends LinearLayout {
             field.setImageFieldInteractionListener(imageFieldInteractionListener);
             layout.addView(field);
             LinearLayout.LayoutParams params1 = (LinearLayout.LayoutParams) field.getLayoutParams();
+            params1.width = 0;
             params1.weight = 1;
             field.setLayoutParams(params1);
         }

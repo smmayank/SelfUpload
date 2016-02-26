@@ -22,12 +22,14 @@ public class PhotoPickerGridAdapter extends BaseAdapter {
     private ImageField.ImageFieldInteractionListener imageFieldInteractionListener;
     private ArrayList<PhotoModel.PhotoObject> selectedPhotoObjects;
     private View.OnClickListener onClickListener;
+    private ArrayList<String> selectedPaths;
 
-    public PhotoPickerGridAdapter(Context context, ArrayList<PhotoModel.PhotoObject> images,
-            ImageField.ImageFieldInteractionListener imageFieldInteractionListener,
+    public PhotoPickerGridAdapter(Context context, ArrayList<PhotoModel.PhotoObject> images, ArrayList<String>
+            selectedPaths, ImageField.ImageFieldInteractionListener imageFieldInteractionListener,
             View.OnClickListener onClickListener) {
         this.context = context;
         this.images = images;
+        this.selectedPaths = selectedPaths;
         this.imageFieldInteractionListener = imageFieldInteractionListener;
         this.selectedPhotoObjects = new ArrayList<>();
         this.onClickListener = onClickListener;
@@ -73,10 +75,14 @@ public class PhotoPickerGridAdapter extends BaseAdapter {
             PhotoModel.PhotoObject object = images.get(position - 1);
             imageField.setImageFieldInteractionListener(imageFieldInteractionListener);
             imageField.setPhoto(object);
-            if (selectedPhotoObjects.contains(object)) {
-                imageField.setState(ImageField.State.SELECTED);
+            if (selectedPaths.contains(object.getPath())) {
+                imageField.setState(ImageField.State.USED);
             } else {
-                imageField.setState(ImageField.State.HIGHLIGHTED);
+                if (selectedPhotoObjects.contains(object)) {
+                    imageField.setState(ImageField.State.SELECTED);
+                } else {
+                    imageField.setState(ImageField.State.HIGHLIGHTED);
+                }
             }
         }
         return convertView;
