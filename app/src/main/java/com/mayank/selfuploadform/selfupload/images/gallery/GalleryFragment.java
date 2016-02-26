@@ -78,6 +78,7 @@ public class GalleryFragment extends BaseSelfUploadFragment implements GalleryVi
     private void initToolbar() {
         toolbar.setTitle(getString(R.string.gallery_fragment_title));
         toolbar.setTitleTextColor(ContextCompat.getColor(getContext(), android.R.color.white));
+        toolbar.setNavigationIcon(ContextCompat.getDrawable(getContext(), R.drawable.back_white));
         setToolbar(toolbar);
     }
 
