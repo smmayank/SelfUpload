@@ -200,6 +200,28 @@
         <attr name="defaultBackground" format="reference" />
         <attr name="contentPadding" format="dimension" />
         <attr name="textSize" format="dimension" />
+    </declare-styleable>
 
+    <declare-styleable name="CountPicker">
+        <attr name="text" format="string" />
+        <attr name="prefixText" format="string" />
+        <attr name="postfixText" format="string" />
+        <attr name="textColor" format="color" />
+        <attr name="prefixColor" format="color" />
+        <attr name="postfixColor" format="color" />
+        <attr name="centerTextSize" format="dimension" />
+        <attr name="prefixTextSize" format="dimension" />
+        <attr name="postfixTextSize" format="dimension" />
+        <attr name="correctCountColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="PapaSpinner">
+        <attr name="prefixText" format="string" />
+        <attr name="spinnerEntries" format="reference" />
+        <attr name="hint" format="string" />
+        <attr name="postfixText" format="string" />
+        <attr name="prefixTextColor" format="color" />
+        <attr name="postfixTextColor" format="color" />
+        <attr name="hintTextColor" format="color" />
     </declare-styleable>
 </resources>

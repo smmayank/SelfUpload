@@ -24,7 +24,7 @@ public class SelfUploadDetailsFragment extends BaseSelfUploadFragment
         implements SelfUploadDetailsView, View.OnClickListener,
         SelectionField.SelectionFieldInteractionListener<BaseSelfUploadEntry>,
         SpinnerField.SpinnerFieldInteractionListener<BaseSelfUploadEntry>,
-        NumberField.NumberFieldInteractionListener, InputField.InputFieldInteractionListener {
+        InputField.InputFieldInteractionListener {
 
 
     private Toolbar toolbar;
@@ -81,11 +81,6 @@ public class SelfUploadDetailsFragment extends BaseSelfUploadFragment
                 .self_upload_details_flat_configuration);
         flatConfigSelector.setSpinnerFieldInteractionListener(this);
 
-        bathroomCount = (NumberField) inflate.findViewById(R.id.self_upload_details_bathroom);
-        bathroomCount.setOnNumberFieldInteractionListener(this);
-
-        balconiesCount = (NumberField) inflate.findViewById(R.id.self_upload_details_balconies);
-        balconiesCount.setOnNumberFieldInteractionListener(this);
 
         entryFacing = (SpinnerField<BaseSelfUploadEntry>) inflate
                 .findViewById(R.id.self_upload_details_entrance);
@@ -219,20 +214,6 @@ public class SelfUploadDetailsFragment extends BaseSelfUploadFragment
             }
             case R.id.self_upload_details_buildings: {
                 presenter.buildingSelected(index, entry);
-                break;
-            }
-        }
-    }
-
-    @Override
-    public void onNumberSelected(NumberField field, int value) {
-        switch (field.getId()) {
-            case R.id.self_upload_details_bathroom: {
-                presenter.onBathroomValueChanged(value);
-                break;
-            }
-            case R.id.self_upload_details_balconies: {
-                presenter.onBalconiesValueChanged(value);
                 break;
             }
         }

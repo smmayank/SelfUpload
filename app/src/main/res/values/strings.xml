@@ -523,6 +523,10 @@
     <string name="storage_permission_granted">External storage access granted.</string>
     <string name="add_new">ADD NEW</string>
     <string name="add_more">ADD MORE</string>
+    <string name="no_of_bathrooms">No. of Bathrooms</string>
+    <string name="minus">-</string>
+    <string name="plus">+</string>
+    <string name="no_of_balconies">No. of Balconies</string>
 
     <string-array name="property_types">
         <item>Apartment,1</item>

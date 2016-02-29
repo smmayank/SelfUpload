@@ -37,20 +37,36 @@
                 app:headerText="BHK Type"
                 app:mandatory="true" />
 
-            <com.mayank.selfuploadform.selfupload.widgets.NumberField
-                android:id="@+id/self_upload_details_bathroom"
+            <com.mayank.selfuploadform.selfupload.widgets.CountPicker
+                android:id="@+id/bathroom_count_picker"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="?attr/actionBarSize"
                 android:layout_marginTop="@dimen/field_margin_top"
-                app:contentText="No. of Bathrooms"
-                app:headerVisible="false" />
+                android:background="@color/black_5_percent_opacity"
+                android:orientation="vertical"
+                app:centerTextSize="@dimen/font_size_5"
+                app:postfixColor="@color/chatbuttonsend"
+                app:postfixText="@string/plus"
+                app:postfixTextSize="@dimen/font_size_8"
+                app:prefixColor="@color/chatbuttonsend"
+                app:prefixText="@string/minus"
+                app:prefixTextSize="@dimen/font_size_8"
+                app:text="@string/no_of_bathrooms" />
 
-            <com.mayank.selfuploadform.selfupload.widgets.NumberField
-                android:id="@+id/self_upload_details_balconies"
+            <com.mayank.selfuploadform.selfupload.widgets.CountPicker
+                android:id="@+id/balcony_count_picker"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:contentText="No. of Balconies"
-                app:headerVisible="false" />
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/black_5_percent_opacity"
+                android:orientation="vertical"
+                app:centerTextSize="@dimen/font_size_5"
+                app:postfixColor="@color/chatbuttonsend"
+                app:postfixText="@string/plus"
+                app:postfixTextSize="@dimen/font_size_8"
+                app:prefixColor="@color/chatbuttonsend"
+                app:prefixText="@string/minus"
+                app:prefixTextSize="@dimen/font_size_8"
+                app:text="@string/no_of_balconies" />
 
             <com.mayank.selfuploadform.selfupload.widgets.SpinnerField
                 android:id="@+id/self_upload_details_entrance"
