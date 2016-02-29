@@ -30,7 +30,7 @@ public class SelfUploadCommercialsFragment extends BaseSelfUploadFragment
   }
 
   private void initToolbar() {
-    toolbar.setTitle("Commercials");
+    toolbar.setTitle(getString(R.string.title_commercial));
     setToolbar(toolbar);
   }
 }

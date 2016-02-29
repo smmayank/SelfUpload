@@ -190,4 +190,8 @@
     <declare-styleable name="InputSelectionCheckboxField">
         <attr name="checkboxText" format="string" localization="suggested" />
     </declare-styleable>
+    <declare-styleable name="customEditText">
+        <attr name="hintText" format="string"/>
+        <attr name="dropDownMenu" format="reference"/>
+    </declare-styleable>
 </resources>

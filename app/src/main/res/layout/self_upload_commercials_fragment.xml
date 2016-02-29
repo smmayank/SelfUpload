@@ -42,6 +42,8 @@
                 app:mandatory="true"
                 app:postfixString="%" />
 
+
+
             <Button
                 android:id="@+id/self_upload_commercials_action_button"
                 style="@style/MyButtonRounded"
