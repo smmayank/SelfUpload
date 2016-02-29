@@ -1,18 +1,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <include layout="@layout/self_upload_toolbar" />
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_5dp"
+        android:indeterminate="false"
+        android:max="@integer/max_progress"
+        android:minHeight="@dimen/dimen_5dp"
+        android:progress="0"
+        android:progressDrawable="@drawable/green_progress_drawable" />
+
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context="com.mayank.selfuploadform.MainActivity"
         tools:showIn="@layout/activity_main">
 
         <LinearLayout
@@ -21,37 +31,119 @@
             android:orientation="vertical"
             android:padding="@dimen/dimen_13dp">
 
-            <com.mayank.selfuploadform.selfupload.widgets.InputSelectionCheckboxField
-                android:id="@+id/self_upload_commercials_price"
+            <com.mayank.selfuploadform.selfupload.widgets.ValueInputField
+                android:id="@+id/price_field"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:checkboxText="Negotiable"
-                app:headerText="Price"
-                app:hintText="Ex. 85.5"
-                app:inputType="numberDecimal"
-                app:mandatory="true" />
+                android:layout_marginBottom="@dimen/dimen_5dp"
+                app:hint="@string/price_hint"
+                app:hintSize="@dimen/font_size_14"
+                app:hintTextColor="@color/black_30_percent_opacity"
+                app:prefix="@string/rupee_sign"
+                app:prefixSize="@dimen/font_size_20"
+                app:prefixTextColor="@color/black_54pc"
+                app:spinnerEntries="@array/price_entries"
+                app:titleText="@string/price"
+                app:titleTextSize="@dimen/font_size_14" />
 
-            <com.mayank.selfuploadform.selfupload.widgets.InputField
-                android:id="@+id/self_upload_commercials_brokerage"
+            <CheckBox
+                android:id="@+id/price_negotiable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_5dp"
+                android:text="@string/negotiable"
+                android:textColor="@color/black_54pc" />
+
+            <com.mayank.selfuploadform.selfupload.widgets.ValueInputField
+                android:id="@+id/brokerage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/field_margin_top"
-                app:checkboxText="Negotiable"
-                app:headerText="Price"
-                app:inputType="numberDecimal"
-                app:mandatory="true"
-                app:postfixString="%" />
+                android:layout_marginTop="@dimen/dimen_20dp"
+                app:hint="@string/brokerage_hint"
+                app:hintSize="@dimen/font_size_14"
+                app:hintTextColor="@color/black_30_percent_opacity"
+                app:postfix="@string/percentage"
+                app:postfixSize="@dimen/font_size_20"
+                app:postfixTextColor="@color/black_54pc"
+                app:titleText="@string/brokerage"
+                app:titleTextSize="@dimen/font_size_14" />
+
+            <com.mayank.selfuploadform.selfupload.widgets.ValueInputField
+                android:id="@+id/society_move_in_charges"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20dp"
+                app:hint="@string/price_hint"
+                app:hintSize="@dimen/font_size_14"
+                app:hintTextColor="@color/black_30_percent_opacity"
+                app:prefix="@string/rupee_sign"
+                app:prefixSize="@dimen/font_size_20"
+                app:prefixTextColor="@color/black_54pc"
+                app:spinnerEntries="@array/price_entries"
+                app:titleText="@string/society_move_in_charges"
+                app:titleTextSize="@dimen/font_size_14" />
+
+            <com.mayank.selfuploadform.selfupload.widgets.ValueInputField
+                android:id="@+id/built_up_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20dp"
+                app:hint="@string/built_up_area_hint"
+                app:hintSize="@dimen/font_size_14"
+                app:hintTextColor="@color/black_30_percent_opacity"
+                app:spinnerEntries="@array/area_entries"
+                app:titleText="@string/built_up_area"
+                app:titleTextSize="@dimen/font_size_14" />
+
+            <com.mayank.selfuploadform.selfupload.widgets.ValueInputField
+                android:id="@+id/carpet_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20dp"
+                android:orientation="vertical"
+                app:hint="@string/carpet_area_hint"
+                app:hintSize="@dimen/font_size_14"
+                app:hintTextColor="@color/black_30_percent_opacity"
+                app:spinnerEntries="@array/area_entries"
+                app:titleText="@string/carpet_area"
+                app:titleTextSize="@dimen/font_size_14" />
+
+            <TextView
+                android:id="@+id/available_from_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20dp"
+                android:paddingBottom="@dimen/dimen_8dp"
+                android:paddingTop="@dimen/dimen_8dp"
+                android:text="@string/available_from_label"
+                android:textColor="@color/black_54pc"
+                android:textSize="@dimen/font_size_14" />
+
+            <TextView
+                android:id="@+id/available_from"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/translucent_black_border"
+                android:gravity="center_vertical"
+                android:paddingEnd="@dimen/dimen_20dp"
+                android:paddingLeft="@dimen/dimen_20dp"
+                android:paddingRight="@dimen/dimen_20dp"
+                android:paddingStart="@dimen/dimen_20dp"
+                android:text="@string/date_select_hint"
+                android:textColor="@color/black_30_percent_opacity"
+                android:textSize="@dimen/font_size_14" />
 
             <Button
-                android:id="@+id/self_upload_commercials_action_button"
-                style="@style/MyButtonRounded"
+                android:id="@+id/save_proceed"
+                style="@style/purple_button_with_white_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/field_margin_top"
+                android:layout_marginTop="@dimen/dimen_20dp"
                 android:text="@string/save_and_proceed" />
+
         </LinearLayout>
 
     </ScrollView>
-
 
 </LinearLayout>

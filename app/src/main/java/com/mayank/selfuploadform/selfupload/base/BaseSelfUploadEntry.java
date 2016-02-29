@@ -2,13 +2,13 @@ package com.mayank.selfuploadform.selfupload.base;
 
 import com.mayank.selfuploadform.selfupload.widgets.BaseField;
 
-public class BaseSelfUploadEntry implements BaseField.BaseEntry {
+public class BaseSelfUploadEntry<V> implements BaseField.BaseEntry {
   private CharSequence text;
-  private CharSequence id;
+  private V value;
 
-  public BaseSelfUploadEntry(CharSequence text, CharSequence id) {
+  public BaseSelfUploadEntry(CharSequence text, V id) {
     this.text = text;
-    this.id = id;
+    this.value = id;
   }
 
   @Override
@@ -16,15 +16,15 @@ public class BaseSelfUploadEntry implements BaseField.BaseEntry {
     return text;
   }
 
-  public CharSequence getId() {
-    return id;
+  public V getValue() {
+    return value;
   }
 
   @Override
   public String toString() {
     return "BaseSelfUploadEntry{" +
             "text=" + text +
-            ", id=" + id +
+            ", value=" + value +
             '}';
   }
 }

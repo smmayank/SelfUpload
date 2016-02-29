@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 import com.mayank.selfuploadform.R;
 import com.mayank.selfuploadform.selfupload.base.BaseSelfUploadEntry;
 import com.mayank.selfuploadform.selfupload.base.BaseSelfUploadFragment;
-import com.mayank.selfuploadform.selfupload.search.building.SelfUploadBuildingSearchFragment;
 import com.mayank.selfuploadform.selfupload.repository.SelfUploadFormRepository;
+import com.mayank.selfuploadform.selfupload.search.building.SelfUploadBuildingSearchFragment;
 import com.mayank.selfuploadform.selfupload.widgets.InputField;
 import com.mayank.selfuploadform.selfupload.widgets.NumberField;
 import com.mayank.selfuploadform.selfupload.widgets.SelectionField;
@@ -20,32 +20,31 @@ import com.mayank.selfuploadform.selfupload.widgets.SpinnerField;
 
 import java.util.List;
 
-public class SelfUploadDetailsFragment extends BaseSelfUploadFragment
-        implements SelfUploadDetailsView, View.OnClickListener,
-        SelectionField.SelectionFieldInteractionListener<BaseSelfUploadEntry>,
-        SpinnerField.SpinnerFieldInteractionListener<BaseSelfUploadEntry>,
-        InputField.InputFieldInteractionListener {
+public class SelfUploadDetailsFragment extends BaseSelfUploadFragment implements SelfUploadDetailsView, View
+        .OnClickListener, InputField.InputFieldInteractionListener, SelectionField.SelectionFieldInteractionListener,
+        SpinnerField.SpinnerFieldInteractionListener {
 
 
     private Toolbar toolbar;
     private SelfUploadDetailsPresenter presenter;
     private View actionButton;
 
-    private SelectionField<BaseSelfUploadEntry> propertyTypeSelector;
-    private SpinnerField<BaseSelfUploadEntry> flatConfigSelector;
+    private SelectionField<BaseSelfUploadEntry<Integer>> propertyTypeSelector;
+    private SpinnerField<BaseSelfUploadEntry<Integer>> flatConfigSelector;
     private NumberField bathroomCount;
     private NumberField balconiesCount;
-    private SpinnerField<BaseSelfUploadEntry> entryFacing;
+    private SpinnerField<BaseSelfUploadEntry<String>> entryFacing;
     private InputField locality;
     private InputField buildingName;
     private InputField floorNumber;
     private InputField totalFloor;
     private InputField ageOfProperty;
     private View amenityHeader;
-    private SelectionField<BaseSelfUploadEntry> parking;
-    private SelectionField<BaseSelfUploadEntry> cupboards;
-    private SelectionField<BaseSelfUploadEntry> pipeline;
+    private SelectionField<BaseSelfUploadEntry<Boolean>> parking;
+    private SelectionField<BaseSelfUploadEntry<Boolean>> cupboards;
+    private SelectionField<BaseSelfUploadEntry<Boolean>> pipeline;
     private InputField description;
+
 
     @Nullable
     @Override
@@ -63,6 +62,12 @@ public class SelfUploadDetailsFragment extends BaseSelfUploadFragment
     private void initValues() {
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+
     private void initToolbar() {
         toolbar.setTitle(R.string.property_details);
         setToolbar(toolbar);
@@ -73,16 +78,15 @@ public class SelfUploadDetailsFragment extends BaseSelfUploadFragment
         actionButton = inflate.findViewById(R.id.self_upload_details_action_button);
         actionButton.setOnClickListener(this);
 
-        propertyTypeSelector = (SelectionField<BaseSelfUploadEntry>) inflate.findViewById(
+        propertyTypeSelector = (SelectionField<BaseSelfUploadEntry<Integer>>) inflate.findViewById(
                 R.id.self_upload_details_property_type);
         propertyTypeSelector.setSelectionFieldInteractionListener(this);
 
-        flatConfigSelector = (SpinnerField<BaseSelfUploadEntry>) inflate.findViewById(R.id
+        flatConfigSelector = (SpinnerField<BaseSelfUploadEntry<Integer>>) inflate.findViewById(R.id
                 .self_upload_details_flat_configuration);
         flatConfigSelector.setSpinnerFieldInteractionListener(this);
 
-
-        entryFacing = (SpinnerField<BaseSelfUploadEntry>) inflate
+        entryFacing = (SpinnerField<BaseSelfUploadEntry<String>>) inflate
                 .findViewById(R.id.self_upload_details_entrance);
         entryFacing.setSpinnerFieldInteractionListener(this);
 
@@ -102,15 +106,15 @@ public class SelfUploadDetailsFragment extends BaseSelfUploadFragment
 
         amenityHeader = inflate.findViewById(R.id.self_upload_details_amenity_header);
 
-        parking = (SelectionField<BaseSelfUploadEntry>) inflate
+        parking = (SelectionField<BaseSelfUploadEntry<Boolean>>) inflate
                 .findViewById(R.id.self_upload_details_amenity_parking);
         parking.setSelectionFieldInteractionListener(this);
 
-        cupboards = (SelectionField<BaseSelfUploadEntry>) inflate
+        cupboards = (SelectionField<BaseSelfUploadEntry<Boolean>>) inflate
                 .findViewById(R.id.self_upload_details_amenity_cupboards);
         cupboards.setSelectionFieldInteractionListener(this);
 
-        pipeline = (SelectionField<BaseSelfUploadEntry>) inflate
+        pipeline = (SelectionField<BaseSelfUploadEntry<Boolean>>) inflate
                 .findViewById(R.id.self_upload_details_amenity_pipeline);
         pipeline.setSelectionFieldInteractionListener(this);
 
@@ -121,7 +125,7 @@ public class SelfUploadDetailsFragment extends BaseSelfUploadFragment
     private void initPresenter() {
         SelfUploadFormRepository repository =
                 new SelfUploadFormRepository(getActivity());
-        presenter = new SelfUploadDetailsPresenter(repository, this);
+        presenter = new SelfUploadDetailsPresenter(repository, this, getPropertyModel());
     }
 
     @Override
@@ -130,22 +134,22 @@ public class SelfUploadDetailsFragment extends BaseSelfUploadFragment
     }
 
     @Override
-    public void setPropertyTypes(List<BaseSelfUploadEntry> propertyTypes) {
+    public void setPropertyTypes(List<BaseSelfUploadEntry<Integer>> propertyTypes) {
         propertyTypeSelector.addEntries(propertyTypes);
     }
 
     @Override
-    public void setFlatConfiguration(List<BaseSelfUploadEntry> flatConfigurationType) {
+    public void setFlatConfiguration(List<BaseSelfUploadEntry<Integer>> flatConfigurationType) {
         flatConfigSelector.addEntries(flatConfigurationType);
     }
 
     @Override
-    public void setEntranceFacingTypes(List<BaseSelfUploadEntry> entranceEntries) {
+    public void setEntranceFacingTypes(List<BaseSelfUploadEntry<String>> entranceEntries) {
         entryFacing.addEntries(entranceEntries);
     }
 
     @Override
-    public void setAmenitiesEntries(List<BaseSelfUploadEntry> amenitiesEntries) {
+    public void setAmenitiesEntries(List<BaseSelfUploadEntry<Boolean>> amenitiesEntries) {
         parking.addEntries(amenitiesEntries);
         cupboards.addEntries(amenitiesEntries);
         pipeline.addEntries(amenitiesEntries);
@@ -174,46 +178,6 @@ public class SelfUploadDetailsFragment extends BaseSelfUploadFragment
         switch (v.getId()) {
             case R.id.self_upload_details_action_button: {
                 presenter.actionButtonClicked();
-                break;
-            }
-        }
-    }
-
-    @Override
-    public void onSelectionFieldSelected(SelectionField field, int index, BaseSelfUploadEntry entry) {
-        switch (field.getId()) {
-            case R.id.self_upload_details_property_type: {
-                presenter.propertyTypeSelected(index, entry);
-                break;
-            }
-            case R.id.self_upload_details_amenity_parking: {
-                presenter.parking(index, entry);
-                break;
-            }
-            case R.id.self_upload_details_amenity_cupboards: {
-                presenter.cupboards(index, entry);
-                break;
-            }
-            case R.id.self_upload_details_amenity_pipeline: {
-                presenter.pipeline(index, entry);
-                break;
-            }
-        }
-    }
-
-    @Override
-    public void onSpinnerFieldSelected(SpinnerField field, int index, BaseSelfUploadEntry entry) {
-        switch (field.getId()) {
-            case R.id.self_upload_details_flat_configuration: {
-                presenter.flatConfigurationSelected(index, entry);
-                break;
-            }
-            case R.id.self_upload_details_entrance: {
-                presenter.entranceSelected(index, entry);
-                break;
-            }
-            case R.id.self_upload_details_buildings: {
-                presenter.buildingSelected(index, entry);
                 break;
             }
         }
@@ -260,5 +224,49 @@ public class SelfUploadDetailsFragment extends BaseSelfUploadFragment
         } catch (NumberFormatException e) {
             return 0;
         }
+    }
+
+    @Override
+    public void onSelectionFieldSelected(SelectionField field, int index, Object entry) {
+        switch (field.getId()) {
+            case R.id.self_upload_details_flat_configuration: {
+                presenter.flatConfigurationSelected(index, (BaseSelfUploadEntry) entry);
+                break;
+            }
+            case R.id.self_upload_details_entrance: {
+                presenter.entranceSelected(index, (BaseSelfUploadEntry<String>) entry);
+                break;
+            }
+            case R.id.self_upload_details_buildings: {
+                presenter.buildingSelected(index, (BaseSelfUploadEntry<Integer>) entry);
+                break;
+            }
+        }
+
+    }
+
+    @Override
+    public void onSpinnerFieldSelected(SpinnerField field, int index, Object entry) {
+
+        switch (field.getId()) {
+            case R.id.self_upload_details_flat_configuration: {
+                presenter.flatConfigurationSelected(index, (BaseSelfUploadEntry) entry);
+                break;
+            }
+            case R.id.self_upload_details_entrance: {
+                presenter.entranceSelected(index, (BaseSelfUploadEntry<String>) entry);
+                break;
+            }
+            case R.id.self_upload_details_buildings: {
+                presenter.buildingSelected(index, (BaseSelfUploadEntry<Integer>) entry);
+                break;
+            }
+        }
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 }

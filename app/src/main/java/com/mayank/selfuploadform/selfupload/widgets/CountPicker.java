@@ -8,6 +8,7 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -31,10 +32,9 @@ public class CountPicker extends LinearLayout implements View.OnClickListener {
     private int textColor;
     private int prefixColor;
     private int postfixColor;
-    private int textSize;
-    private int prefixTextSize;
-    private int postfixTextSize;
-    private int correctCorrectColor;
+    private float textSize;
+    private float prefixTextSize;
+    private float postfixTextSize;
     private int count;
     private TextView textView;
     private OnNumberChangedListener onNumberChangedListener;
@@ -63,13 +63,11 @@ public class CountPicker extends LinearLayout implements View.OnClickListener {
                 R.color.post_call_widget_yes_color));
         postfixColor = typedArray.getColor(R.styleable.CountPicker_postfixColor, ContextCompat.getColor(getContext(),
                 R.color.post_call_widget_yes_color));
-        correctCorrectColor = typedArray.getColor(R.styleable.CountPicker_correctCountColor, ContextCompat.getColor
-                (getContext(), android.R.color.black));
-        textSize = typedArray.getDimensionPixelSize(R.styleable.CountPicker_centerTextSize, getResources()
+        textSize = typedArray.getDimension(R.styleable.CountPicker_centerTextSize, getResources()
                 .getDimensionPixelSize(R.dimen.font_size_5));
-        prefixTextSize = typedArray.getDimensionPixelSize(R.styleable.CountPicker_prefixTextSize, getResources()
+        prefixTextSize = typedArray.getDimension(R.styleable.CountPicker_prefixTextSize, getResources()
                 .getDimensionPixelSize(R.dimen.font_size_8));
-        postfixTextSize = typedArray.getDimensionPixelSize(R.styleable.CountPicker_postfixTextSize, getResources()
+        postfixTextSize = typedArray.getDimension(R.styleable.CountPicker_postfixTextSize, getResources()
                 .getDimensionPixelSize(R.dimen.font_size_8));
         typedArray.recycle();
         initViews();
@@ -90,7 +88,7 @@ public class CountPicker extends LinearLayout implements View.OnClickListener {
         postfixTextView.setLayoutParams(postfixLayoutParams);
         postfixTextView.setText(postfixText);
         postfixTextView.setTextColor(postfixColor);
-        postfixTextView.setTextSize(postfixTextSize);
+        postfixTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, postfixTextSize);
         postfixTextView.setGravity(Gravity.CENTER);
         postfixTextView.setOnClickListener(this);
         postfixTextView.setTag(POSTFIX);
@@ -104,7 +102,7 @@ public class CountPicker extends LinearLayout implements View.OnClickListener {
         textLayoutParams.weight = 3;
         textView.setLayoutParams(textLayoutParams);
         setText();
-        textView.setTextSize(textSize);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
         textView.setGravity(Gravity.CENTER);
         textView.setOnClickListener(null);
         textView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.translucent_black_border));
@@ -118,7 +116,7 @@ public class CountPicker extends LinearLayout implements View.OnClickListener {
         prefixTextView.setLayoutParams(prefixLayoutParams);
         prefixTextView.setText(prefixText);
         prefixTextView.setTextColor(prefixColor);
-        prefixTextView.setTextSize(prefixTextSize);
+        prefixTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, prefixTextSize);
         prefixTextView.setGravity(Gravity.CENTER);
         prefixTextView.setOnClickListener(this);
         prefixTextView.setTag(PREFIX);

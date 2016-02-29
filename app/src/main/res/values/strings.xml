@@ -47,7 +47,7 @@
     <string name="lease_type_label">Tenant Type</string>
     <string name="address_hint">Address or Landmark near this property</string>
     <string name="label_locations">LOCATIONS *</string>
-    <string name="available_from_label">Available From</string>
+    <string name="available_from_label">Available From*</string>
     <string name="date_hint">Select a date</string>
     <string name="apartment_label">Apartment</string>
     <string name="independent_house_label">Independent House</string>
@@ -527,6 +527,18 @@
     <string name="minus">-</string>
     <string name="plus">+</string>
     <string name="no_of_balconies">No. of Balconies</string>
+    <string name="title_commercial">Commercials</string>
+    <string name="price_hint">Ex. 85.5</string>
+    <string name="price">Price*</string>
+    <string name="brokerage_hint">Enter brokerage</string>
+    <string name="percentage">%</string>
+    <string name="brokerage">Brokerage</string>
+    <string name="society_move_in_charges">Society move-in charges*</string>
+    <string name="built_up_area_hint">Built-up Area of the property</string>
+    <string name="built_up_area">Built-up Area*</string>
+    <string name="carpet_area_hint">Carpet Area of the property</string>
+    <string name="carpet_area">Carpet Area*</string>
+    <string name="date_select_hint">dd / mm / yyyy</string>
 
     <string-array name="property_types">
         <item>Apartment,1</item>
@@ -554,21 +566,21 @@
     </string-array>
 
     <string-array name="entrance_facing_types">
-        <item>North,1</item>
-        <item>North-East,2</item>
-        <item>East,3</item>
-        <item>South-East,4</item>
-        <item>South,5</item>
-        <item>South-West,6</item>
-        <item>West,7</item>
-        <item>North-West,8</item>
+        <item>North</item>
+        <item>North-East</item>
+        <item>East</item>
+        <item>South-East</item>
+        <item>South</item>
+        <item>South-West</item>
+        <item>West</item>
+        <item>North-West</item>
     </string-array>
     <string-array name="age_selection_types">
         <item>Months</item>
         <item>Years</item>
     </string-array>
     <string-array name="yes_no">
-        <item>Yes</item>
-        <item>No</item>
+        <item>Yes,true</item>
+        <item>No,false</item>
     </string-array>
 </resources>

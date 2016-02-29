@@ -24,10 +24,13 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.mayank.selfuploadform.R;
+import com.mayank.selfuploadform.base.Logger;
+import com.mayank.selfuploadform.models.PropertyModel;
 import com.mayank.selfuploadform.selfupload.base.BaseSelfUploadFragment;
 import com.mayank.selfuploadform.selfupload.base.BaseSelfUploadFragment.BaseSelfUploadFragmentCallback;
 import com.mayank.selfuploadform.selfupload.dashboard.SelfUploadDashboardFragment;
 import com.mayank.selfuploadform.selfupload.images.photopicker.PhotoPickerFragment;
+import com.mayank.selfuploadform.selfupload.repository.RealmRepository;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -37,12 +40,22 @@ public class SelfUploadActivity extends AppCompatActivity
         implements BaseSelfUploadFragmentCallback {
 
     private static final int FRAGMENT_CONTAINER = R.id.fragment_container;
+    private RealmRepository mRealmRepository;
+    private PropertyModel mPropertyModel;
+    private Integer mPropertyId;
+    public static final String PROPERTY_ID = "property_id";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
         initDashboardFragment();
+        mRealmRepository = new RealmRepository(this);
+        if (getIntent().getExtras() != null) {
+            mPropertyId = getIntent().getExtras().getInt(PROPERTY_ID);
+        }
+
     }
 
     private void initDashboardFragment() {
@@ -91,6 +104,23 @@ public class SelfUploadActivity extends AppCompatActivity
                 }
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mRealmRepository.beginTransaction();
+        if (mPropertyId == null) {
+            mPropertyModel = mRealmRepository.getRealmObject(PropertyModel.class, -1);
+        } else {
+            mPropertyModel = mRealmRepository.getRealmObject(PropertyModel.class, mPropertyId);
+        }
+
+    }
+
+    @Override
+    public PropertyModel getPropertyModel() {
+        return mPropertyModel;
     }
 
     @Override
@@ -168,6 +198,13 @@ public class SelfUploadActivity extends AppCompatActivity
                     getSupportFragmentManager().getBackStackEntryAt(0).getId(),
                     FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mRealmRepository.commitTransaction();
+        Logger.logD(this, "values saved");
     }
 
     private static class SaveImageTask extends AsyncTask<Void, Void, String> {

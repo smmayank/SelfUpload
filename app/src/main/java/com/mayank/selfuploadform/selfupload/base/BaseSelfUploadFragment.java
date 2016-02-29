@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.mayank.selfuploadform.R;
 import com.mayank.selfuploadform.base.TrackedFragment;
+import com.mayank.selfuploadform.models.PropertyModel;
 
 public abstract class BaseSelfUploadFragment extends TrackedFragment {
 
@@ -56,6 +57,10 @@ public abstract class BaseSelfUploadFragment extends TrackedFragment {
         listener.requestForPermission(permissions, requestID);
     }
 
+    protected PropertyModel getPropertyModel() {
+        return listener.getPropertyModel();
+    }
+
     protected void clearBackStack() {
         listener.clearBackStack();
     }
@@ -68,8 +73,8 @@ public abstract class BaseSelfUploadFragment extends TrackedFragment {
         return getClass().getSimpleName();
     }
 
-    protected final void setViewVisibility(View viewName, boolean visibility) {
-        viewName.setVisibility(visibility ? View.VISIBLE : View.GONE);
+    protected final void setViewVisibility(View buildingName, boolean visibility) {
+        buildingName.setVisibility(visibility ? View.VISIBLE : View.GONE);
     }
 
     public interface BaseSelfUploadFragmentCallback {
@@ -82,6 +87,9 @@ public abstract class BaseSelfUploadFragment extends TrackedFragment {
         void requestForPermission(String[] permissions, int requestID);
 
         void clearBackStack();
+
+        PropertyModel getPropertyModel();
+
     }
 
 }

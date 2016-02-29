@@ -28,8 +28,8 @@
             <shape>
                 <gradient
                     android:angle="270"
-                    android:endColor="@color/primary_dark"
-                    android:startColor="@color/primary_dark" />
+                    android:endColor="@color/irish_green"
+                    android:startColor="@color/irish_green" />
             </shape>
         </clip>
     </item>

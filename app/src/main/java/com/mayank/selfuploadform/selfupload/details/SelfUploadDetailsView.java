@@ -8,13 +8,13 @@ public interface SelfUploadDetailsView {
 
     void enableActionButton(boolean enable);
 
-    void setPropertyTypes(List<BaseSelfUploadEntry> propertyTypes);
+    void setPropertyTypes(List<BaseSelfUploadEntry<Integer>> propertyTypes);
 
-    void setFlatConfiguration(List<BaseSelfUploadEntry> flatConfigurationType);
+    void setFlatConfiguration(List<BaseSelfUploadEntry<Integer>> flatConfigurationType);
 
-    void setEntranceFacingTypes(List<BaseSelfUploadEntry> entranceEntries);
+    void setEntranceFacingTypes(List<BaseSelfUploadEntry<String>> entranceEntries);
 
-    void setAmenitiesEntries(List<BaseSelfUploadEntry> amenitiesEntries);
+    void setAmenitiesEntries(List<BaseSelfUploadEntry<Boolean>> amenitiesEntries);
 
     void showBuildingsDetails(boolean visibility);
 

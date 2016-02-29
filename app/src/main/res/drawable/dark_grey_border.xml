@@ -5,7 +5,7 @@
         android:width="2px"
         android:color="@color/black_10_percent_opacity" />
 
-    <solid android:color="@android:color/transparent" />
+    <solid android:color="@color/border_gray" />
 
     <corners android:radius="0dp" />
 

@@ -44,13 +44,13 @@
                 android:layout_marginTop="@dimen/field_margin_top"
                 android:background="@color/black_5_percent_opacity"
                 android:orientation="vertical"
-                app:centerTextSize="@dimen/font_size_5"
+                app:centerTextSize="@dimen/font_size_14"
                 app:postfixColor="@color/chatbuttonsend"
                 app:postfixText="@string/plus"
-                app:postfixTextSize="@dimen/font_size_8"
+                app:postfixTextSize="@dimen/font_size_32"
                 app:prefixColor="@color/chatbuttonsend"
                 app:prefixText="@string/minus"
-                app:prefixTextSize="@dimen/font_size_8"
+                app:prefixTextSize="@dimen/font_size_32"
                 app:text="@string/no_of_bathrooms" />
 
             <com.mayank.selfuploadform.selfupload.widgets.CountPicker
@@ -59,13 +59,13 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/black_5_percent_opacity"
                 android:orientation="vertical"
-                app:centerTextSize="@dimen/font_size_5"
+                app:centerTextSize="@dimen/font_size_14"
                 app:postfixColor="@color/chatbuttonsend"
                 app:postfixText="@string/plus"
-                app:postfixTextSize="@dimen/font_size_8"
+                app:postfixTextSize="@dimen/font_size_32"
                 app:prefixColor="@color/chatbuttonsend"
                 app:prefixText="@string/minus"
-                app:prefixTextSize="@dimen/font_size_8"
+                app:prefixTextSize="@dimen/font_size_32"
                 app:text="@string/no_of_balconies" />
 
             <com.mayank.selfuploadform.selfupload.widgets.SpinnerField

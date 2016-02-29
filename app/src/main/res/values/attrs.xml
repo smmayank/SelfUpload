@@ -180,7 +180,6 @@
         <attr name="inputType" />
     </declare-styleable>
 
-
     <declare-styleable name="InputSelectionField">
         <attr name="spinnerWidth" format="dimension" />
         <attr name="selectionTextSize" format="dimension" />
@@ -212,16 +211,21 @@
         <attr name="centerTextSize" format="dimension" />
         <attr name="prefixTextSize" format="dimension" />
         <attr name="postfixTextSize" format="dimension" />
-        <attr name="correctCountColor" format="color" />
     </declare-styleable>
 
-    <declare-styleable name="PapaSpinner">
-        <attr name="prefixText" format="string" />
+    <declare-styleable name="ValueInputField">
+        <attr name="titleColor" format="color" />
+        <attr name="titleText" format="string" />
+        <attr name="titleTextSize" format="dimension" />
+        <attr name="prefix" format="string" />
         <attr name="spinnerEntries" format="reference" />
         <attr name="hint" format="string" />
-        <attr name="postfixText" format="string" />
+        <attr name="postfix" format="string" />
         <attr name="prefixTextColor" format="color" />
         <attr name="postfixTextColor" format="color" />
         <attr name="hintTextColor" format="color" />
+        <attr name="prefixSize" format="dimension" />
+        <attr name="hintSize" format="dimension" />
+        <attr name="postfixSize" format="dimension" />
     </declare-styleable>
 </resources>
