@@ -40,13 +40,12 @@ public class SelfUploadDashboardFragment extends BaseSelfUploadFragment
     private ImageView detailsStatusView;
     private ImageView commercialsStatusView;
     private ImageView photosStatusView;
-    private View view;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.self_upload_dashboard_fragment, container, false);
+        View view = inflater.inflate(R.layout.self_upload_dashboard_fragment, container, false);
         initValues();
         initViews(view);
         initToolbar();
@@ -161,38 +160,35 @@ public class SelfUploadDashboardFragment extends BaseSelfUploadFragment
         cardsElevation = getResources().getDimension(R.dimen.dimen_5dp);
     }
 
-    private void initViews(View inflate) {
-        toolbar = (Toolbar) inflate.findViewById(R.id.toolbar);
+    private void initViews(View view) {
+        toolbar = (Toolbar) view.findViewById(R.id.toolbar);
 
-        View cardsList = inflate.findViewById(R.id.dashboard_cards_list);
+        View cardsList = view.findViewById(R.id.dashboard_cards_list);
         ViewCompat.setElevation(cardsList, cardsElevation);
 
-        View detailsCard = inflate.findViewById(R.id.self_upload_dashboard_details_card);
+        View detailsCard = view.findViewById(R.id.self_upload_dashboard_details_card);
         detailsCard.setOnClickListener(this);
-        detailsSubtitleView =
-                (TextView) detailsCard.findViewById(R.id.self_upload_dashboard_details_card_sub_title);
-        detailsStatusView = (ImageView) detailsCard
-                .findViewById(R.id.self_upload_dashboard_details_card_status_image);
+        detailsSubtitleView = (TextView) detailsCard.findViewById(R.id.self_upload_dashboard_details_card_sub_title);
+        detailsStatusView = (ImageView) detailsCard.findViewById(R.id.self_upload_dashboard_details_card_status_image);
 
-        View commercialsCard = inflate.findViewById(R.id.self_upload_dashboard_commercials_card);
+        View commercialsCard = view.findViewById(R.id.self_upload_dashboard_commercials_card);
         commercialsCard.setOnClickListener(this);
         commercialsSubtitleView =
-                (TextView) commercialsCard
-                        .findViewById(R.id.self_upload_dashboard_commercials_card_sub_title);
+                (TextView) commercialsCard.findViewById(R.id.self_upload_dashboard_commercials_card_sub_title);
         commercialsStatusView =
                 (ImageView) commercialsCard
                         .findViewById(R.id.self_upload_dashboard_commercials_card_status_image);
 
-        View photosCard = inflate.findViewById(R.id.self_upload_dashboard_photos_card);
+        View photosCard = view.findViewById(R.id.self_upload_dashboard_photos_card);
         photosCard.setOnClickListener(this);
         photosSubtitleView =
                 (TextView) photosCard.findViewById(R.id.self_upload_dashboard_photos_card_sub_title);
         photosStatusView = (ImageView) photosCard
                 .findViewById(R.id.self_upload_dashboard_photos_card_status_image);
 
-        actionButton = (Button) inflate.findViewById(R.id.dashboard_action_button);
+        actionButton = (Button) view.findViewById(R.id.dashboard_action_button);
 
-        progressBar = (ProgressBar) inflate.findViewById(R.id.dashboard_progress_bar);
+        progressBar = (ProgressBar) view.findViewById(R.id.dashboard_progress_bar);
         progressBar.setMax(MAX_PROGRESS);
     }
 

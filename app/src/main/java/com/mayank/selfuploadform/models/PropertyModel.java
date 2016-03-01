@@ -9,29 +9,44 @@ import io.realm.annotations.PrimaryKey;
 public class PropertyModel extends RealmObject {
 
     private static final String TAG = "PropertyModel";
+
     @PrimaryKey
     private int id;
+
     private Integer propertyType;
     private Integer bhkType;
     private Integer bathroomCount;
     private Integer balconyCount;
-    private String entranceFacing;
     private Integer localityId;
     private Integer buildingId;
     private Integer floorNumber;
     private Integer totalFloors;
     private Integer ageOfProperty;
+
+    private String entranceFacing;
     private String ageOfPropertyUnit;
+    private String description;
+    private String priceUnit;
+    private String builtUpAreaUnit;
+    private String availableFrom;
+
     private Boolean reservedParking;
     private Boolean cupboards;
     private Boolean pipelineGas;
-    private String description;
-    private Long price;
-    private String priceUnit;
+    private Boolean isPriceNegotiable;
+
+    private Double price;
     private Double brokerage;
     private Double builtUpArea;
-    private String builtUpAreaUnit;
-    private String availableFrom;
+    private Double carpetArea;
+    private Double societyCharges;
+
+
+    private Double priceFactor;
+    private Double builtUpAreaFactor;
+    private Double carpetAreaFactor;
+    private Double brokerageFactor;
+    private Double societyChargesFactor;
 
     public int getId() {
         return id;
@@ -161,11 +176,11 @@ public class PropertyModel extends RealmObject {
         this.description = description;
     }
 
-    public Long getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Long price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -207,5 +222,69 @@ public class PropertyModel extends RealmObject {
 
     public void setAvailableFrom(String availableFrom) {
         this.availableFrom = availableFrom;
+    }
+
+    public Boolean getIsPriceNegotiable() {
+        return isPriceNegotiable;
+    }
+
+    public void setIsPriceNegotiable(Boolean priceNegotiable) {
+        isPriceNegotiable = priceNegotiable;
+    }
+
+    public Double getCarpetArea() {
+        return carpetArea;
+    }
+
+    public void setCarpetArea(Double carpetArea) {
+        this.carpetArea = carpetArea;
+    }
+
+    public Double getSocietyCharges() {
+        return societyCharges;
+    }
+
+    public void setSocietyCharges(Double societyCharges) {
+        this.societyCharges = societyCharges;
+    }
+
+    public Double getPriceFactor() {
+        return priceFactor;
+    }
+
+    public void setPriceFactor(Double priceFactor) {
+        this.priceFactor = priceFactor;
+    }
+
+    public Double getBuiltUpAreaFactor() {
+        return builtUpAreaFactor;
+    }
+
+    public void setBuiltUpAreaFactor(Double builtUpAreaFactor) {
+        this.builtUpAreaFactor = builtUpAreaFactor;
+    }
+
+    public Double getCarpetAreaFactor() {
+        return carpetAreaFactor;
+    }
+
+    public void setCarpetAreaFactor(Double carpetAreaFactor) {
+        this.carpetAreaFactor = carpetAreaFactor;
+    }
+
+    public Double getBrokerageFactor() {
+        return brokerageFactor;
+    }
+
+    public void setBrokerageFactor(Double brokerageFactor) {
+        this.brokerageFactor = brokerageFactor;
+    }
+
+    public Double getSocietyChargesFactor() {
+        return societyChargesFactor;
+    }
+
+    public void setSocietyChargesFactor(Double societyChargesFactor) {
+        this.societyChargesFactor = societyChargesFactor;
     }
 }

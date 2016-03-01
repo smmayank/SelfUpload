@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -57,6 +58,7 @@ public class ValueInputField extends LinearLayout implements AdapterView.OnItemS
     private Double conversionFactor;
     private ArrayList<ValueChangedListener> valueChangedListeners;
     private LinearLayout holder;
+    private Spinner spinner;
 
     public ValueInputField(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -149,9 +151,18 @@ public class ValueInputField extends LinearLayout implements AdapterView.OnItemS
         this.addView(holder);
     }
 
-    public void setValue(Double value) {
-        if (!Double.isNaN(value)) {
-            this.editText.setText(String.valueOf(value));
+    public void setValue(Double value, Double conversionFactor) {
+        if (null != value && null != conversionFactor) {
+            editText.removeTextChangedListener(this);
+            editText.setText(String.valueOf(value));
+            if (null != conversions) {
+                for (int i = 0; i < conversions.length; i++) {
+                    if (conversionFactor.equals(conversions[i])) {
+                        spinner.setSelection(i);
+                        break;
+                    }
+                }
+            }
         }
     }
 
@@ -173,7 +184,7 @@ public class ValueInputField extends LinearLayout implements AdapterView.OnItemS
 
     private void createSpinnerView() {
         if (0 != spinnerWeight) {
-            Spinner spinner = new Spinner(getContext());
+            spinner = new Spinner(getContext());
             LayoutParams layoutParams = new LayoutParams(0, LayoutParams.MATCH_PARENT);
             layoutParams.weight = spinnerWeight;
             layoutParams.gravity = Gravity.CENTER;
@@ -203,6 +214,9 @@ public class ValueInputField extends LinearLayout implements AdapterView.OnItemS
         editText.addTextChangedListener(this);
         editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, hintSize);
         editText.setPadding(getResources().getDimensionPixelSize(R.dimen.dimen_6dp), 0, 0, 0);
+        InputFilter[] filterArray = new InputFilter[1];
+        filterArray[0] = new InputFilter.LengthFilter(3);
+        editText.setFilters(filterArray);
         holder.addView(editText);
     }
 
@@ -244,6 +258,7 @@ public class ValueInputField extends LinearLayout implements AdapterView.OnItemS
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         conversionFactor = conversions[position];
+        calculateConvertedValue();
     }
 
     @Override
@@ -258,13 +273,21 @@ public class ValueInputField extends LinearLayout implements AdapterView.OnItemS
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (!TextUtils.isEmpty(s.toString())) {
+        calculateConvertedValue();
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
+    }
+
+    private void calculateConvertedValue() {
+        if (!TextUtils.isEmpty(editText.getText().toString())) {
             try {
-                Double value = Double.parseDouble(s.toString());
-                value *= conversionFactor;
                 if (!valueChangedListeners.isEmpty()) {
+                    Double value = Double.parseDouble(editText.getText().toString());
                     for (ValueChangedListener valueChangedListener : valueChangedListeners) {
-                        valueChangedListener.onValueChanged(this, value);
+                        valueChangedListener.onValueChanged(this, value, conversionFactor);
                     }
                 }
             } catch (NumberFormatException e) {
@@ -273,14 +296,9 @@ public class ValueInputField extends LinearLayout implements AdapterView.OnItemS
         }
     }
 
-    @Override
-    public void afterTextChanged(Editable s) {
-
-    }
-
     public interface ValueChangedListener {
 
-        void onValueChanged(ValueInputField papaInputField, Double value);
+        void onValueChanged(ValueInputField papaInputField, Double value, Double conversionFactor);
 
     }
 }
