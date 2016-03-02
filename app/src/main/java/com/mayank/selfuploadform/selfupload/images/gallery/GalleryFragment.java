@@ -1,8 +1,6 @@
 package com.mayank.selfuploadform.selfupload.images.gallery;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
@@ -46,7 +44,7 @@ public class GalleryFragment extends BaseSelfUploadFragment implements GalleryVi
     public static GalleryFragment newInstance(PhotoModel photoModel) {
         GalleryFragment fragment = new GalleryFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(GalleryRepository.PHOTO_MODEL, new Gson().toJson(photoModel));
+        bundle.putString(GalleryRepository.GALLERY_MODEL, new Gson().toJson(photoModel));
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -72,7 +70,7 @@ public class GalleryFragment extends BaseSelfUploadFragment implements GalleryVi
     }
 
     private void getExtras() {
-        photoModel = new Gson().fromJson(getArguments().getString(GalleryRepository.PHOTO_MODEL), PhotoModel.class);
+        photoModel = new Gson().fromJson(getArguments().getString(GalleryRepository.GALLERY_MODEL), PhotoModel.class);
     }
 
     private void initToolbar() {
@@ -183,10 +181,7 @@ public class GalleryFragment extends BaseSelfUploadFragment implements GalleryVi
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.save_proceed: {
-                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putString(GalleryRepository.PHOTO_MODEL, new Gson().toJson(photoModel));
-                editor.apply();
+                GalleryRepository.setPhotoModel(getContext(), getPropertyModel().getId(), photoModel);
                 break;
             }
             case R.id.edit: {

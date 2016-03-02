@@ -1,87 +1,109 @@
 package com.mayank.selfuploadform.selfupload.dashboard;
 
-import com.mayank.selfuploadform.base.Logger;
 import com.mayank.selfuploadform.models.PhotoModel;
+import com.mayank.selfuploadform.models.PropertyModel;
 import com.mayank.selfuploadform.selfupload.repository.GalleryRepository;
+import com.mayank.selfuploadform.selfupload.repository.ProgressRepository;
+
+import java.util.ArrayList;
 
 public class SelfUploadDashboardPresenter {
 
-    public static final int NEW_PROPERTY = -1;
-
-    private static final int STATUS_COUNT = 3;
-
-    private static final int DETAILS_INDEX = 0;
-    private static final int COMMERCIALS_INDEX = 1;
-    private static final int PHOTOS_INDEX = 2;
-
-    private final SelfUploadDashboardView view;
-    private final int propertyId;
-
-    private final int[] statuses;
     private GalleryRepository galleryRepository;
+    private ProgressRepository progressRepository;
+    private String username;
+    private SelfUploadDashboardView view;
+    private PropertyModel model;
 
-    public SelfUploadDashboardPresenter(SelfUploadDashboardView view) {
-        this(view, NEW_PROPERTY);
-    }
-
-    public SelfUploadDashboardPresenter(SelfUploadDashboardView view, int
-            propertyId) {
+    public SelfUploadDashboardPresenter(SelfUploadDashboardView view, GalleryRepository galleryRepository,
+            PropertyModel propertyModel, ProgressRepository progressRepository, String username) {
         this.view = view;
-        this.propertyId = propertyId;
-        statuses = new int[STATUS_COUNT];
-        if (NEW_PROPERTY != propertyId) {
-            fetchProperty(propertyId);
-        } else {
-            createNewProperty();
-        }
+        this.model = propertyModel;
+        this.username = username;
+        this.progressRepository = progressRepository;
+        this.galleryRepository = galleryRepository;
         initDefaults();
     }
 
     private void initDefaults() {
-        view.enableActionButton(false);
-
-        view.showProgressBar(true);
-        view.setProgress(0);
-
-        view.setUsername("John Doe");
-
-        view.setDetailsSubTitle("2BHK Apartment, Nahar Amrit Shakti, No");
-        view.setDetailsStatus(statuses[DETAILS_INDEX]);
-
-        view.setCommercialsSubTitle("Price, Brokerage, Built-up-Area etc.");
-        view.setCommercialsStatus(statuses[COMMERCIALS_INDEX]);
-
-        view.showPhotos("Price, Brokerage, Built-up-Area etc.");
-        view.setPhotosStatus(statuses[PHOTOS_INDEX]);
+        view.setUsername(username);
+        calculateProgress();
     }
 
-    private void createNewProperty() {
+    private void calculateProgress() {
+        int detailsProgress = calculateDetailsProgress();
+        int commercialProgress = calculateCommercialProgress();
+        int photosProgress = calculatePhotosProgress();
+        int totalProgress = (int) ((double) (commercialProgress + detailsProgress + photosProgress) / 3.0);
+        view.setProgress(totalProgress);
     }
 
-    private void fetchProperty(int propertyId) {
-
+    private int calculateDetailsProgress() {
+        int detailsProgress = ProgressRepository.getDetailsProgress(model);
+        if (detailsProgress == 0) {
+            view.setDetailsImageView(SelfUploadDashboardView.DEFAULT);
+            view.setDetailsSubTitle(null);
+        } else if (detailsProgress == 100) {
+            view.setDetailsImageView(SelfUploadDashboardView.COMPLETED);
+            view.setDetailsSubTitle(progressRepository.getDetailsText(model));
+        } else {
+            view.setDetailsImageView(SelfUploadDashboardView.INCOMPLETE);
+            view.setDetailsSubTitle(progressRepository.getDetailsText(model));
+        }
+        return detailsProgress;
     }
 
-    public void onResume() {
-        Logger.logD(this, "onResume");
+    private int calculateCommercialProgress() {
+        int commercialProgress = ProgressRepository.getCommercialProgress(model);
+        if (commercialProgress == 0) {
+            view.setCommercialImageView(SelfUploadDashboardView.DEFAULT);
+            view.setCommercialsSubTitle(null);
+        } else if (commercialProgress == 100) {
+            view.setCommercialImageView(SelfUploadDashboardView.COMPLETED);
+            view.setCommercialsSubTitle(progressRepository.getCommercialText(model));
+        } else {
+            view.setCommercialImageView(SelfUploadDashboardView.INCOMPLETE);
+            view.setCommercialsSubTitle(progressRepository.getCommercialText(model));
+        }
+        return commercialProgress;
     }
 
-    public void onPause() {
-        Logger.logD(this, "onPause");
+    private int calculatePhotosProgress() {
+        PhotoModel photoModel = galleryRepository.getPhotoModel(model.getId());
+        ArrayList<PhotoModel.PhotoObject> photoObjects = new ArrayList<>();
+        for (String tag : photoModel.getMap().keySet()) {
+            photoObjects.addAll(photoModel.getMap().get(tag));
+        }
+        int totalObjects = photoObjects.size();
+        int progress;
+        if (0 == totalObjects) {
+            progress = 0;
+            view.setPhotosImageView(SelfUploadDashboardView.DEFAULT);
+            view.setDefaultPhotosView();
+        } else if (GalleryRepository.MIN_COUNT_GALLERY >= totalObjects) {
+            progress = 100;
+            view.setPhotosImageView(SelfUploadDashboardView.COMPLETED);
+            view.setCapturedPhotosView();
+            view.setCapturedImages(photoObjects);
+        } else {
+            progress = 50;
+            view.setPhotosImageView(SelfUploadDashboardView.INCOMPLETE);
+            view.setCapturedPhotosView();
+            view.setCapturedImages(photoObjects);
+        }
+        return progress;
     }
 
     public void detailsCardClicked() {
-        Logger.logD(this, "detailsCardClicked");
         view.openDetailsView();
     }
 
     public void commercialsCardClicked() {
-        Logger.logD(this, "commercialsCardClicked");
         view.openCommercialsView();
     }
 
-    public void photosCardClicked(PhotoModel photoModel) {
-        Logger.logD(this, "photosCardClicked");
+    public void photosCardClicked() {
+        PhotoModel photoModel = galleryRepository.getPhotoModel(model.getId());
         if (null == photoModel) {
             view.openPickerView();
         } else {

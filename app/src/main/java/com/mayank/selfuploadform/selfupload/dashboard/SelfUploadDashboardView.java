@@ -2,31 +2,33 @@ package com.mayank.selfuploadform.selfupload.dashboard;
 
 import com.mayank.selfuploadform.models.PhotoModel;
 
+import java.util.ArrayList;
+
 public interface SelfUploadDashboardView {
 
-    int CARD_STATUS_NEW = 0;
-    int CARD_STATUS_INCOMPLETE = 1;
-    int CARD_STATUS_COMPLETE = 2;
+    int DEFAULT = 0;
+    int INCOMPLETE = 1;
+    int COMPLETED = 2;
 
-    void setUsername(CharSequence name);
+    void setUsername(String name);
 
     void setProgress(int progress);
 
-    void showProgressBar(boolean visible);
+    void setDetailsSubTitle(String data);
 
-    void enableActionButton(boolean enabled);
+    void setCommercialsSubTitle(String data);
 
-    void setDetailsSubTitle(CharSequence data);
+    void setCapturedImages(ArrayList<PhotoModel.PhotoObject> photoObjects);
 
-    void setDetailsStatus(int status);
+    void setDefaultPhotosView();
 
-    void setCommercialsSubTitle(CharSequence data);
+    void setCapturedPhotosView();
 
-    void setCommercialsStatus(int status);
+    void setDetailsImageView(int status);
 
-    void showPhotos(CharSequence... images);
+    void setCommercialImageView(int status);
 
-    void setPhotosStatus(int status);
+    void setPhotosImageView(int status);
 
     void openDetailsView();
 

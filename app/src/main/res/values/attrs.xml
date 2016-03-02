@@ -197,7 +197,7 @@
         <attr name="defaultTextColor" format="color" />
         <attr name="selectedBackground" format="reference" />
         <attr name="defaultBackground" format="reference" />
-        <attr name="contentPadding" format="dimension" />
+        <attr name="padding" format="dimension" />
         <attr name="textSize" format="dimension" />
     </declare-styleable>
 

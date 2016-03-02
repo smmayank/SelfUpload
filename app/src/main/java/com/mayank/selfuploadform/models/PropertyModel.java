@@ -11,7 +11,7 @@ public class PropertyModel extends RealmObject {
     private static final String TAG = "PropertyModel";
 
     @PrimaryKey
-    private int id;
+    private Integer id;
 
     private Integer propertyType;
     private Integer bhkType;
@@ -24,16 +24,13 @@ public class PropertyModel extends RealmObject {
     private Integer ageOfProperty;
 
     private String entranceFacing;
-    private String ageOfPropertyUnit;
     private String description;
-    private String priceUnit;
-    private String builtUpAreaUnit;
     private String availableFrom;
 
     private Boolean reservedParking;
     private Boolean cupboards;
     private Boolean pipelineGas;
-    private Boolean isPriceNegotiable;
+    private Boolean isPriceNegotiable = Boolean.FALSE;
 
     private Double price;
     private Double brokerage;
@@ -41,18 +38,18 @@ public class PropertyModel extends RealmObject {
     private Double carpetArea;
     private Double societyCharges;
 
-
     private Double priceFactor;
     private Double builtUpAreaFactor;
     private Double carpetAreaFactor;
     private Double brokerageFactor;
     private Double societyChargesFactor;
+    private Double ageOfPropertyFactor;
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -136,14 +133,6 @@ public class PropertyModel extends RealmObject {
         this.ageOfProperty = ageOfProperty;
     }
 
-    public String getAgeOfPropertyUnit() {
-        return ageOfPropertyUnit;
-    }
-
-    public void setAgeOfPropertyUnit(String ageOfPropertyUnit) {
-        this.ageOfPropertyUnit = ageOfPropertyUnit;
-    }
-
     public Boolean getReservedParking() {
         return reservedParking;
     }
@@ -184,14 +173,6 @@ public class PropertyModel extends RealmObject {
         this.price = price;
     }
 
-    public String getPriceUnit() {
-        return priceUnit;
-    }
-
-    public void setPriceUnit(String priceUnit) {
-        this.priceUnit = priceUnit;
-    }
-
     public Double getBrokerage() {
         return brokerage;
     }
@@ -206,14 +187,6 @@ public class PropertyModel extends RealmObject {
 
     public void setBuiltUpArea(Double builtUpArea) {
         this.builtUpArea = builtUpArea;
-    }
-
-    public String getBuiltUpAreaUnit() {
-        return builtUpAreaUnit;
-    }
-
-    public void setBuiltUpAreaUnit(String builtUpAreaUnit) {
-        this.builtUpAreaUnit = builtUpAreaUnit;
     }
 
     public String getAvailableFrom() {
@@ -286,5 +259,13 @@ public class PropertyModel extends RealmObject {
 
     public void setSocietyChargesFactor(Double societyChargesFactor) {
         this.societyChargesFactor = societyChargesFactor;
+    }
+
+    public Double getAgeOfPropertyFactor() {
+        return ageOfPropertyFactor;
+    }
+
+    public void setAgeOfPropertyFactor(Double ageOfPropertyFactor) {
+        this.ageOfPropertyFactor = ageOfPropertyFactor;
     }
 }

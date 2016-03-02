@@ -44,7 +44,7 @@ public class PhotoPickerFragment extends BaseSelfUploadFragment implements Photo
         PhotoPickerFragment fragment = new PhotoPickerFragment();
         if (null != photoModel) {
             Bundle bundle = new Bundle();
-            bundle.putString(GalleryRepository.PHOTO_MODEL, new Gson().toJson(photoModel));
+            bundle.putString(GalleryRepository.GALLERY_MODEL, new Gson().toJson(photoModel));
             fragment.setArguments(bundle);
         }
         return fragment;
@@ -66,7 +66,7 @@ public class PhotoPickerFragment extends BaseSelfUploadFragment implements Photo
     private void getExtras() {
         paths = new ArrayList<>();
         if (null != getArguments()) {
-            String photoModelString = getArguments().getString(GalleryRepository.PHOTO_MODEL, null);
+            String photoModelString = getArguments().getString(GalleryRepository.GALLERY_MODEL, null);
             if (null != photoModelString) {
                 photoModel = new Gson().fromJson(photoModelString, PhotoModel.class);
                 for (String tag : photoModel.getMap().keySet()) {

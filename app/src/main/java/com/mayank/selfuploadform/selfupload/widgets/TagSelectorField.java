@@ -64,7 +64,7 @@ public class TagSelectorField extends LinearLayout implements View.OnClickListen
         if (null == defaultBackground) {
             defaultBackground = new ColorDrawable(selectedTextColor);
         }
-        contentPadding = typedArray.getDimensionPixelSize(R.styleable.TagSelectorField_contentPadding, getResources()
+        contentPadding = typedArray.getDimensionPixelSize(R.styleable.TagSelectorField_padding, getResources()
                 .getDimensionPixelSize(R.dimen.dimen_6dp));
         fontSize = typedArray.getDimensionPixelSize(R.styleable.TagSelectorField_textSize, getResources()
                 .getDimensionPixelSize(R.dimen.fontsize_12));

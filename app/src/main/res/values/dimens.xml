@@ -85,7 +85,7 @@
     <dimen name="field_content_default_width">100dp</dimen>
     <dimen name="input_selection_field_default_width">120dp</dimen>
     <dimen name="field_margin_top">@dimen/dimen_26dp</dimen>
-    <dimen name="self_upload_dashboard_toolbar_height">248dp</dimen>
+    <dimen name="self_upload_dashboard_toolbar_height">250dp</dimen>
     <dimen name="dimen_4dp">4dp</dimen>
     <dimen name="dimen_6dp">6dp</dimen>
     <dimen name="dimen_24dp">24dp</dimen>
@@ -94,4 +94,14 @@
     <dimen name="fontsize_12">12sp</dimen>
     <dimen name="font_size_32">32sp</dimen>
     <dimen name="font_size_5">5sp</dimen>
+    <dimen name="self_upload_toolbar_image_margin">30dp</dimen>
+    <dimen name="dashboard_cards_margin_top">210dp</dimen>
+    <dimen name="dimen_40dp">40dp</dimen>
+    <dimen name="dimen_60dp">60dp</dimen>
+    <dimen name="dimen_30dp">30dp</dimen>
+    <dimen name="dimen_35dp">35dp</dimen>
+    <dimen name="dimen_70dp">70dp</dimen>
+    <dimen name="dimen_105dp">105dp</dimen>
+    <dimen name="dimen_100dp">100dp</dimen>
+    <dimen name="dimen_150dp">150dp</dimen>
 </resources>

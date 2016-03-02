@@ -539,6 +539,12 @@
     <string name="carpet_area_hint">Carpet Area of the property</string>
     <string name="carpet_area">Carpet Area*</string>
     <string name="date_select_hint">dd / mm / yyyy</string>
+    <string name="built_up_area_title">Built-up Area</string>
+    <string name="carpet_area_title">Carpet Area</string>
+    <string name="self_upload_help_text">Let\'s list your property in Housing</string>
+    <string name="dashboard_status_text">%s&#37; COMPLETED</string>
+    <string name="welcome_text">Hi %s</string>
+    <string name="more_images_format">+%s</string>
 
     <string-array name="property_types">
         <item>Apartment,1</item>
