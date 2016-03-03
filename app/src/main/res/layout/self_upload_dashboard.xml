@@ -96,6 +96,7 @@
             android:showDividers="middle">
 
             <RelativeLayout
+                android:id="@+id/property_details_card"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_0dp"
                 android:layout_weight="1">
@@ -154,6 +155,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/commercial_card"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_0dp"
                 android:layout_weight="1">
@@ -212,6 +214,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/photos_card"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_0dp"
                 android:layout_weight="1"

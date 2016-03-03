@@ -110,4 +110,8 @@ public class SelfUploadDashboardPresenter {
             view.openGalleryView(photoModel);
         }
     }
+
+    public void saveUploadButtonClicked() {
+
+    }
 }

@@ -19,7 +19,6 @@ import com.mayank.selfuploadform.R;
 import com.mayank.selfuploadform.models.PhotoModel;
 import com.mayank.selfuploadform.selfupload.base.BaseSelfUploadFragment;
 import com.mayank.selfuploadform.selfupload.commercials.SelfUploadCommercialsFragment;
-import com.mayank.selfuploadform.selfupload.details.SelfUploadDetailsFragment;
 import com.mayank.selfuploadform.selfupload.images.gallery.GalleryFragment;
 import com.mayank.selfuploadform.selfupload.images.photopicker.PhotoPickerFragment;
 import com.mayank.selfuploadform.selfupload.repository.GalleryRepository;
@@ -62,7 +61,14 @@ public class SelfUploadDashboardFragment extends BaseSelfUploadFragment
         View view = inflater.inflate(R.layout.self_upload_dashboard, container, false);
         initViews(view);
         initToolbar();
+        setListeners(view);
         return view;
+    }
+
+    private void setListeners(View view) {
+        view.findViewById(R.id.commercial_card).setOnClickListener(this);
+        view.findViewById(R.id.property_details_card).setOnClickListener(this);
+        view.findViewById(R.id.photos_card).setOnClickListener(this);
     }
 
     @Override
@@ -126,39 +132,43 @@ public class SelfUploadDashboardFragment extends BaseSelfUploadFragment
     }
 
     private void setImageView(ImageView imgView, int status) {
-        int imgRes;
+        int imageResource;
         switch (status) {
             default:
             case DEFAULT: {
-                imgRes = R.drawable.enter;
+                imageResource = R.drawable.enter;
                 break;
             }
             case INCOMPLETE: {
-                imgRes = R.drawable.incomplete;
+                imageResource = R.drawable.incomplete;
                 break;
             }
             case COMPLETED: {
-                imgRes = R.drawable.complete;
+                imageResource = R.drawable.complete;
                 break;
             }
         }
-        imgView.setImageResource(imgRes);
+        imgView.setImageResource(imageResource);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.self_upload_dashboard_details_card: {
+            case R.id.property_details_card: {
                 presenter.detailsCardClicked();
                 break;
             }
-            case R.id.self_upload_dashboard_commercials_card: {
+            case R.id.commercial_card: {
                 presenter.commercialsCardClicked();
                 break;
             }
-            case R.id.self_upload_dashboard_photos_card: {
+            case R.id.photos_card: {
                 requestForPermission(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
                         Manifest.permission.WRITE_EXTERNAL_STORAGE}, ACCESS_STORAGE_PERMISSION);
+                break;
+            }
+            case R.id.save_upload: {
+                presenter.saveUploadButtonClicked();
                 break;
             }
         }
@@ -177,7 +187,7 @@ public class SelfUploadDashboardFragment extends BaseSelfUploadFragment
     public void setProgress(int progress) {
         progressBar.setProgress(progress);
         if (progress != MAX_PROGRESS) {
-            saveUploadButton.setText(getString(R.string.dashboard_status_text, progress));
+            saveUploadButton.setText(getString(R.string.dashboard_progress_text_format, progress));
             saveUploadButton.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.warm_grey));
             saveUploadButton.setOnClickListener(null);
         } else {
@@ -239,7 +249,7 @@ public class SelfUploadDashboardFragment extends BaseSelfUploadFragment
 
     @Override
     public void openDetailsView() {
-        openFragment(new SelfUploadDetailsFragment());
+        //openFragment(new SelfUploadDetailsFragment());
     }
 
     @Override
@@ -265,19 +275,26 @@ public class SelfUploadDashboardFragment extends BaseSelfUploadFragment
             imageViews.add((ImageView) imageStack.findViewById(R.id.image3));
             imageViews.add((ImageView) imageStack.findViewById(R.id.image4));
             TextView textView = (TextView) imageStack.findViewById(R.id.last_text);
-            if (photoObjects.size() <= imageViews.size()) {
-                for (int i = 0; i < photoObjects.size(); i++) {
-                    imageViews.get(i).setVisibility(View.VISIBLE);
-                    File file = new File(photoObjects.get(i).getPath());
-                    Picasso.with(getContext()).load(file).into(imageViews.get(i));
-                }
+            int maxCount;
+            boolean showText;
+            if (imageViews.size() == photoObjects.size()) {
+                maxCount = imageViews.size();
+                showText = false;
+            } else if (imageViews.size() > photoObjects.size()) {
+                maxCount = photoObjects.size();
+                showText = false;
             } else {
-                for (int i = 0; i < imageViews.size(); i++) {
-                    imageViews.get(i).setVisibility(View.VISIBLE);
-                    File file = new File(photoObjects.get(i).getPath());
-                    Picasso.with(getContext()).load(file).into(imageViews.get(i));
-                }
-                int count = photoObjects.size() + 1 - imageViews.size();
+                maxCount = imageViews.size() - 1;
+                showText = true;
+            }
+            for (int i = 0; i < maxCount; i++) {
+                imageViews.get(i).setVisibility(View.VISIBLE);
+                File file = new File(photoObjects.get(i).getPath());
+                Picasso.with(getContext()).load(file).into(imageViews.get(i));
+            }
+            if (showText) {
+                imageViews.get(imageViews.size() - 1).setVisibility(View.VISIBLE);
+                int count = photoObjects.size() - (imageViews.size() - 1);
                 textView.setText(getString(R.string.more_images_format, count));
                 textView.setVisibility(View.VISIBLE);
             }
