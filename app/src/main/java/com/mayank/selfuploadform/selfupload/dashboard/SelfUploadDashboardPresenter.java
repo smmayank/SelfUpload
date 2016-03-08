@@ -81,7 +81,7 @@ public class SelfUploadDashboardPresenter {
                 progress = 0;
                 view.setPhotosImageView(SelfUploadDashboardView.DEFAULT);
                 view.setDefaultPhotosView();
-            } else if (GalleryRepository.MIN_COUNT_GALLERY >= totalObjects) {
+            } else if (GalleryRepository.MIN_COUNT_GALLERY <= totalObjects) {
                 progress = 100;
                 view.setPhotosImageView(SelfUploadDashboardView.COMPLETED);
                 view.setCapturedPhotosView();

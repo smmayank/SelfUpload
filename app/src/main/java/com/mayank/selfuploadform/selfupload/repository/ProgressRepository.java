@@ -116,6 +116,9 @@ public class ProgressRepository {
                         carpetAreaText, context.getString(R.string.carpet_area_title)));
             }
         }
+        if (0 < finalString.length()) {
+            finalString = finalString.substring(0, finalString.length() - 1);
+        }
         return finalString;
     }
 

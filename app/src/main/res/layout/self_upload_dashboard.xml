@@ -112,6 +112,8 @@
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/details_image_view"
+                        android:layout_toStartOf="@+id/details_image_view"
                         tools:ignore="RelativeOverlap">
 
                         <TextView
@@ -129,8 +131,10 @@
                             android:layout_below="@+id/details_main_text"
                             android:layout_marginTop="@dimen/dimen_10dp"
                             android:ellipsize="end"
+                            android:ems="100"
                             android:lines="1"
-                            android:singleLine="false"
+                            android:maxLines="1"
+                            android:singleLine="true"
                             android:text="@string/self_upload_dashboard_property_detail_sub_title"
                             android:textColor="@color/black_30_percent_opacity"
                             android:textSize="@dimen/font_size_14" />
@@ -174,6 +178,8 @@
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/commercial_image_view"
+                        android:layout_toStartOf="@+id/commercial_image_view"
                         tools:ignore="RelativeOverlap">
 
                         <TextView
@@ -190,6 +196,11 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/commercial_main_text"
                             android:layout_marginTop="@dimen/dimen_10dp"
+                            android:ellipsize="end"
+                            android:ems="100"
+                            android:lines="1"
+                            android:maxLines="1"
+                            android:singleLine="true"
                             android:text="@string/self_upload_dashboard_commercials_sub_title"
                             android:textColor="@color/black_30_percent_opacity"
                             android:textSize="@dimen/font_size_14" />
@@ -230,6 +241,8 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/photos_image_view"
+                    android:layout_toStartOf="@+id/photos_image_view"
                     tools:ignore="RelativeOverlap">
 
                     <TextView
@@ -247,8 +260,10 @@
                         android:layout_below="@+id/photos_main_text"
                         android:layout_marginTop="@dimen/dimen_10dp"
                         android:ellipsize="end"
+                        android:ems="100"
                         android:lines="1"
-                        android:singleLine="false"
+                        android:maxLines="1"
+                        android:singleLine="true"
                         android:text="@string/self_upload_dashboard_photos_sub_title"
                         android:textColor="@color/black_30_percent_opacity"
                         android:textSize="@dimen/font_size_14" />

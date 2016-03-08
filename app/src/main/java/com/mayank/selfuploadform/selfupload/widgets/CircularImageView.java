@@ -106,6 +106,6 @@ public class CircularImageView extends ImageView {
 
         // Then draw the border.
         canvas.drawCircle(dest.centerX(), dest.centerY(),
-                source.width() / 2f - circularImageBorder / 2, borderPaint);
+                dest.height() / 2f - circularImageBorder / 2, borderPaint);
     }
 }

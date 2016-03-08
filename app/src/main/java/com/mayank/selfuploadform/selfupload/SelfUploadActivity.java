@@ -55,7 +55,14 @@ public class SelfUploadActivity extends AppCompatActivity
         if (getIntent().getExtras() != null) {
             mPropertyId = getIntent().getExtras().getInt(PROPERTY_ID);
         }
-
+        if (!mRealmRepository.isInTransaction()) {
+            mRealmRepository.beginTransaction();
+        }
+        if (mPropertyId == null) {
+            mPropertyModel = mRealmRepository.getRealmObject(PropertyModel.class, -1);
+        } else {
+            mPropertyModel = mRealmRepository.getRealmObject(PropertyModel.class, mPropertyId);
+        }
     }
 
     private void initDashboardFragment() {
@@ -109,13 +116,9 @@ public class SelfUploadActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        mRealmRepository.beginTransaction();
-        if (mPropertyId == null) {
-            mPropertyModel = mRealmRepository.getRealmObject(PropertyModel.class, -1);
-        } else {
-            mPropertyModel = mRealmRepository.getRealmObject(PropertyModel.class, mPropertyId);
+        if (!mRealmRepository.isInTransaction()) {
+            mRealmRepository.beginTransaction();
         }
-
     }
 
     @Override
@@ -203,7 +206,9 @@ public class SelfUploadActivity extends AppCompatActivity
     @Override
     protected void onPause() {
         super.onPause();
-        mRealmRepository.commitTransaction();
+        if (mRealmRepository.isInTransaction()) {
+            mRealmRepository.commitTransaction();
+        }
         Logger.logD(this, "values saved");
     }
 
