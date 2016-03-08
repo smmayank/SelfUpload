@@ -15,7 +15,7 @@ import java.util.HashMap;
 public class GalleryRepository {
 
     public static final String GALLERY_MODEL = "gallery_model";
-    public static final int MIN_COUNT_GALLERY = 5;
+    public static final int MIN_COUNT_GALLERY = 1;
 
     private Context context;
 

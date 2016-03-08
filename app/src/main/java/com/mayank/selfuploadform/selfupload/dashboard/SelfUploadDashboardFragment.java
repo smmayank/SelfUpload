@@ -34,6 +34,8 @@ public class SelfUploadDashboardFragment extends BaseSelfUploadFragment
     public static final int ACCESS_STORAGE_PERMISSION = 101;
     private static final int MAX_PROGRESS = 100;
 
+    private static final String PROGRESS_TEXT = "%s%% COMPLETED";
+
     private SelfUploadDashboardPresenter presenter;
 
     private Toolbar toolbar;
@@ -115,19 +117,12 @@ public class SelfUploadDashboardFragment extends BaseSelfUploadFragment
 
     @Override
     protected int getStatusBarColor() {
-        return ContextCompat.getColor(getContext(), R.color.purple_primary_dark);
+        return ContextCompat.getColor(getContext(), R.color.primary_dark);
     }
 
     private void initToolbar() {
-        toolbar.setTitleTextAppearance(getContext(), R.style.SelfUploadToolbarTitleTextAppearance);
-        toolbar.setSubtitleTextAppearance(getContext(),
-                R.style.SelfUploadToolbarSubtitleTextAppearance);
-        toolbar.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.purple_primary));
-        ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();
-        layoutParams.height =
-                getResources().getDimensionPixelSize(R.dimen.self_upload_dashboard_toolbar_height);
-        toolbar.setLayoutParams(layoutParams);
-        toolbar.setSubtitle(getString(R.string.self_upload_dashboard_subtitle));
+        toolbar.setTitle("");
+        toolbar.setNavigationIcon(R.drawable.back_white);
         setToolbar(toolbar);
     }
 
@@ -187,7 +182,7 @@ public class SelfUploadDashboardFragment extends BaseSelfUploadFragment
     public void setProgress(int progress) {
         progressBar.setProgress(progress);
         if (progress != MAX_PROGRESS) {
-            saveUploadButton.setText(getString(R.string.dashboard_progress_text_format, progress));
+            saveUploadButton.setText(String.format(PROGRESS_TEXT, progress));
             saveUploadButton.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.warm_grey));
             saveUploadButton.setOnClickListener(null);
         } else {

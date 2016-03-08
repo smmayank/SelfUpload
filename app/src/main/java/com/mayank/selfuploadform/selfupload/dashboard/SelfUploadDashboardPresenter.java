@@ -70,28 +70,32 @@ public class SelfUploadDashboardPresenter {
 
     private int calculatePhotosProgress() {
         PhotoModel photoModel = galleryRepository.getPhotoModel(model.getId());
-        ArrayList<PhotoModel.PhotoObject> photoObjects = new ArrayList<>();
-        for (String tag : photoModel.getMap().keySet()) {
-            photoObjects.addAll(photoModel.getMap().get(tag));
-        }
-        int totalObjects = photoObjects.size();
-        int progress;
-        if (0 == totalObjects) {
-            progress = 0;
-            view.setPhotosImageView(SelfUploadDashboardView.DEFAULT);
-            view.setDefaultPhotosView();
-        } else if (GalleryRepository.MIN_COUNT_GALLERY >= totalObjects) {
-            progress = 100;
-            view.setPhotosImageView(SelfUploadDashboardView.COMPLETED);
-            view.setCapturedPhotosView();
-            view.setCapturedImages(photoObjects);
+        if (null != photoModel && null != photoModel.getMap()) {
+            ArrayList<PhotoModel.PhotoObject> photoObjects = new ArrayList<>();
+            for (String tag : photoModel.getMap().keySet()) {
+                photoObjects.addAll(photoModel.getMap().get(tag));
+            }
+            int totalObjects = photoObjects.size();
+            int progress;
+            if (0 == totalObjects) {
+                progress = 0;
+                view.setPhotosImageView(SelfUploadDashboardView.DEFAULT);
+                view.setDefaultPhotosView();
+            } else if (GalleryRepository.MIN_COUNT_GALLERY >= totalObjects) {
+                progress = 100;
+                view.setPhotosImageView(SelfUploadDashboardView.COMPLETED);
+                view.setCapturedPhotosView();
+                view.setCapturedImages(photoObjects);
+            } else {
+                progress = 50;
+                view.setPhotosImageView(SelfUploadDashboardView.INCOMPLETE);
+                view.setCapturedPhotosView();
+                view.setCapturedImages(photoObjects);
+            }
+            return progress;
         } else {
-            progress = 50;
-            view.setPhotosImageView(SelfUploadDashboardView.INCOMPLETE);
-            view.setCapturedPhotosView();
-            view.setCapturedImages(photoObjects);
+            return 0;
         }
-        return progress;
     }
 
     public void detailsCardClicked() {
