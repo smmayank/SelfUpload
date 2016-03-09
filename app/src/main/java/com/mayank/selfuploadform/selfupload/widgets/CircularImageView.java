@@ -17,7 +17,7 @@ import android.widget.ImageView;
 
 public class CircularImageView extends ImageView {
 
-    private static float circularImageBorder = 1f;
+    private static float circularImageBorder = 5f;
 
     private final Matrix matrix;
     private final RectF source;
@@ -46,7 +46,7 @@ public class CircularImageView extends ImageView {
         bitmapPaint.setDither(true);
 
         borderPaint = new Paint();
-        borderPaint.setColor(Color.TRANSPARENT);
+        borderPaint.setColor(Color.WHITE);
         borderPaint.setStyle(Paint.Style.STROKE);
         borderPaint.setStrokeWidth(circularImageBorder);
         borderPaint.setAntiAlias(true);
@@ -64,7 +64,6 @@ public class CircularImageView extends ImageView {
         } else {
             bitmapDrawable = (BitmapDrawable) drawable;
         }
-
         if (bitmapDrawable == null) {
             return;
         }
@@ -106,6 +105,7 @@ public class CircularImageView extends ImageView {
 
         // Then draw the border.
         canvas.drawCircle(dest.centerX(), dest.centerY(),
-                dest.height() / 2f - circularImageBorder / 2, borderPaint);
+                this.getHeight() / 2f - circularImageBorder / 2, borderPaint);
+
     }
 }

@@ -16,6 +16,7 @@ public class GalleryRepository {
 
     public static final String GALLERY_MODEL = "gallery_model";
     public static final int MIN_COUNT_GALLERY = 1;
+    public static final int MAX_COUNT_GALLERY = 10;
 
     private Context context;
 

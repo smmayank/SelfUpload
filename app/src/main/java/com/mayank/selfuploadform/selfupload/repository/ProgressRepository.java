@@ -7,13 +7,15 @@ import com.mayank.selfuploadform.models.PropertyModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 
 /**
  * Created by rahulchandnani on 01/03/16
  */
 public class ProgressRepository {
 
-    private static final String COMMERCIAL_TEXT_FORMAT = "%s%s %s, ";
+    private static final String COMMERCIAL_PREFIX_TEXT_FORMAT = "%s%.0f %s, ";
+    private static final String COMMERCIAL_POSTFIX_TEXT_FORMAT = "%.0f%s %s, ";
     private Context context;
 
     public ProgressRepository(Context context) {
@@ -71,12 +73,13 @@ public class ProgressRepository {
                 }
             }
             finalString = finalString.concat(String
-                    .format(COMMERCIAL_TEXT_FORMAT, context.getString(R.string.rupee_sign), model.getPrice(),
-                            priceText));
+                    .format(Locale.getDefault(), COMMERCIAL_PREFIX_TEXT_FORMAT, context.getString(R.string.rupee_sign),
+                            model.getPrice(), priceText));
         }
         if (null != model.getBrokerage()) {
-            finalString = finalString.concat(String.format(COMMERCIAL_TEXT_FORMAT, model.getBrokerage(), context
-                    .getString(R.string.percentage), context.getString(R.string.brokerage)));
+            finalString = finalString.concat(String
+                    .format(Locale.getDefault(), COMMERCIAL_POSTFIX_TEXT_FORMAT, model.getBrokerage(),
+                            context.getString(R.string.percentage), context.getString(R.string.brokerage)));
         }
         if (null != model.getBuiltUpArea() || null != model.getCarpetArea()) {
             String[] areaArray = context.getResources().getStringArray(R.array.area_entries);
@@ -99,8 +102,9 @@ public class ProgressRepository {
                     }
                     i++;
                 }
-                finalString = finalString.concat(String.format(COMMERCIAL_TEXT_FORMAT, model.getBuiltUpArea(),
-                        builtUpAreaText, context.getString(R.string.built_up_area_title)));
+                finalString = finalString.concat(String
+                        .format(Locale.getDefault(), COMMERCIAL_POSTFIX_TEXT_FORMAT, model.getBuiltUpArea(),
+                                builtUpAreaText, context.getString(R.string.built_up_area_title)));
             }
             if (null != model.getCarpetArea()) {
                 String carpetAreaText = null;
@@ -112,12 +116,13 @@ public class ProgressRepository {
                     }
                     i++;
                 }
-                finalString = finalString.concat(String.format(COMMERCIAL_TEXT_FORMAT, model.getCarpetArea(),
-                        carpetAreaText, context.getString(R.string.carpet_area_title)));
+                finalString = finalString.concat(String
+                        .format(Locale.getDefault(), COMMERCIAL_POSTFIX_TEXT_FORMAT, model.getCarpetArea(),
+                                carpetAreaText, context.getString(R.string.carpet_area_title)));
             }
         }
         if (0 < finalString.length()) {
-            finalString = finalString.substring(0, finalString.length() - 1);
+            finalString = finalString.substring(0, finalString.length() - 2);
         }
         return finalString;
     }

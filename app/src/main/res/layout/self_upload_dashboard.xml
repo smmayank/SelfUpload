@@ -104,7 +104,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="@dimen/dimen_24dp">
+                    android:padding="@dimen/dimen_16dp">
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -170,7 +170,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="@dimen/dimen_24dp">
+                    android:padding="@dimen/dimen_16dp">
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -232,7 +232,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_0dp"
                 android:layout_weight="1"
-                android:padding="@dimen/dimen_24dp">
+                android:padding="@dimen/dimen_16dp">
 
                 <RelativeLayout
                     android:id="@+id/default_photos_view"

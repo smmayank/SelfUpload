@@ -4,6 +4,7 @@ import android.Manifest;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -129,17 +130,17 @@ public class SelfUploadDashboardFragment extends BaseSelfUploadFragment
     private void setImageView(ImageView imgView, int status) {
         int imageResource;
         switch (status) {
-            default:
-            case DEFAULT: {
-                imageResource = R.drawable.enter;
-                break;
-            }
             case INCOMPLETE: {
                 imageResource = R.drawable.incomplete;
                 break;
             }
             case COMPLETED: {
                 imageResource = R.drawable.complete;
+                break;
+            }
+            default:
+            case DEFAULT: {
+                imageResource = R.drawable.enter;
                 break;
             }
         }
@@ -266,9 +267,15 @@ public class SelfUploadDashboardFragment extends BaseSelfUploadFragment
         if (null != photoObjects && 0 < photoObjects.size()) {
             ArrayList<ImageView> imageViews = new ArrayList<>();
             imageViews.add((ImageView) imageStack.findViewById(R.id.image1));
-            imageViews.add((ImageView) imageStack.findViewById(R.id.image2));
-            imageViews.add((ImageView) imageStack.findViewById(R.id.image3));
-            imageViews.add((ImageView) imageStack.findViewById(R.id.image4));
+            ImageView imageView2 = (ImageView) imageStack.findViewById(R.id.image2);
+            ViewCompat.setElevation(imageView2, getResources().getDimension(R.dimen.dimen_5dp));
+            imageViews.add(imageView2);
+            ImageView imageView3 = (ImageView) imageStack.findViewById(R.id.image3);
+            ViewCompat.setElevation(imageView3, getResources().getDimension(R.dimen.dimen_10dp));
+            imageViews.add(imageView3);
+            ImageView imageView4 = (ImageView) imageStack.findViewById(R.id.image4);
+            ViewCompat.setElevation(imageView4, getResources().getDimension(R.dimen.dimen_15dp));
+            imageViews.add(imageView4);
             TextView textView = (TextView) imageStack.findViewById(R.id.last_text);
             int maxCount;
             boolean showText;

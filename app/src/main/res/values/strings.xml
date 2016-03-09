@@ -545,6 +545,8 @@
     <string name="dashboard_progress_text_format" formatted="false">%s&#37; COMPLETED</string>
     <string name="welcome_text">Hi %s</string>
     <string name="more_images_format">+%s</string>
+    <string name="max_allowed_delete" formatted="false">Max %s images allowed. You currently have captured %s images.
+        Please delete %s images to proceed.</string>
 
     <string-array name="property_types">
         <item>Apartment,1</item>

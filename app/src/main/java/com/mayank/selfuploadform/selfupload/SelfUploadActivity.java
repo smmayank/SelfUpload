@@ -45,7 +45,6 @@ public class SelfUploadActivity extends AppCompatActivity
     private Integer mPropertyId;
     public static final String PROPERTY_ID = "property_id";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -214,12 +213,10 @@ public class SelfUploadActivity extends AppCompatActivity
 
     private static class SaveImageTask extends AsyncTask<Void, Void, String> {
 
-
         private static final String URI_FILE_PREFIX = "file://";
         private final BaseSelfUploadFragment fragment;
         private final Bitmap bitmap;
         private final Context context;
-
 
         public SaveImageTask(Context context, BaseSelfUploadFragment fragment, Bitmap bitmap) {
             this.context = context;

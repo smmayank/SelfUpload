@@ -1,6 +1,7 @@
 package com.mayank.selfuploadform.selfupload.images.gallery;
 
 import com.mayank.selfuploadform.models.PhotoModel;
+import com.mayank.selfuploadform.selfupload.repository.GalleryRepository;
 
 import java.util.ArrayList;
 
@@ -22,7 +23,7 @@ public class GalleryPresenter {
     private void initDefaults() {
         this.selectedPhotoObjects = new ArrayList<>();
         galleryView.setDefaultMenuItems();
-        galleryView.setImagesToView(photoModel);
+        checkImages();
     }
 
     public void editOptionClicked() {
@@ -84,7 +85,40 @@ public class GalleryPresenter {
         selectedPhotoObjects.clear();
         galleryView.disableEditMode();
         galleryView.setDefaultMenuItems();
-        galleryView.setImagesToView(photoModel);
+        galleryView.saveImages();
+        checkImages();
+    }
+
+    public void saveImages() {
+        if (GalleryRepository.MAX_COUNT_GALLERY < getCurrentTotalImages()) {
+            galleryView.notifyUserToDelete(GalleryRepository.MAX_COUNT_GALLERY, getCurrentTotalImages());
+        }
+        galleryView.saveImages();
+
+    }
+
+    private void checkImages() {
+        int currentTotal = getCurrentTotalImages();
+        if (0 == currentTotal) {
+            galleryView.launchPicker(photoModel);
+        } else if (GalleryRepository.MAX_COUNT_GALLERY < currentTotal) {
+            galleryView.setImagesToView(photoModel);
+            galleryView.notifyUserToDelete(GalleryRepository.MAX_COUNT_GALLERY, currentTotal);
+        } else {
+            galleryView.setImagesToView(photoModel);
+        }
+    }
+
+    private int getCurrentTotalImages() {
+        if (null == photoModel) {
+            return 0;
+        } else {
+            int total = 0;
+            for (String key : photoModel.getMap().keySet()) {
+                total += photoModel.getMap().get(key).size();
+            }
+            return total;
+        }
     }
 
     public void addPhotosClicked() {

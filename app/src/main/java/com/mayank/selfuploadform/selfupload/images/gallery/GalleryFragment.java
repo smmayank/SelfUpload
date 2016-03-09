@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.mayank.selfuploadform.R;
@@ -174,14 +175,28 @@ public class GalleryFragment extends BaseSelfUploadFragment implements GalleryVi
 
     @Override
     public void launchPicker(PhotoModel photoModel) {
+        clearBackStack();
         openFragment(PhotoPickerFragment.newInstance(photoModel));
+    }
+
+    @Override
+    public void notifyUserToDelete(int maxAllowed, int currentTotal) {
+        Toast.makeText(getContext(),
+                getString(R.string.max_allowed_delete, maxAllowed, currentTotal, currentTotal - maxAllowed),
+                Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void saveImages() {
+        GalleryRepository.setPhotoModel(getContext(), getPropertyModel().getId(), photoModel);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.save_proceed: {
-                GalleryRepository.setPhotoModel(getContext(), getPropertyModel().getId(), photoModel);
+                galleryPresenter.saveImages();
+                clearBackStack();
                 break;
             }
             case R.id.edit: {
