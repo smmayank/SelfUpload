@@ -1,5 +1,4 @@
 package com.mayank.selfuploadform.selfupload.details;
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
@@ -7,17 +6,14 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.mayank.selfuploadform.R;
 import com.mayank.selfuploadform.selfupload.base.BaseSelfUploadEntry;
 import com.mayank.selfuploadform.selfupload.base.BaseSelfUploadFragment;
 import com.mayank.selfuploadform.selfupload.repository.SelfUploadFormRepository;
 import com.mayank.selfuploadform.selfupload.search.building.SelfUploadBuildingSearchFragment;
 import com.mayank.selfuploadform.selfupload.widgets.InputField;
-import com.mayank.selfuploadform.selfupload.widgets.NumberField;
 import com.mayank.selfuploadform.selfupload.widgets.SelectionField;
 import com.mayank.selfuploadform.selfupload.widgets.SpinnerField;
-
 import java.util.List;
 
 public class SelfUploadDetailsFragment extends BaseSelfUploadFragment implements SelfUploadDetailsView, View
@@ -31,8 +27,6 @@ public class SelfUploadDetailsFragment extends BaseSelfUploadFragment implements
 
     private SelectionField<BaseSelfUploadEntry<Integer>> propertyTypeSelector;
     private SpinnerField<BaseSelfUploadEntry<Integer>> flatConfigSelector;
-    private NumberField bathroomCount;
-    private NumberField balconiesCount;
     private SpinnerField<BaseSelfUploadEntry<String>> entryFacing;
     private InputField locality;
     private InputField buildingName;

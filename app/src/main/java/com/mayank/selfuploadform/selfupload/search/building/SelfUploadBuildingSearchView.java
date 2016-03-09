@@ -1,7 +1,17 @@
 package com.mayank.selfuploadform.selfupload.search.building;
 
-public interface SelfUploadBuildingSearchView {
-  void setEmptySearchText(CharSequence text);
+import com.mayank.selfuploadform.selfupload.search.building.models.SearchResultModel;
 
-  void openLocalitySearchView(CharSequence buildingName);
+import java.util.ArrayList;
+
+public interface SelfUploadBuildingSearchView {
+    void setEmptySearchText(CharSequence text);
+
+    void openLocalitySearchView(CharSequence buildingName);
+
+    void refreshAdapter();
+
+    void setAdapterData(ArrayList<SearchResultModel> buildingSearchResults);
+
+    void setLocality(String localityName);
 }

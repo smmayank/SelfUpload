@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
@@ -16,13 +17,21 @@ import android.widget.EditText;
 
 import com.mayank.selfuploadform.R;
 import com.mayank.selfuploadform.selfupload.base.BaseSelfUploadFragment;
+import com.mayank.selfuploadform.selfupload.search.building.adapter.SearchAdapter;
+import com.mayank.selfuploadform.selfupload.search.building.models.SearchResultModel;
+import com.mayank.selfuploadform.selfupload.search.SearchRepository;
+
+import java.util.ArrayList;
 
 public class SelfUploadLocalitySearchFragment extends BaseSelfUploadFragment
-        implements SelfUploadLocalitySearchView, AdapterView.OnItemClickListener, TextWatcher {
+        implements SelfUploadLocalitySearchView, AdapterView.OnItemClickListener, TextWatcher,View.OnClickListener {
 
     private SelfUploadLocalitySearchPresenter presenter;
     private Toolbar toolbar;
     private EditText localitySearchEditor;
+    private RecyclerView mLocalitiesList;
+    private SearchAdapter mSearchAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     public static Fragment newInstance(CharSequence buildingName) {
         Fragment frag = new SelfUploadLocalitySearchFragment();
@@ -35,7 +44,7 @@ public class SelfUploadLocalitySearchFragment extends BaseSelfUploadFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View inflate =
-                inflater.inflate(R.layout.self_upload_building_search_fragment, container, false);
+                inflater.inflate(R.layout.self_upload_locality_search_fragment, container, false);
         initValues();
         initViews(inflate);
         initToolbar();
@@ -47,18 +56,22 @@ public class SelfUploadLocalitySearchFragment extends BaseSelfUploadFragment
     }
 
     private void initPresenter() {
-        presenter = new SelfUploadLocalitySearchPresenter(this);
+        presenter = new SelfUploadLocalitySearchPresenter(this, new SearchRepository());
         presenter.onCreate(getArguments());
     }
 
     private void initViews(View inflate) {
         toolbar = (Toolbar) inflate.findViewById(R.id.toolbar);
 
-        RecyclerView localitiesList =
-                (RecyclerView) inflate.findViewById(R.id.self_upload_buidling_search_results);
+        mLocalitiesList =
+                (RecyclerView) inflate.findViewById(R.id.self_upload_locality_search_results);
+        mLayoutManager = new LinearLayoutManager(getContext());
+        mLocalitiesList.setLayoutManager(mLayoutManager);
+        mSearchAdapter = new SearchAdapter(getContext(), new ArrayList<SearchResultModel>(), this);
+        mLocalitiesList.setAdapter(mSearchAdapter);
 
         localitySearchEditor =
-                (EditText) inflate.findViewById(R.id.self_building_upload_building_search_editor);
+                (EditText) inflate.findViewById(R.id.self_building_upload_locality_search_editor);
         localitySearchEditor.addTextChangedListener(this);
     }
 
@@ -89,6 +102,12 @@ public class SelfUploadLocalitySearchFragment extends BaseSelfUploadFragment
     }
 
     @Override
+    public void setAdapterData(ArrayList<SearchResultModel> searchResultModels) {
+        mSearchAdapter.updateAdapter(searchResultModels);
+
+    }
+
+    @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
     }
 
@@ -101,4 +120,8 @@ public class SelfUploadLocalitySearchFragment extends BaseSelfUploadFragment
         presenter.searchLocality(s);
     }
 
+    @Override
+    public void onClick(View v) {
+
+    }
 }

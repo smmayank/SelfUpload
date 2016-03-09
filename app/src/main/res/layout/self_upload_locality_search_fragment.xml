@@ -12,17 +12,17 @@
         android:background="@color/white"
         app:popupTheme="@style/AppTheme.PopupOverlay">
 
-        <TextView
-            android:id="@+id/self_building_upload_building_search_editor"
+        <EditText
+            android:id="@+id/self_building_upload_locality_search_editor"
             style="@style/SelfUploadSearchEditorStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
-            android:hint="@string/search_building_editor_hint" />
+            android:hint="@string/search_locality_editor_hint" />
     </android.support.v7.widget.Toolbar>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/self_upload_buidling_search_results"
+        android:id="@+id/self_upload_locality_search_results"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

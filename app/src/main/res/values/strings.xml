@@ -539,6 +539,8 @@
     <string name="carpet_area_hint">Carpet Area of the property</string>
     <string name="carpet_area">Carpet Area*</string>
     <string name="date_select_hint">dd / mm / yyyy</string>
+    <string name="building_name">Building Name</string>
+    <string name="building_name_hint">Enter Building Name</string>
 
     <string-array name="property_types">
         <item>Apartment,1</item>

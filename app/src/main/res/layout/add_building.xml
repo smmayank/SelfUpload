@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <com.mayank.selfuploadform.selfupload.widgets.InputField
+        android:id="@+id/building_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/field_margin_top"
+        app:editable="true"
+        app:headerText="@string/building_name"
+        app:inputType="number"
+        app:mandatory="true" />
+
+
+    <com.mayank.selfuploadform.selfupload.widgets.InputField
+        android:id="@+id/locality_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/field_margin_top"
+        app:descriptorIcon="@drawable/search"
+        app:editable="false"
+        app:headerText="Locality"
+        app:mandatory="true" />
+
+
+
+</LinearLayout>
