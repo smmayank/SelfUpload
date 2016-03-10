@@ -34,4 +34,6 @@ public interface GalleryView {
     void notifyUserToDelete(int maxAllowed, int currentTotal);
 
     void saveImages();
+
+    void exit();
 }

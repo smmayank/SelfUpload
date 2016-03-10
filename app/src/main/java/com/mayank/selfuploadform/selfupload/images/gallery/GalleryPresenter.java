@@ -92,9 +92,10 @@ public class GalleryPresenter {
     public void saveImages() {
         if (GalleryRepository.MAX_COUNT_GALLERY < getCurrentTotalImages()) {
             galleryView.notifyUserToDelete(GalleryRepository.MAX_COUNT_GALLERY, getCurrentTotalImages());
+        } else {
+            galleryView.saveImages();
+            galleryView.exit();
         }
-        galleryView.saveImages();
-
     }
 
     private void checkImages() {
@@ -124,4 +125,5 @@ public class GalleryPresenter {
     public void addPhotosClicked() {
         galleryView.launchPicker(photoModel);
     }
+
 }

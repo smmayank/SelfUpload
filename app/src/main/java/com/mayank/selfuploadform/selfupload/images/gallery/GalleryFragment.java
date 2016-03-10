@@ -192,11 +192,15 @@ public class GalleryFragment extends BaseSelfUploadFragment implements GalleryVi
     }
 
     @Override
+    public void exit() {
+        clearBackStack();
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.save_proceed: {
                 galleryPresenter.saveImages();
-                clearBackStack();
                 break;
             }
             case R.id.edit: {
