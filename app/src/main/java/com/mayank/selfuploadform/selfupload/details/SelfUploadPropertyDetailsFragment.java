@@ -44,7 +44,7 @@ public class SelfUploadPropertyDetailsFragment extends BaseSelfUploadFragment im
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
             @Nullable Bundle savedInstanceState) {
-        View inflate = inflater.inflate(R.layout.self_upload_details_fragment, container, false);
+        View inflate = inflater.inflate(R.layout.self_upload_property_details_fragment, container, false);
         initValues();
         initViews(inflate);
         initToolbar();

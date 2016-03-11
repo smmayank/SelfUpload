@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import com.mayank.selfuploadform.R;
 import com.mayank.selfuploadform.selfupload.base.BaseSelfUploadFragment;
-import com.mayank.selfuploadform.selfupload.details.SelfUploadDetailsFragment;
+import com.mayank.selfuploadform.selfupload.details.SelfUploadPropertyDetailsFragment;
 import com.mayank.selfuploadform.selfupload.search.SearchRepository;
 import com.mayank.selfuploadform.selfupload.search.building.adapter.SearchAdapter;
 import com.mayank.selfuploadform.selfupload.search.building.models.LocalitiesModel;
@@ -141,7 +141,7 @@ public class SelfUploadBuildingSearchFragment extends BaseSelfUploadFragment
     @Override
     public void setLocality(LocalitiesModel locality) {
         callBackPress();
-        callUpdateAndReplace(-1, SelfUploadDetailsFragment.class.getSimpleName(), locality.getName(), presenter
+        callUpdateAndReplace(-1, SelfUploadPropertyDetailsFragment.class.getSimpleName(), locality.getName(), presenter
                 .getBuildingName());
     }
     @Override

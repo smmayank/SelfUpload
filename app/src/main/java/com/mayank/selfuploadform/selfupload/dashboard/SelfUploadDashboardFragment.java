@@ -20,7 +20,7 @@ import com.mayank.selfuploadform.R;
 import com.mayank.selfuploadform.models.PhotoModel;
 import com.mayank.selfuploadform.selfupload.base.BaseSelfUploadFragment;
 import com.mayank.selfuploadform.selfupload.commercials.SelfUploadCommercialsFragment;
-import com.mayank.selfuploadform.selfupload.details.SelfUploadDetailsFragment;
+import com.mayank.selfuploadform.selfupload.details.SelfUploadPropertyDetailsFragment;
 import com.mayank.selfuploadform.selfupload.images.gallery.GalleryFragment;
 import com.mayank.selfuploadform.selfupload.images.photopicker.PhotoPickerFragment;
 import com.mayank.selfuploadform.selfupload.repository.GalleryRepository;
@@ -246,7 +246,7 @@ public class  SelfUploadDashboardFragment extends BaseSelfUploadFragment
 
     @Override
     public void openDetailsView() {
-        openFragment(new SelfUploadDetailsFragment());
+        openFragment(new SelfUploadPropertyDetailsFragment());
     }
 
     @Override
