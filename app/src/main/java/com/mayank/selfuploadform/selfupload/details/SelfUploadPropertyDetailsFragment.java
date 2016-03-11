@@ -16,7 +16,7 @@ import com.mayank.selfuploadform.selfupload.widgets.SelectionField;
 import com.mayank.selfuploadform.selfupload.widgets.SpinnerField;
 import java.util.List;
 
-public class SelfUploadDetailsFragment extends BaseSelfUploadFragment implements SelfUploadDetailsView, View
+public class SelfUploadPropertyDetailsFragment extends BaseSelfUploadFragment implements SelfUploadDetailsView, View
         .OnClickListener, InputField.InputFieldInteractionListener, SelectionField.SelectionFieldInteractionListener,
         SpinnerField.SpinnerFieldInteractionListener {
 
@@ -163,7 +163,7 @@ public class SelfUploadDetailsFragment extends BaseSelfUploadFragment implements
     }
 
     @Override
-    public void openLocalitySearch() {
+    public void openBuildingSearch() {
         openFragment(new SelfUploadBuildingSearchFragment());
     }
 
@@ -256,6 +256,24 @@ public class SelfUploadDetailsFragment extends BaseSelfUploadFragment implements
                 break;
             }
         }
+
+    }
+
+    @Override
+    public void updateFragment(int requestCode, Object... data) {
+        locality.setVisibility(View.VISIBLE);
+        floorNumber.setVisibility(View.VISIBLE);
+        totalFloor.setVisibility(View.VISIBLE);
+        ageOfProperty.setVisibility(View.VISIBLE);
+        amenityHeader.setVisibility(View.VISIBLE);
+        parking.setVisibility(View.VISIBLE);
+        cupboards.setVisibility(View.VISIBLE);
+        pipeline.setVisibility(View.VISIBLE);
+        description.setVisibility(View.VISIBLE);
+        buildingName.setText(data[1].toString());
+        buildingName.setEnabled(false);
+        locality.setText(data[0].toString());
+        locality.setEnabled(false);
 
     }
 

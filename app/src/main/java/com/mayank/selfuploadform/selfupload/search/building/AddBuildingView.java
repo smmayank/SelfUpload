@@ -7,5 +7,6 @@ public interface AddBuildingView {
 
     void setBuildingName(String name);
     void setLocalityName(String name);
+    void openLocalitySearch();
 
 }

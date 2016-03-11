@@ -2,16 +2,16 @@
 
     <item android:id="@android:id/background">
         <shape>
-            <corners android:radius="@dimen/dimen_3dp" />
-            <solid android:color="@color/gray" />
+            <corners android:radius="@dimen/dimen_0dp" />
+            <solid android:color="@color/black_20_percent_opacity" />
         </shape>
     </item>
 
     <item android:id="@android:id/secondaryProgress">
         <clip>
             <shape>
-                <corners android:radius="@dimen/dimen_3dp" />
-                <solid android:color="@color/primary_dark" />
+                <corners android:radius="@dimen/dimen_0dp" />
+                <solid android:color="@color/purple" />
             </shape>
         </clip>
     </item>
@@ -19,8 +19,8 @@
     <item android:id="@android:id/progress">
         <clip>
             <shape>
-                <corners android:radius="@dimen/dimen_3dp" />
-                <solid android:color="@color/primary" />
+                <corners android:radius="@dimen/dimen_0dp" />
+                <solid android:color="@color/purple" />
             </shape>
         </clip>
     </item>

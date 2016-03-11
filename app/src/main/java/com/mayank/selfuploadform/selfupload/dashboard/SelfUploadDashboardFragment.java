@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,102 +24,224 @@ import com.mayank.selfuploadform.selfupload.details.SelfUploadDetailsFragment;
 import com.mayank.selfuploadform.selfupload.images.gallery.GalleryFragment;
 import com.mayank.selfuploadform.selfupload.images.photopicker.PhotoPickerFragment;
 import com.mayank.selfuploadform.selfupload.repository.GalleryRepository;
+import com.mayank.selfuploadform.selfupload.repository.ProgressRepository;
+import com.squareup.picasso.Picasso;
 
-public class SelfUploadDashboardFragment extends BaseSelfUploadFragment
+import java.io.File;
+import java.util.ArrayList;
+
+public class  SelfUploadDashboardFragment extends BaseSelfUploadFragment
         implements SelfUploadDashboardView, View.OnClickListener {
 
-    private static final int MAX_PROGRESS = 100;
     public static final int ACCESS_STORAGE_PERMISSION = 101;
+    private static final int MAX_PROGRESS = 100;
+
+    private static final String PROGRESS_TEXT = "%s%% COMPLETED";
+
     private SelfUploadDashboardPresenter presenter;
+
     private Toolbar toolbar;
-    private float cardsElevation;
-    private Button actionButton;
+
+    private Button saveUploadButton;
+
     private ProgressBar progressBar;
-    private TextView detailsSubtitleView;
-    private TextView commercialsSubtitleView;
-    private TextView photosSubtitleView;
-    private ImageView detailsStatusView;
-    private ImageView commercialsStatusView;
-    private ImageView photosStatusView;
-    private View view;
+
+    private View defaultPhotosView;
+    private View capturedPhotoView;
+    private View imageStack;
+
+    private TextView welcomeText;
+    private TextView detailsHelpText;
+    private TextView commercialHelpText;
+
+    private ImageView detailsImageView;
+    private ImageView commercialImageView;
+    private ImageView photosImageView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.self_upload_dashboard_fragment, container, false);
-        initValues();
+        View view = inflater.inflate(R.layout.self_upload_dashboard, container, false);
         initViews(view);
         initToolbar();
-        initPresenter();
+        setListeners(view);
         return view;
+    }
+
+    private void setListeners(View view) {
+        view.findViewById(R.id.commercial_card).setOnClickListener(this);
+        view.findViewById(R.id.property_details_card).setOnClickListener(this);
+        view.findViewById(R.id.photos_card).setOnClickListener(this);
+    }
+
+    @Override
+    public void onPermissionResult(int requestID, boolean granted) {
+        super.onPermissionResult(requestID, granted);
+        switch (requestID) {
+            case ACCESS_STORAGE_PERMISSION: {
+                if (granted) {
+                    launchGalleryModule();
+                } else {
+                    Toast.makeText(getContext(), getString(R.string.storage_permission_denied), Toast.LENGTH_SHORT)
+                            .show();
+                }
+                break;
+            }
+        }
+    }
+
+    private void initViews(View view) {
+        toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        saveUploadButton = (Button) view.findViewById(R.id.save_upload);
+        progressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
+        welcomeText = (TextView) view.findViewById(R.id.welcome_text);
+        detailsHelpText = (TextView) view.findViewById(R.id.details_help_text);
+        commercialHelpText = (TextView) view.findViewById(R.id.commercial_help_text);
+        defaultPhotosView = view.findViewById(R.id.default_photos_view);
+        capturedPhotoView = view.findViewById(R.id.photos_second_view);
+        imageStack = view.findViewById(R.id.image_stack);
+        detailsImageView = (ImageView) view.findViewById(R.id.details_image_view);
+        commercialImageView = (ImageView) view.findViewById(R.id.commercial_image_view);
+        photosImageView = (ImageView) view.findViewById(R.id.photos_image_view);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        presenter.onResume();
+        initValues();
+    }
+
+    private void initValues() {
+        presenter = new SelfUploadDashboardPresenter(this, new GalleryRepository(getContext()), getPropertyModel(),
+                new ProgressRepository(getContext()), "Daddy");
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        presenter.onPause();
+    protected int getStatusBarColor() {
+        return ContextCompat.getColor(getContext(), R.color.primary_dark);
     }
 
-    @Override
-    public void setUsername(CharSequence name) {
-        toolbar.setTitle(getString(R.string.self_upload_dashboard_title, name));
-        updateToolbar();
-    }
-
-    private void updateToolbar() {
+    private void initToolbar() {
+        toolbar.setTitle("");
+        toolbar.setNavigationIcon(R.drawable.back_white);
         setToolbar(toolbar);
+    }
+
+    private void setImageView(ImageView imgView, int status) {
+        int imageResource;
+        switch (status) {
+            case INCOMPLETE: {
+                imageResource = R.drawable.incomplete;
+                break;
+            }
+            case COMPLETED: {
+                imageResource = R.drawable.complete;
+                break;
+            }
+            default:
+            case DEFAULT: {
+                imageResource = R.drawable.enter;
+                break;
+            }
+        }
+        imgView.setImageResource(imageResource);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.property_details_card: {
+                presenter.detailsCardClicked();
+                break;
+            }
+            case R.id.commercial_card: {
+                presenter.commercialsCardClicked();
+                break;
+            }
+            case R.id.photos_card: {
+                requestForPermission(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE}, ACCESS_STORAGE_PERMISSION);
+                break;
+            }
+            case R.id.save_upload: {
+                presenter.saveUploadButtonClicked();
+                break;
+            }
+        }
+    }
+
+    private void launchGalleryModule() {
+        presenter.photosCardClicked();
+    }
+
+    @Override
+    public void setUsername(String name) {
+        welcomeText.setText(getString(R.string.welcome_text, name));
     }
 
     @Override
     public void setProgress(int progress) {
         progressBar.setProgress(progress);
+        if (progress != MAX_PROGRESS) {
+            saveUploadButton.setText(String.format(PROGRESS_TEXT, progress));
+            saveUploadButton.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.warm_grey));
+            saveUploadButton.setOnClickListener(null);
+        } else {
+            saveUploadButton.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.purple));
+            saveUploadButton.setText(getString(R.string.save_and_upload));
+            saveUploadButton.setOnClickListener(this);
+        }
     }
 
     @Override
-    public void showProgressBar(boolean visible) {
-        setViewVisibility(progressBar, visible);
+    public void setDetailsSubTitle(String data) {
+        if (!TextUtils.isEmpty(data)) {
+            detailsHelpText.setText(data);
+        } else {
+            detailsHelpText.setText(getString(R.string.self_upload_dashboard_property_detail_sub_title));
+        }
     }
 
     @Override
-    public void enableActionButton(boolean enabled) {
-        actionButton.setEnabled(enabled);
+    public void setCommercialsSubTitle(String data) {
+        if (!TextUtils.isEmpty(data)) {
+            commercialHelpText.setText(data);
+        } else {
+            commercialHelpText.setText(getString(R.string.self_upload_dashboard_commercials_sub_title));
+        }
     }
 
     @Override
-    public void setDetailsSubTitle(CharSequence data) {
-        detailsSubtitleView.setText(data);
+    public void setCapturedImages(ArrayList<PhotoModel.PhotoObject> photoObjects) {
+        handleImageStack(photoObjects);
     }
 
     @Override
-    public void setDetailsStatus(int status) {
-        setStatus(detailsStatusView, status);
+    public void setDefaultPhotosView() {
+        defaultPhotosView.setVisibility(View.VISIBLE);
+        capturedPhotoView.setVisibility(View.GONE);
     }
 
     @Override
-    public void setCommercialsSubTitle(CharSequence data) {
-        commercialsSubtitleView.setText(data);
+    public void setCapturedPhotosView() {
+        defaultPhotosView.setVisibility(View.GONE);
+        capturedPhotoView.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public void setCommercialsStatus(int status) {
-        setStatus(commercialsStatusView, status);
+    public void setDetailsImageView(int status) {
+        setImageView(detailsImageView, status);
     }
 
     @Override
-    public void showPhotos(CharSequence... images) {
-        setViewVisibility(photosSubtitleView, null == images || 0 == images.length);
+    public void setCommercialImageView(int status) {
+        setImageView(commercialImageView, status);
     }
 
     @Override
-    public void setPhotosStatus(int status) {
-        setStatus(photosStatusView, status);
+    public void setPhotosImageView(int status) {
+        setImageView(photosImageView, status);
     }
 
     @Override
@@ -141,124 +264,46 @@ public class SelfUploadDashboardFragment extends BaseSelfUploadFragment
         openFragment(GalleryFragment.newInstance(photoModel));
     }
 
-    @Override
-    public void onPermissionResult(int requestID, boolean granted) {
-        super.onPermissionResult(requestID, granted);
-        switch (requestID) {
-            case ACCESS_STORAGE_PERMISSION: {
-                if (granted) {
-                    launchGalleryModule();
-                } else {
-                    Toast.makeText(getContext(), getString(R.string.storage_permission_denied), Toast.LENGTH_SHORT)
-                            .show();
-                }
-                break;
+    private void handleImageStack(ArrayList<PhotoModel.PhotoObject> photoObjects) {
+        if (null != photoObjects && 0 < photoObjects.size()) {
+            ArrayList<ImageView> imageViews = new ArrayList<>();
+            imageViews.add((ImageView) imageStack.findViewById(R.id.image1));
+            ImageView imageView2 = (ImageView) imageStack.findViewById(R.id.image2);
+            ViewCompat.setElevation(imageView2, getResources().getDimension(R.dimen.dimen_5dp));
+            imageViews.add(imageView2);
+            ImageView imageView3 = (ImageView) imageStack.findViewById(R.id.image3);
+            ViewCompat.setElevation(imageView3, getResources().getDimension(R.dimen.dimen_10dp));
+            imageViews.add(imageView3);
+            ImageView imageView4 = (ImageView) imageStack.findViewById(R.id.image4);
+            ViewCompat.setElevation(imageView4, getResources().getDimension(R.dimen.dimen_15dp));
+            imageViews.add(imageView4);
+            TextView textView = (TextView) imageStack.findViewById(R.id.last_text);
+            int maxCount;
+            boolean showText;
+            if (imageViews.size() == photoObjects.size()) {
+                maxCount = imageViews.size();
+                showText = false;
+            } else if (imageViews.size() > photoObjects.size()) {
+                maxCount = photoObjects.size();
+                showText = false;
+            } else {
+                maxCount = imageViews.size() - 1;
+                showText = true;
             }
+            for (int i = 0; i < maxCount; i++) {
+                imageViews.get(i).setVisibility(View.VISIBLE);
+                File file = new File(photoObjects.get(i).getPath());
+                Picasso.with(getContext()).load(file).into(imageViews.get(i));
+            }
+            if (showText) {
+                imageViews.get(imageViews.size() - 1).setVisibility(View.VISIBLE);
+                int count = photoObjects.size() - (imageViews.size() - 1);
+                textView.setText(getString(R.string.more_images_format, count));
+                textView.setVisibility(View.VISIBLE);
+            }
+        } else {
+            setDefaultPhotosView();
         }
-    }
-
-    private void initValues() {
-        cardsElevation = getResources().getDimension(R.dimen.dimen_5dp);
-    }
-
-    private void initViews(View inflate) {
-        toolbar = (Toolbar) inflate.findViewById(R.id.toolbar);
-
-        View cardsList = inflate.findViewById(R.id.dashboard_cards_list);
-        ViewCompat.setElevation(cardsList, cardsElevation);
-
-        View detailsCard = inflate.findViewById(R.id.self_upload_dashboard_details_card);
-        detailsCard.setOnClickListener(this);
-        detailsSubtitleView =
-                (TextView) detailsCard.findViewById(R.id.self_upload_dashboard_details_card_sub_title);
-        detailsStatusView = (ImageView) detailsCard
-                .findViewById(R.id.self_upload_dashboard_details_card_status_image);
-
-        View commercialsCard = inflate.findViewById(R.id.self_upload_dashboard_commercials_card);
-        commercialsCard.setOnClickListener(this);
-        commercialsSubtitleView =
-                (TextView) commercialsCard
-                        .findViewById(R.id.self_upload_dashboard_commercials_card_sub_title);
-        commercialsStatusView =
-                (ImageView) commercialsCard
-                        .findViewById(R.id.self_upload_dashboard_commercials_card_status_image);
-
-        View photosCard = inflate.findViewById(R.id.self_upload_dashboard_photos_card);
-        photosCard.setOnClickListener(this);
-        photosSubtitleView =
-                (TextView) photosCard.findViewById(R.id.self_upload_dashboard_photos_card_sub_title);
-        photosStatusView = (ImageView) photosCard
-                .findViewById(R.id.self_upload_dashboard_photos_card_status_image);
-
-        actionButton = (Button) inflate.findViewById(R.id.dashboard_action_button);
-
-        progressBar = (ProgressBar) inflate.findViewById(R.id.dashboard_progress_bar);
-        progressBar.setMax(MAX_PROGRESS);
-    }
-
-    private void initPresenter() {
-        presenter = new SelfUploadDashboardPresenter(this);
-    }
-
-    @Override
-    protected int getStatusBarColor() {
-        return ContextCompat.getColor(getContext(), R.color.purple_primary_dark);
-    }
-
-    private void initToolbar() {
-        toolbar.setTitleTextAppearance(getContext(), R.style.SelfUploadToolbarTitleTextAppearance);
-        toolbar.setSubtitleTextAppearance(getContext(),
-                R.style.SelfUploadToolbarSubtitleTextAppearance);
-        toolbar.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.purple_primary));
-        ViewGroup.LayoutParams layoutParams = toolbar.getLayoutParams();
-        layoutParams.height =
-                getResources().getDimensionPixelSize(R.dimen.self_upload_dashboard_toolbar_height);
-        toolbar.setLayoutParams(layoutParams);
-        toolbar.setSubtitle(getString(R.string.self_upload_dashboard_subtitle));
-        updateToolbar();
-    }
-
-    private void setStatus(ImageView imgView, int status) {
-        int imgRes;
-        switch (status) {
-            default:
-            case CARD_STATUS_NEW: {
-                imgRes = R.drawable.enter;
-                break;
-            }
-            case CARD_STATUS_INCOMPLETE: {
-                imgRes = R.drawable.incomplete;
-                break;
-            }
-            case CARD_STATUS_COMPLETE: {
-                imgRes = R.drawable.complete;
-                break;
-            }
-        }
-        imgView.setImageResource(imgRes);
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.self_upload_dashboard_details_card: {
-                presenter.detailsCardClicked();
-                break;
-            }
-            case R.id.self_upload_dashboard_commercials_card: {
-                presenter.commercialsCardClicked();
-                break;
-            }
-            case R.id.self_upload_dashboard_photos_card: {
-                requestForPermission(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE}, ACCESS_STORAGE_PERMISSION);
-                break;
-            }
-        }
-    }
-
-    private void launchGalleryModule() {
-        presenter.photosCardClicked(new GalleryRepository(getContext(), null).getPhotoModel());
     }
 
 }

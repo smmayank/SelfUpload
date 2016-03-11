@@ -3,7 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="@dimen/dimen_16dp">
+
+    <include layout="@layout/self_upload_toolbar" />
 
     <com.mayank.selfuploadform.selfupload.widgets.InputField
         android:id="@+id/building_name"
@@ -12,7 +15,7 @@
         android:layout_marginTop="@dimen/field_margin_top"
         app:editable="true"
         app:headerText="@string/building_name"
-        app:inputType="number"
+        app:inputType="text"
         app:mandatory="true" />
 
 

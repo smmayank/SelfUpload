@@ -208,6 +208,17 @@ public class InputField extends BaseField implements View.OnClickListener, TextW
         }
     }
 
+    public void setText (CharSequence text) {
+        if (!TextUtils.isEmpty(text)) {
+            getEditor().setText(text);
+        }
+
+    }
+
+    public void setEnabled (boolean enabled) {
+        getEditor().setEnabled(enabled);
+    }
+
     public interface InputFieldInteractionListener {
         void onInputFieldClicked(InputField field);
 

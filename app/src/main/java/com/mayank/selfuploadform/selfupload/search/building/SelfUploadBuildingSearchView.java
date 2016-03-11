@@ -1,5 +1,6 @@
 package com.mayank.selfuploadform.selfupload.search.building;
 
+import com.mayank.selfuploadform.selfupload.search.building.models.LocalitiesModel;
 import com.mayank.selfuploadform.selfupload.search.building.models.SearchResultModel;
 
 import java.util.ArrayList;
@@ -13,5 +14,5 @@ public interface SelfUploadBuildingSearchView {
 
     void setAdapterData(ArrayList<SearchResultModel> buildingSearchResults);
 
-    void setLocality(String localityName);
+    void setLocality(LocalitiesModel locality);
 }

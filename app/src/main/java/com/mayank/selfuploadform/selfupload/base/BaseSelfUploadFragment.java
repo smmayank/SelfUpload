@@ -41,6 +41,10 @@ public abstract class BaseSelfUploadFragment extends TrackedFragment {
 
     }
 
+    protected void callBackPress(){
+        listener.callBackPress();
+    }
+
     protected int getStatusBarColor() {
         return defaultColor;
     }
@@ -63,6 +67,10 @@ public abstract class BaseSelfUploadFragment extends TrackedFragment {
 
     protected void clearBackStack() {
         listener.clearBackStack();
+    }
+
+    protected void callUpdateAndReplace (int requestCode, String fragmentTag, Object... data) {
+        listener.updateAndReplaceFragment(requestCode,fragmentTag,data);
     }
 
     public void onPermissionResult(int requestID, boolean granted) {
@@ -90,6 +98,9 @@ public abstract class BaseSelfUploadFragment extends TrackedFragment {
 
         PropertyModel getPropertyModel();
 
+        void updateAndReplaceFragment(int requestCode,String fragmentTag, Object... data);
+
+        void callBackPress();
     }
 
 }

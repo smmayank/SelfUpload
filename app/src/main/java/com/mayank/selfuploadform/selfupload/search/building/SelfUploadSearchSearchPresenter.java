@@ -3,6 +3,7 @@ package com.mayank.selfuploadform.selfupload.search.building;
 import android.text.TextUtils;
 
 import com.mayank.selfuploadform.base.Logger;
+import com.mayank.selfuploadform.models.PropertyModel;
 import com.mayank.selfuploadform.selfupload.search.building.models.BuildingDetailsResult;
 import com.mayank.selfuploadform.selfupload.search.building.models.SearchResultModel;
 import com.mayank.selfuploadform.selfupload.search.building.models.LocalitiesModel;
@@ -17,10 +18,13 @@ public class SelfUploadSearchSearchPresenter implements
 
     private final SelfUploadBuildingSearchView view;
     private SearchRepository mBuildingSearchRepo;
+    private PropertyModel mPropertyModel;
 
-    public SelfUploadSearchSearchPresenter(SelfUploadBuildingSearchView view, SearchRepository buildingSearchRepository) {
+    public SelfUploadSearchSearchPresenter(SelfUploadBuildingSearchView view, SearchRepository
+            buildingSearchRepository, PropertyModel propertyModel) {
         this.view = view;
         this.mBuildingSearchRepo = buildingSearchRepository;
+        this.mPropertyModel = propertyModel;
         initDefaults();
     }
 
@@ -42,6 +46,7 @@ public class SelfUploadSearchSearchPresenter implements
     }
 
     public void getBuildingDetails (int id) {
+        mPropertyModel.setBuildingId(id);
         mBuildingSearchRepo.getBuildingDetails("http://harmans.housing.com:3001", id, this);
     }
 
@@ -64,6 +69,7 @@ public class SelfUploadSearchSearchPresenter implements
 
     @Override
     public void onBuildingDetailsReceived(ArrayList<BuildingDetailsResult> buildingDetailsResults) {
+
         getLocality(buildingDetailsResults.get(0).getLat(), buildingDetailsResults.get(0).getLng());
 
 
@@ -71,8 +77,16 @@ public class SelfUploadSearchSearchPresenter implements
 
     @Override
     public void onLocalityDataReceived(LocalitiesModel locality) {
-        view.setLocality(locality.getName());
+        mPropertyModel.setLocalityId(locality.getUuid());
+        mPropertyModel.setLocalityName(locality.getName());
+        view.setLocality(locality);
+    }
 
+    public void setBuildingName(String buildingName) {
+        mPropertyModel.setBuildingName(buildingName);
+    }
 
+    public String getBuildingName() {
+        return mPropertyModel.getBuildingName();
     }
 }

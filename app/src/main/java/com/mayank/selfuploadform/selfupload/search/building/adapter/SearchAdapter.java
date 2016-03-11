@@ -42,7 +42,8 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.DataObject
     public void onBindViewHolder(DataObjectHolder holder, int position) {
 
         holder.buildingName.setText(mBuildingSearchResult.get(position).getName());
-        holder.buildingName.setTag(R.id.building_id, mBuildingSearchResult.get(position).getUuid());
+        holder.buildingName.setTag(R.id.entity_id, mBuildingSearchResult.get(position).getUuid());
+        holder.buildingName.setTag(R.id.entity_name, mBuildingSearchResult.get(position).getName());
 
 
     }
@@ -63,7 +64,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.DataObject
 
         public DataObjectHolder(View itemView, View.OnClickListener onClickListener) {
             super(itemView);
-            buildingName = (TextView)itemView.findViewById(R.id.building_name);
+            buildingName = (TextView)itemView.findViewById(R.id.name);
             buildingName.setOnClickListener(onClickListener);
         }
 

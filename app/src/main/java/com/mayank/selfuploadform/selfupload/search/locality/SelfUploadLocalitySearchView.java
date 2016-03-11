@@ -5,7 +5,7 @@ import com.mayank.selfuploadform.selfupload.search.building.models.SearchResultM
 import java.util.ArrayList;
 
 public interface SelfUploadLocalitySearchView {
-  void setBuildingName(CharSequence buildingName);
+
 
   void setAdapterData(ArrayList<SearchResultModel> searchResultModels);
 }

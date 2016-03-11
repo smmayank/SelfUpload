@@ -542,6 +542,16 @@
     <string name="building_name">Building Name</string>
     <string name="building_name_hint">Enter Building Name</string>
 
+    <string name="built_up_area_title">Built-up Area</string>
+    <string name="carpet_area_title">Carpet Area</string>
+    <string name="self_upload_help_text">Let\'s list your property in Housing</string>
+    <string name="dashboard_progress_text_format" formatted="false">%s&#37; COMPLETED</string>
+    <string name="welcome_text">Hi %s</string>
+    <string name="more_images_format">+%s</string>
+    <string name="max_allowed_delete" formatted="false">Max %s images allowed. You currently have captured %s images.
+        Please delete %s images to proceed.</string>
+    <string name="add_new_building">Add New Building</string>
+
     <string-array name="property_types">
         <item>Apartment,1</item>
         <item>Independent House,2</item>

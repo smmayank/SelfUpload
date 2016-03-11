@@ -2,7 +2,6 @@ package com.mayank.selfuploadform.selfupload.search.locality;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,9 +16,10 @@ import android.widget.EditText;
 
 import com.mayank.selfuploadform.R;
 import com.mayank.selfuploadform.selfupload.base.BaseSelfUploadFragment;
+import com.mayank.selfuploadform.selfupload.search.SearchRepository;
+import com.mayank.selfuploadform.selfupload.search.building.AddBuildingFragment;
 import com.mayank.selfuploadform.selfupload.search.building.adapter.SearchAdapter;
 import com.mayank.selfuploadform.selfupload.search.building.models.SearchResultModel;
-import com.mayank.selfuploadform.selfupload.search.SearchRepository;
 
 import java.util.ArrayList;
 
@@ -32,12 +32,6 @@ public class SelfUploadLocalitySearchFragment extends BaseSelfUploadFragment
     private RecyclerView mLocalitiesList;
     private SearchAdapter mSearchAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-
-    public static Fragment newInstance(CharSequence buildingName) {
-        Fragment frag = new SelfUploadLocalitySearchFragment();
-        frag.setArguments(SelfUploadLocalitySearchPresenter.generateArgs(buildingName));
-        return frag;
-    }
 
     @Nullable
     @Override
@@ -56,8 +50,7 @@ public class SelfUploadLocalitySearchFragment extends BaseSelfUploadFragment
     }
 
     private void initPresenter() {
-        presenter = new SelfUploadLocalitySearchPresenter(this, new SearchRepository());
-        presenter.onCreate(getArguments());
+        presenter = new SelfUploadLocalitySearchPresenter(this, new SearchRepository(), getPropertyModel());
     }
 
     private void initViews(View inflate) {
@@ -92,13 +85,6 @@ public class SelfUploadLocalitySearchFragment extends BaseSelfUploadFragment
     @Override
     public void onDestroy() {
         super.onDestroy();
-        presenter.onDestroy();
-    }
-
-    @Override
-    public void setBuildingName(CharSequence buildingName) {
-        toolbar.setTitle(buildingName);
-        setToolbar(toolbar);
     }
 
     @Override
@@ -122,6 +108,18 @@ public class SelfUploadLocalitySearchFragment extends BaseSelfUploadFragment
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.name: {
+                String localityId = v.getTag(R.id.entity_id).toString();
+                presenter.setLocalityId(localityId);
+                String localityName = v.getTag(R.id.entity_name).toString();
+                presenter.setLocalityName(localityName);
+                callBackPress();
+                callUpdateAndReplace(-1, AddBuildingFragment.class.getSimpleName(), localityName);
+                break;
+
+            }
+        }
 
     }
 }

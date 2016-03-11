@@ -2,9 +2,9 @@ package com.mayank.selfuploadform.selfupload.widgets;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -51,12 +51,12 @@ public class ValueInputField extends LinearLayout implements AdapterView.OnItemS
     private int spinnerWeight = 0;
     private int postfixWeight = 0;
     private EditText editText;
-    private Drawable borderDrawable;
     private String[] entries;
     private Double[] conversions;
     private Double conversionFactor;
     private ArrayList<ValueChangedListener> valueChangedListeners;
     private LinearLayout holder;
+    private Spinner spinner;
 
     public ValueInputField(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -91,7 +91,6 @@ public class ValueInputField extends LinearLayout implements AdapterView.OnItemS
         titleTextSize = typedArray.getDimension(R.styleable.ValueInputField_titleTextSize, getResources().getDimension
                 (R.dimen.font_size_14));
         typedArray.recycle();
-        borderDrawable = ContextCompat.getDrawable(getContext(), R.drawable.translucent_black_border);
         createConversionArray(spinnerEntries);
         calculateWeights();
         valueChangedListeners = new ArrayList<>();
@@ -149,9 +148,18 @@ public class ValueInputField extends LinearLayout implements AdapterView.OnItemS
         this.addView(holder);
     }
 
-    public void setValue(Double value) {
-        if (!Double.isNaN(value)) {
-            this.editText.setText(String.valueOf(value));
+    public void setValue(Double value, Double conversionFactor) {
+        if (null != value && null != conversionFactor) {
+            editText.removeTextChangedListener(this);
+            editText.setText(String.valueOf(value));
+            if (null != conversions) {
+                for (int i = 0; i < conversions.length; i++) {
+                    if (conversionFactor.equals(conversions[i])) {
+                        spinner.setSelection(i);
+                        break;
+                    }
+                }
+            }
         }
     }
 
@@ -166,14 +174,14 @@ public class ValueInputField extends LinearLayout implements AdapterView.OnItemS
             postfixTextView.setGravity(Gravity.CENTER);
             postfixTextView.setTextColor(postfixTextColor);
             postfixTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, postfixSize);
-            postfixTextView.setBackground(borderDrawable);
+            postfixTextView.setBackgroundResource(R.drawable.translucent_black_border);
             holder.addView(postfixTextView);
         }
     }
 
     private void createSpinnerView() {
         if (0 != spinnerWeight) {
-            Spinner spinner = new Spinner(getContext());
+            spinner = new Spinner(getContext());
             LayoutParams layoutParams = new LayoutParams(0, LayoutParams.MATCH_PARENT);
             layoutParams.weight = spinnerWeight;
             layoutParams.gravity = Gravity.CENTER;
@@ -184,7 +192,7 @@ public class ValueInputField extends LinearLayout implements AdapterView.OnItemS
             adapter.setDropDownViewResource(R.layout.self_upload_spinner_dropdown_item);
             spinner.setAdapter(adapter);
             spinner.setOnItemSelectedListener(this);
-            spinner.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.dark_grey_border));
+            spinner.setBackgroundResource(R.drawable.dark_grey_border);
             holder.addView(spinner);
         }
     }
@@ -192,17 +200,19 @@ public class ValueInputField extends LinearLayout implements AdapterView.OnItemS
     private void createCenterView() {
         editText = new EditText(getContext());
         LayoutParams layoutParams = new LayoutParams(0, LayoutParams.MATCH_PARENT);
-        layoutParams.gravity = Gravity.CENTER;
         layoutParams.weight = centerWeight;
         editText.setLayoutParams(layoutParams);
         editText.setHint(hint);
+        editText.setBackgroundResource(R.drawable.translucent_black_border);
         editText.setHintTextColor(hintTextColor);
         editText.setGravity(Gravity.CENTER_VERTICAL | Gravity.START);
-        editText.setBackground(borderDrawable);
         editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         editText.addTextChangedListener(this);
         editText.setTextSize(TypedValue.COMPLEX_UNIT_PX, hintSize);
         editText.setPadding(getResources().getDimensionPixelSize(R.dimen.dimen_6dp), 0, 0, 0);
+        InputFilter[] filterArray = new InputFilter[1];
+        filterArray[0] = new InputFilter.LengthFilter(3);
+        editText.setFilters(filterArray);
         holder.addView(editText);
     }
 
@@ -216,7 +226,7 @@ public class ValueInputField extends LinearLayout implements AdapterView.OnItemS
             prefixTextView.setText(prefixText);
             prefixTextView.setGravity(Gravity.CENTER);
             prefixTextView.setTextColor(prefixTextColor);
-            prefixTextView.setBackground(borderDrawable);
+            prefixTextView.setBackgroundResource(R.drawable.translucent_black_border);
             prefixTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, prefixSize);
             holder.addView(prefixTextView);
         }
@@ -244,6 +254,7 @@ public class ValueInputField extends LinearLayout implements AdapterView.OnItemS
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         conversionFactor = conversions[position];
+        calculateConvertedValue();
     }
 
     @Override
@@ -258,19 +269,7 @@ public class ValueInputField extends LinearLayout implements AdapterView.OnItemS
 
     @Override
     public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (!TextUtils.isEmpty(s.toString())) {
-            try {
-                Double value = Double.parseDouble(s.toString());
-                value *= conversionFactor;
-                if (!valueChangedListeners.isEmpty()) {
-                    for (ValueChangedListener valueChangedListener : valueChangedListeners) {
-                        valueChangedListener.onValueChanged(this, value);
-                    }
-                }
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-            }
-        }
+        calculateConvertedValue();
     }
 
     @Override
@@ -278,9 +277,25 @@ public class ValueInputField extends LinearLayout implements AdapterView.OnItemS
 
     }
 
+    private void calculateConvertedValue() {
+        Double value = null;
+        if (!TextUtils.isEmpty(editText.getText().toString())) {
+            try {
+                if (!valueChangedListeners.isEmpty()) {
+                    value = Double.parseDouble(editText.getText().toString());
+                }
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+        for (ValueChangedListener valueChangedListener : valueChangedListeners) {
+            valueChangedListener.onValueChanged(this, value, conversionFactor);
+        }
+    }
+
     public interface ValueChangedListener {
 
-        void onValueChanged(ValueInputField papaInputField, Double value);
+        void onValueChanged(ValueInputField papaInputField, Double value, Double conversionFactor);
 
     }
 }

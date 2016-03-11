@@ -31,4 +31,7 @@ public interface GalleryView {
 
     void launchPicker(PhotoModel photoModel);
 
+    void notifyUserToDelete(int maxAllowed, int currentTotal);
+
+    void saveImages();
 }

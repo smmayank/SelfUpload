@@ -58,7 +58,7 @@ public class SelfUploadDetailsPresenter {
 
     public void onBuildingClicked() {
         Logger.logD(this, "onBuildingClicked ");
-        view.openLocalitySearch();
+        view.openBuildingSearch();
     }
 
     public void buildingSelected(int index, BaseSelfUploadEntry<Integer> entry) {
