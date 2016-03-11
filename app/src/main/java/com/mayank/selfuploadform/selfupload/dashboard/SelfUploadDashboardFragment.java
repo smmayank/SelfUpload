@@ -1,6 +1,7 @@
 package com.mayank.selfuploadform.selfupload.dashboard;
 
 import android.Manifest;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -34,8 +35,6 @@ public class SelfUploadDashboardFragment extends BaseSelfUploadFragment
 
     public static final int ACCESS_STORAGE_PERMISSION = 101;
     private static final int MAX_PROGRESS = 100;
-
-    private static final String PROGRESS_TEXT = "%s%% COMPLETED";
 
     private SelfUploadDashboardPresenter presenter;
 
@@ -183,12 +182,10 @@ public class SelfUploadDashboardFragment extends BaseSelfUploadFragment
     public void setProgress(int progress) {
         progressBar.setProgress(progress);
         if (progress != MAX_PROGRESS) {
-            saveUploadButton.setText(String.format(PROGRESS_TEXT, progress));
             saveUploadButton.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.warm_grey));
             saveUploadButton.setOnClickListener(null);
         } else {
             saveUploadButton.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.purple));
-            saveUploadButton.setText(getString(R.string.save_and_upload));
             saveUploadButton.setOnClickListener(this);
         }
     }
@@ -296,9 +293,14 @@ public class SelfUploadDashboardFragment extends BaseSelfUploadFragment
             }
             if (showText) {
                 imageViews.get(imageViews.size() - 1).setVisibility(View.VISIBLE);
+                Bitmap bitmap = Bitmap.createBitmap(getResources().getDimensionPixelSize(R.dimen.dimen_100dp),
+                        getResources().getDimensionPixelSize(R.dimen.dimen_100dp), Bitmap.Config.ARGB_8888);
+                bitmap.eraseColor(ContextCompat.getColor(getContext(), R.color.gray_cell_background));
+                imageViews.get(imageViews.size() - 1).setImageBitmap(bitmap);
                 int count = photoObjects.size() - (imageViews.size() - 1);
                 textView.setText(getString(R.string.more_images_format, count));
                 textView.setVisibility(View.VISIBLE);
+                ViewCompat.setElevation(textView, getResources().getDimension(R.dimen.dimen_20dp));
             }
         } else {
             setDefaultPhotosView();

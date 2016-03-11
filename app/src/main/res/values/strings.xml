@@ -547,6 +547,7 @@
     <string name="more_images_format">+%s</string>
     <string name="max_allowed_delete" formatted="false">Max %s images allowed. You currently have captured %s images.
         Please delete %s images to proceed.</string>
+    <string name="upload_now">UPLOAD NOW</string>
 
     <string-array name="property_types">
         <item>Apartment,1</item>

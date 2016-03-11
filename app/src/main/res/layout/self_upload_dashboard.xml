@@ -59,6 +59,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:background="@color/warm_grey"
+        android:text="@string/upload_now"
         android:textColor="@android:color/white"
         android:textSize="@dimen/font_size_16" />
 
