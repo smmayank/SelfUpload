@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.mayank.selfuploadform.R;
 import com.mayank.selfuploadform.selfupload.base.BaseSelfUploadEntry;
 import com.mayank.selfuploadform.selfupload.base.BaseSelfUploadFragment;
@@ -14,6 +15,7 @@ import com.mayank.selfuploadform.selfupload.search.building.SelfUploadBuildingSe
 import com.mayank.selfuploadform.selfupload.widgets.InputField;
 import com.mayank.selfuploadform.selfupload.widgets.SelectionField;
 import com.mayank.selfuploadform.selfupload.widgets.SpinnerField;
+
 import java.util.List;
 
 public class SelfUploadPropertyDetailsFragment extends BaseSelfUploadFragment implements SelfUploadDetailsView, View
@@ -49,7 +51,12 @@ public class SelfUploadPropertyDetailsFragment extends BaseSelfUploadFragment im
         initViews(inflate);
         initToolbar();
         initPresenter();
+        populateValues();
         return inflate;
+    }
+
+    private void populateValues() {
+
     }
 
 

@@ -19,4 +19,5 @@ public interface SelfUploadDetailsView {
     void showBuildingsDetails(boolean visibility);
 
     void openBuildingSearch();
+
 }

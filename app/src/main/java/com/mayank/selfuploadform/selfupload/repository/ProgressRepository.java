@@ -1,6 +1,7 @@
 package com.mayank.selfuploadform.selfupload.repository;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.mayank.selfuploadform.R;
 import com.mayank.selfuploadform.models.PropertyModel;
@@ -16,6 +17,13 @@ public class ProgressRepository {
 
     private static final String COMMERCIAL_PREFIX_TEXT_FORMAT = "%s%.0f %s, ";
     private static final String COMMERCIAL_POSTFIX_TEXT_FORMAT = "%.0f%s %s, ";
+    private static final int PROPERTY_TYPE_ID_APARTMENT = 1;
+    private static final int PROPERTY_TYPE_ID_INDEPENDENT_HOUSE = 2;
+    private static final int PROPERTY_TYPE_ID_INDEPENDENT_FLOOR = 35;
+
+    public static final String PROPERTY_TYPE_APARTMENT = "Apartment";
+    public static final String PROPERTY_TYPE_INDEPENDENT_HOUSE = "Independent House";
+    public static final String PROPERTY_TYPE_INDEPENDENT_FLOOR = "Independent Floor";
     private Context context;
 
     public ProgressRepository(Context context) {
@@ -128,6 +136,50 @@ public class ProgressRepository {
     }
 
     public String getDetailsText(PropertyModel propertyModel) {
+        String finalString = "";
+        if (null != propertyModel.getPropertyType()) {
+            finalString += getPropertyTypeText(propertyModel.getPropertyType()) + ",";
+        }
+        if (null != propertyModel.getBhkType()) {
+            finalString += getBhkName(propertyModel.getBhkType()) + ",";
+
+        }
+        if (null != propertyModel.getBuildingName()) {
+                finalString += propertyModel.getBuildingName() + ",";
+        }
+        if (null != propertyModel.getLocalityName()) {
+            finalString += propertyModel.getLocalityName() + ",";
+        }
+        if (!TextUtils.isEmpty(finalString)) {
+            return finalString.substring(0, finalString.length() - 1);
+        } else {
+            return finalString;
+        }
+    }
+
+    private String getBhkName(Integer bhkType) {
+        String[] bhkTypeArray = context.getResources().getStringArray(R.array.flat_configurations);
+        for (String bhkConfig : bhkTypeArray) {
+            String[] splitArray = bhkConfig.split(",");
+            if (bhkType == Integer.parseInt(splitArray[1])) {
+                return splitArray[0];
+            }
+        }
+        return null;
+    }
+
+    private String getPropertyTypeText(Integer propertyType) {
+        switch (propertyType) {
+            case PROPERTY_TYPE_ID_APARTMENT: {
+                return PROPERTY_TYPE_APARTMENT;
+            }
+            case PROPERTY_TYPE_ID_INDEPENDENT_FLOOR: {
+                return PROPERTY_TYPE_INDEPENDENT_FLOOR;
+            }
+            case PROPERTY_TYPE_ID_INDEPENDENT_HOUSE: {
+                return PROPERTY_TYPE_INDEPENDENT_HOUSE;
+            }
+        }
         return null;
     }
 
